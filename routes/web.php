@@ -14,9 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
+    return view('home');
+})->name('home');
+Route::get('produkte', function () {
+    return view('pages.product');
+})->name('product');
+Route::get('eu-gmp', function () {
+    return view('pages.eu-gmp');
+})->name('eu-gmp');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
