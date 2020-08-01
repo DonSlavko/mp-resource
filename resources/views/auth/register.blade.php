@@ -45,8 +45,8 @@
                         <v-select :items="items" label="Anrede *" outlined dense></v-select>
                         <v-select :items="items" label="Titel (Präfix)" outlined dense></v-select>
 
-                        <v-text-field class="mt-1" label="Vorname *" id="firstname" name="firstname" type="text" outlined dense></v-text-field>
-                        <v-text-field class="mt-1" label="Nachname *" id="lastname" name="lastname" type="text" outlined dense></v-text-field>
+                        <v-text-field class="mt-1" label="Vorname *" id="firstname" name="first_name" type="text" outlined dense></v-text-field>
+                        <v-text-field class="mt-1" label="Nachname *" id="lastname" name="last_name" type="text" outlined dense></v-text-field>
 
                         <p class="font-weight-bold text-subtitle-1 mb-2">Kontaktdaten (Liefer- und Rechnungsadresse)</p>
 
