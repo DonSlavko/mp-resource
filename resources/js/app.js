@@ -30,4 +30,19 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     vuetify,
     el: '#app',
+
+    data: {
+        validate: {
+            name: [
+                value => !!value || 'Dieses Feld ist erforderlich.'
+            ],
+            email: [
+                value => !!value || 'Dieses Feld ist erforderlich.',
+                value => {
+                    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    return pattern.test(value) || 'Bitte gib eine gültige E-Mail-Adresse an.'
+                },
+            ]
+        }
+    }
 });

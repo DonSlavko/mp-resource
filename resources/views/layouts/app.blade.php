@@ -30,19 +30,19 @@
 
                         <v-spacer></v-spacer>
 
-                        <v-btn text class="text--secondary">
+                        <v-btn href="/" text class="text--secondary">
                             Unternehmen</v-btn>
                         <v-btn href="{{ route('product') }}" text class="text--secondary">
                             Produkte</v-btn>
                         <v-btn href="{{ route('eu-gmp') }}" text class="text--secondary">
                             EU-\GMP</v-btn>
-                        <v-btn text class="text--secondary">
+                        <v-btn href="{{ route('investor') }}"text class="text--secondary">
                             Investoren</v-btn>
-                        <v-btn text class="text--secondary">
+                        <v-btn href="{{ route('career') }}" text class="text--secondary">
                             Karriere</v-btn>
                         <v-btn text class="text--secondary">
                             Aktuelles</v-btn>
-                        <v-btn text class="text--secondary">
+                        <v-btn href="{{ route('contact') }}" text class="text--secondary">
                             Kontakt</v-btn>
                         <v-btn text class="text--secondary">
                             Shop</v-btn>
@@ -55,5 +55,7 @@
             </v-main>
         </v-app>
     </div>
+
+    @stack('scripts')
 </body>
 </html>
