@@ -1,6 +1,7 @@
 import Vue from "vue"
 
 import Login from './components/auth/Login.vue';
+import Register from './components/auth/Register.vue';
 
 
 import HomeAttribute from "./components/admin/attribute/HomeAttribute";
@@ -16,6 +17,7 @@ import HomeVariation from "./components/admin/variation/HomeVariation";
 import ShowVariation from "./components/admin/variation/ShowVariation";
 
 Vue.component('login', Login);
+Vue.component('register', Register);
 
 Vue.component('home-attribute', HomeAttribute);
 Vue.component('show-attribute', ShowAttribute);
