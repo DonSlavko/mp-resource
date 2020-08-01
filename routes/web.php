@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('pages.home');
 })->name('home');
 Route::get('produkte', function () {
     return view('pages.product');
@@ -22,6 +22,15 @@ Route::get('produkte', function () {
 Route::get('eu-gmp', function () {
     return view('pages.eu-gmp');
 })->name('eu-gmp');
+Route::get('investoren', function () {
+    return view('pages.investor');
+})->name('investor');
+Route::get('karriere', function () {
+    return view('pages.career');
+})->name('career');
+Route::get('kontakt', function () {
+    return view('pages.contact');
+})->name('contact');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

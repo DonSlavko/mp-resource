@@ -11,11 +11,12 @@
                justify="center"
         >
             <v-col class="text-center" style="color: #444444" cols="12">
-                <h4 class="text-body-1 font-weight-medium mb-4">PRODUKTE</h4>
-                <h1 class="text-h3 font-weight-bold mb-4">Eine gute therapeutische und <br> medizinische Alternative</h1>
+                <h4 class="text-body-1 font-weight-medium mb-4">GOOD MANUFACTURING PRATICE</h4>
+                <h1 class="text-h3 font-weight-bold mb-4">
+                    Wir helfen Ihnen gerne bei Ihren <br> GMP – Projekten
+                </h1>
                 <h4 class="text-body-1 font-weight-medium">
-                    Bei der Therapie/Behandlung mit medizinischen Cannabisprodukten steht die
-                    <br>Reduzierung von Schmerzen und Krankheitssymptomen im Mittelpunkt.
+                    Sie möchten eine GMP-Zertifizierung? Bei uns erhalten Sie eine professionale Unterstützung.
                 </h4>
             </v-col>
         </v-row>
@@ -32,99 +33,57 @@
         <section class="mt-16">
             <v-row>
                 <v-col cols="12">
-                    <h2 class="text-h6" style="text-transform: uppercase">Cannabis die Heilpflanze</h2>
+                    <h2 class="text-h6 mb-3" style="text-transform: uppercase">EU-/GMP Zertifizierung für Europe</h2>
                     <hr style="background: #efefef; color: rgba(68,68,68,1); height: 1px; width: 50%; border: none;">
                 </v-col>
                 <v-col cols="6">
-                    <h4>Entourage-Effekt</h4>
-                    <p>Die Bezeichnung „Entourage-Effekt“ stammt aus der Cannabis–Forschung und beschreibt ein
-                        therapeutisches Zusammenspiel zwischen Cannabinoide und Terpenoide. Diese definiert, dass ein
-                        Pflanzenstoffgemisch eine höhere biologische Aktivität besitzt als die isolierte Reinsubstanz selbst.</p>
+                    <h4>EU-/GMP-zertifiziert für den europäischen Markt</h4>
+                    <p>Sie möchten medizinisches Cannabis produzieren, konfektionieren und
+                        exportieren/importieren? Wir haben die Möglichkeit, Sie weltweit bei der
+                        Umsetzung der aufwendigen EU-GMP (Good Manufacturing Practice) Zertifizierung
+                        in Ihrem Unternehmen zu unterstützen.</p>
 
-                    <h4>Cannabinoide</h4>
-                    <p>Cannabinoide sind ein Sammelbegriff für alle Stoffe, die über die Cannabinoid Rezeptoren
-                        wirken. Bis heute wurden mehr als 100 solcher Cannabinoide in der Cannabispflanze
-                        nachgewiesen und extrahiert. Dabei ist interessant, dass Cannabinoide nicht nur in
-                        der Hanfpflanze vorkommen, sondern auch in manchen Pilzen und Bakterien. Von den
-                        bisher mehr als 100 verschiedenen Cannabinoiden sind vor allem THC, CBD, CBC und
-                        CBG die bekanntesten.</p>
+                    <p>Unser Netzwerk aus qualifizierten Partnern verfügen über langjährige Erfahrung
+                        in der Umsetzung. Von der Produktion, Konfektion und der Qualitätskontrolle bis
+                        hin zum Transport überprüfen und bewerten wir Ihre gesamte Liefer- und
+                        Wertschöpfungskette.</p>
 
-                </v-col>
-                <v-col cols="6">
-                    <h4>Terpene und Terpenoide</h4>
-                    <p>Terpene sind eine Gruppierung chemischer Verbindungen und kommen in natürlichen Organismen vor.
-                        Ätherische Öle sind zum Beispiel reich an Terpenen. Ihnen wird eine antimikrobielle Eigenschaft
-                        zugeschrieben, was für den medizinischen Einsatz sehr interessant ist, da Infektionen oder auch
-                        das Wachstum von Mikroorganismen gehemmt werden können. Dabei sind Terpene in Fetten sehr gut
-                        löslich, in Wasser hingegen eher schwer. Daher sind sie vor allem in ätherischen Ölen vorhanden.
-                        Mit einem Vaporizer können die Terpene gezielt durch die genaue Bestimmung der
-                        Verdampfungstemperatur verdampft werden.</p>
+                    <p>Wir bieten Ihnen als <b>zukünftigen Partner</b> eine umfassende Audit- und Beratungsleistung
+                        im Bereich GDP (Good Distribution Practice), EU-GMP und Regulatory Compliance an.</p>
 
-                    <h4>Flavonoide</h4>
-                    <p>Die Flavonoide sind in der Cannabispflanze für den Geruch, Farbe wie auch den Geschmack
-                        verantwortlich und dienen den Pflanzen vor allem dem Schutz vor der UV-Strahlung.
-                        Die Flavonoide werden vor allem über die Nahrung, also über Obst und Gemüse, aufgenommen.
-                        Bisher sind den Forschern rund 8.000 Flavonoide bekannt, jedoch sind längst nicht alle
-                        Flavonoide eingehend erforscht.</p>
-                </v-col>
+                    <p><b>Zukünftiger Partner:</b>
+                        Wir haben die Möglichkeit, mit Ihnen einen Exklusivvertrag abzuschließen, bei dem wir
+                        die Audit- und die Bezirksregierungskosten übernehmen.
+                        <b>Der Nachteil für Sie: Sie binden sich zwischen 1-5 Jahren an uns.</b>
+                        Dann haben Sie vorerst leider keine Möglichkeit, an andere Großhändler in Deutschland
+                        oder Europa zu verkaufen.</p>
 
-                <v-col cols="12">
-                    <h2 class="text-center text-h6 mt-14" style="text-transform: uppercase">Terpenenmatrix</h2>
-                    <hr style="background: #efefef; color: rgba(68,68,68,1); height: 1px; width: 100%; border: none;">
-                </v-col>
+                    <p>Wir wollen Sie in Ihrem EU-Geschäft nicht einschränken, deshalb schlagen wir Ihnen
+                        eine <b>faire Option vor</b>.</p>
 
-                <v-col cols="12">
-                    <v-img src="{{ asset('storage/Tperne_DE.jpg')  }}"></v-img>
-                </v-col>
+                    <p><b>Faire Option:</b> Sie übernehmen die Kosten für die Audits (inkl. Bezirksregierung) und
+                        zusätzlich <b>die Kosten für die Importlizenz</b> Ihrer hergestellten Produkte. Dies
+                        ermöglicht uns den Vertrieb Ihrer Produkte in Deutschland. <b>Der Vorteil für Sie wäre,
+                            dass</b> Sie mit weiteren EU-Partnern ohne Einschränkungen zusammenarbeiten können.</p>
 
-                <v-col cols="12">
-                    <h2 class="text-h6 mt-14" style="text-transform: uppercase">Produkte</h2>
-                    <hr style="background: #efefef; color: rgba(68,68,68,1); height: 1px; width: 50%; border: none;">
+                    <p>Wir von Medical Pharma Resource GmbH bestehen nicht auf einen <b>Exklusivvertrag</b>. Wir
+                        streben eine dauerhafte Partnerschaft mit Ihnen an.</p>
+
+                    <p><b>Wie können Ihnen weitere Servicetätigkeiten über unsere Partner anbieten:</b></p>
+
+                    <ul>
+                        <li class="pb-4">Das Verpacken Ihrer Produkte</li>
+                        <li class="pb-4">Das Labeln Ihrer Produkte</li>
+                        <li class="pb-6">Die Gammabestrahlung der abgepackten Blüten</li>
+                    </ul>
+
+                    <p>Und wenn Sie die Servicetätigkeiten selber übernehmen möchten, so können wir Sie
+                        ebenfalls dabei unterstützen.</p>
                 </v-col>
 
                 <v-col cols="6">
-
-                    <h4>EU-/GMP- und GDP- zertifizierte Qualität</h4>
-                    <p>Unsere medizinischen Cannabisprodukte werden sich durch eine gleichbleibende Qualität
-                        auf höchstem Niveau auszeichnen.</p>
-
-                    <p>Unser Ziel ist es eine große Vielfalt an medizinischen Cannabisprodukten anzubieten,
-                        um eine bessere Verfügbarkeit für die zu behandelnden Krankheitssymptome zu
-                        gewährleisten.</p>
-
-                    <p>Unser Sortiment wird ausschließlich über unseren eigenen Onlineshop zur
-                        Verfügung stehen.
-                    </p>
-
-                    <p>Die Regelungen des Betäubungsmittelgesetzes (BtMG) sehen ein Verbot der
-                        Werbung für Cannabis vor, da Cannabis der Anlage III des BtMG zugeordnet ist.
-                        Wir dürfen als Anbieter keinerlei Hinweise zu den Produkten geben oder gar werblich
-                        tätig werden. Verstöße gegen dieses Verbot stellen eine Straftat dar.</p>
-
-
-                    <p>Zudem ist folgendes in § 10 Heilmittelwerbegesetz (HWG) festgehalten: Für
-                        verschreibungspflichtige Arzneimittel darf nur bei Fachkreisen im engeren
-                        Sinne geworben werden. Das sind Ärzte, Tierärzte, Apotheker und Personen, die
-                        mit diesen Arzneimitteln erlaubterweise Handel betreiben.</p>
-
-                    <p>Ausführliche Informationen für Ärzte und Apotheker finden Sie in unseren Online-Shop.
-                        Sie müssen sich nur bei uns registrieren. Personen aus dem Nicht-Fachkreis, wenden
-                        Sie sich bitte an Ihren behandelnden Arzt oder Apotheker, um weitere Informationen
-                        über den Wirkstoff und seine therapeutischen Einsatzmöglichkeiten zu erhalten.</p>
-
-
-                </v-col>
-
-                <v-col cols="6">
-                    <v-img position="bottom left" height="100%" width="100%" sizes="cover" src="{{ asset('storage/AdobeStock_310714620-scaled.jpeg')  }}"></v-img>
-                </v-col>
-
-                <v-col cols="12">
-                    <h2 class="text-center text-h6 mt-14" style="text-transform: uppercase">Produktpalette - MPRCanna®</h2>
-                </v-col>
-
-                <v-col offset="1" cols="10">
-                    <v-img src="{{ asset('storage/MPRCanna.docx-Word.png')  }}"></v-img>
+                    <v-img height="100%" width="100%" contain
+                           src="{{ asset('storage/Europa3.jpg')  }}"></v-img>
                 </v-col>
 
             </v-row>
