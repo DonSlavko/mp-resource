@@ -34,3 +34,15 @@ Route::get('kontakt', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::name('user.')->group(function () {
+    Route::get('neuigkeiten', function () {
+        return view('user.news');
+    })->name('news');
+    Route::get('shop', function () {
+        return view('user.shop');
+    })->name('shop');
+    Route::get('vorbestellungen/my-pre-orders/', function () {
+        return view('user.preorder');
+    })->name('preorder');
+});

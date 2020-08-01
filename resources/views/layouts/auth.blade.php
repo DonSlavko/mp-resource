@@ -29,5 +29,8 @@
             </v-app>
         </main>
     </div>
+
+@stack('scripts')
 </body>
 </html>
+
