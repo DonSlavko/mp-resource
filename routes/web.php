@@ -2,47 +2,27 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::namespace('Frontend')->group(function () {
+    Route::get('/', 'LandingController@home')->name('home');
+    Route::get('produkte', 'LandingController@product')->name('product');
+    Route::get('eu-gmp', 'LandingController@eugmp')->name('eu-gmp');
+    Route::get('investoren', 'LandingController@investor')->name('investor');
+    Route::get('karriere', 'LandingController@career')->name('career');
+    Route::get('kontakt', 'LandingController@contact')->name('contact');
+});
 
-Route::get('/', function () {
-    return view('pages.home');
-})->name('home');
-Route::get('produkte', function () {
-    return view('pages.product');
-})->name('product');
-Route::get('eu-gmp', function () {
-    return view('pages.eu-gmp');
-})->name('eu-gmp');
-Route::get('investoren', function () {
-    return view('pages.investor');
-})->name('investor');
-Route::get('karriere', function () {
-    return view('pages.career');
-})->name('career');
-Route::get('kontakt', function () {
-    return view('pages.contact');
-})->name('contact');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::namespace('Frontend')->name('user.')->group(function () {
+    Route::get('neuigkeiten', 'UserController@news')->name('news');
+    Route::get('shop', 'UserController@shop')->name('shop');
+    Route::get('vorbestellungen/my-pre-orders', 'UserController@preorder')->name('preorder');
+});
 
-Route::name('user.')->group(function () {
-    Route::get('neuigkeiten', function () {
-        return view('user.news');
-    })->name('news');
-    Route::get('shop', function () {
-        return view('user.shop');
-    })->name('shop');
-    Route::get('vorbestellungen/my-pre-orders/', function () {
-        return view('user.preorder');
-    })->name('preorder');
+Route::namespace('Frontend\Admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('produkte', 'ProductController');
+    Route::resource('attribut', 'AttributeController');
+    Route::resource('variation', 'VariationController');
+    Route::resource('benutzer', 'UserController');
+    Route::resource('kategorie', 'CategoryController');
 });

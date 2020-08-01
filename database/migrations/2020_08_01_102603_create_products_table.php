@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->integer('variation_id');
 
             $table->string('sku')->nullable();
-            $table->integer('price');
+            $table->float('price');
             $table->integer('stock_quantity');
             $table->timestamps();
         });
