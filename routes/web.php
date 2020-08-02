@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 
 Route::namespace('Frontend')->group(function () {
-    Route::get('/', 'LandingController@home')->name('home');
+    //Route::get('/', 'LandingController@home')->name('home');
     Route::get('produkte', 'LandingController@product')->name('product');
     Route::get('eu-gmp', 'LandingController@eugmp')->name('eu-gmp');
     Route::get('investoren', 'LandingController@investor')->name('investor');
