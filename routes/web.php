@@ -26,3 +26,7 @@ Route::namespace('Frontend\Admin')->prefix('admin')->name('admin.')->group(funct
     Route::resource('benutzer', 'UserController');
     Route::resource('kategorie', 'CategoryController');
 });
+
+Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
+    Route::resource('users', 'UserController');
+});

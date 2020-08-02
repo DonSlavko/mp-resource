@@ -27,22 +27,9 @@
         </v-list-item-group>
       </template>
       <template v-slot:item.activated="{ item }">
-        <v-btn small dense v-if="!!item.activated_at === false" @click="activateAcc(item)">Activate</v-btn>
+        <v-btn small dense v-if="!item.activated_at" @click="activateAcc(item)">Activate</v-btn>
         <v-btn small dense v-else @click="deactivateAcc(item)">Deactivate</v-btn>
 
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon
-            small
-            class="mr-2"
-        >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-            small
-        >
-          mdi-delete
-        </v-icon>
       </template>
     </v-data-table>
   </v-container>
@@ -157,7 +144,21 @@ export default {
 
   methods: {
     initialize () {
-      return null;
+      axios.get('/back/users').then(response => {
+          console.log(response)
+
+          this.table.data = response.data.data.map(item => {
+              let date = new Date(item.created_at);
+              let year = date.getFullYear();
+              let month = (1 + date.getMonth()).toString().padStart(2, '0');
+              let day = date.getDate().toString().padStart(2, '0');
+
+              item.created_at =  year + '/' + month + '/' + day;
+
+              item.show_files = false;
+              return item;
+          })
+      })
     },
 
     showFiles(item) {
@@ -170,34 +171,6 @@ export default {
 
     deactivateAcc(item) {
       return item.activated_at = false;
-    },
-
-    editItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
-    },
-
-    deleteItem (item) {
-      const index = this.desserts.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
-    },
-
-    close () {
-      this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
-    },
-
-    save () {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      } else {
-        this.desserts.push(this.editedItem)
-      }
-      this.close()
     },
   },
 }
