@@ -16,6 +16,8 @@ import HomeUser from "./components/admin/user/HomeUser";
 import HomeVariation from "./components/admin/variation/HomeVariation";
 import ShowVariation from "./components/admin/variation/ShowVariation";
 
+import Shop from "./components/user/Shop";
+
 Vue.component('login', Login);
 Vue.component('register', Register);
 
@@ -31,3 +33,4 @@ Vue.component('home-user', HomeUser);
 Vue.component('home-variation', HomeVariation);
 Vue.component('show-variation', ShowVariation);
 
+Vue.component('shop', Shop);
