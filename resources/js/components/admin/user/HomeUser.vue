@@ -7,7 +7,7 @@
                   class="elevation-1"
     >
       <template v-slot:item.btmnr="{ item }">
-        <v-btn small dense @click="showFiles(item)">Activate</v-btn>
+        <v-btn small dense @click="showFiles(item)">Show Files</v-btn>
         <v-list-item-group color="primary" v-if="item.show_files">
           <v-list-item dense :href="item.file_1.path">
             <v-list-item-content>

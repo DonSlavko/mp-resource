@@ -8,7 +8,7 @@
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title>Meine Produkte</v-toolbar-title>
+          <v-toolbar-title>Products</v-toolbar-title>
           <v-divider
               class="mx-4"
               inset
@@ -23,7 +23,7 @@
                   class="mb-2"
                   v-bind="attrs"
                   v-on="on"
-              >Neues Produkt</v-btn>
+              >New Product</v-btn>
             </template>
             <v-card>
               <v-card-title>
@@ -85,8 +85,8 @@
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close">Stornieren</v-btn>
-                <v-btn color="blue darken-1" text @click="save">Sparen</v-btn>
+                <v-btn color="blue darken-1" text @click="close">Close</v-btn>
+                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -240,7 +240,7 @@ export default {
 
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'Neues Produkt' : 'Produkt Bearbeiten'
+      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
 
