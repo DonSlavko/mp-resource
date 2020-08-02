@@ -16,6 +16,7 @@ class CreateVariationValuesTable extends Migration
         Schema::create('variation_values', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('description');
             $table->timestamps();
         });
     }

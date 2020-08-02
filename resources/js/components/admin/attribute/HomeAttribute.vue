@@ -166,7 +166,11 @@ export default {
 
   methods: {
     initialize () {
-
+      axios.get('/back/attributes').then(response => {
+        this.table.data = response.data.data;
+      }).catch(error => {
+            console.log(error.message);
+      });
     },
 
     editItem (item) {
@@ -177,8 +181,11 @@ export default {
 
     deleteItem (item) {
       const index = this.table.data.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.table.data.splice(index, 1)
-    },
+        confirm('Are you sure you want to delete this item?') &&
+        axios.delete('/back/attributes/'+item.id).then(respones => {
+          this.initialize();
+        });
+      },
 
     close () {
       this.dialog = false
@@ -190,9 +197,13 @@ export default {
 
     save () {
       if (this.editedIndex > -1) {
-        Object.assign(this.table.data[this.editedIndex], this.editedItem)
+        axios.patch('/back/attributes/'+this.editedItem.id, this.editedItem).then(response => {
+          this.initialize();
+        })
       } else {
-        this.table.data.push(this.editedItem)
+        axios.post('/back/attributes', this.editedItem).then(response => {
+          this.initialize();
+        })
       }
       this.close()
     },

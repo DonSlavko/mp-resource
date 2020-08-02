@@ -53,11 +53,16 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $cateogry)
+    public function update(Request $request, Category $category)
     {
-        $data = $request->all();
 
-        $cateogry->update($data);
+        $data = [
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+        ];
+
+        $category->update($data);
+
 
         return response(['Category updated']);
     }
@@ -68,9 +73,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $cateogry)
+    public function destroy(Category $category)
     {
-        $cateogry->delete();
+        $category->delete();
 
         return response(['Category deleted']);
     }

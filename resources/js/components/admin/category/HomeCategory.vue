@@ -148,7 +148,11 @@ export default {
 
   methods: {
     initialize () {
-
+      axios.get('/back/categories').then(response => {
+        this.table.data = response.data.data;
+      }).catch(error => {
+        console.log(error.message);
+      })
     },
 
     editItem (item) {
@@ -159,7 +163,10 @@ export default {
 
     deleteItem (item) {
       const index = this.table.data.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.table.data.splice(index, 1)
+      confirm('Are you sure you want to delete this item?') &&
+          axios.delete('/back/categories/'+item.id).then(respones => {
+            this.initialize();
+          })
     },
 
     close () {
@@ -172,9 +179,13 @@ export default {
 
     save () {
       if (this.editedIndex > -1) {
-        Object.assign(this.table.data[this.editedIndex], this.editedItem)
+        axios.patch('/back/categories/'+this.editedItem.id, this.editedItem).then(response => {
+          this.initialize();
+        })
       } else {
-        this.table.data.push(this.editedItem)
+        axios.post('/back/categories', this.editedItem).then(response => {
+          this.initialize();
+        })
       }
       this.close()
     },
