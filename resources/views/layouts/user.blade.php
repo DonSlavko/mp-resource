@@ -35,7 +35,7 @@
                         Produkte</v-btn>
                     <v-btn href="{{ route('user.preorder') }}" text class="text--secondary">
                         Vorbestellungen</v-btn>
-                    <v-btn href="/admin/produkte" text class="text--secondary">
+                    <v-btn href="/admin/product" text class="text--secondary">
                         Admin</v-btn>
 
                 </v-row>
