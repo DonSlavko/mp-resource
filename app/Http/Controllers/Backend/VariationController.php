@@ -15,9 +15,9 @@ class VariationController extends Controller
      */
     public function index()
     {
-        $attribute = Variation::all()->load('variationValues')->toArray();
+        $variation = Variation::all()->load('variationValues')->toArray();
 
-        return response(['data' => $attribute]);
+        return response(['data' => $variation]);
     }
 
     /**

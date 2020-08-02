@@ -74,14 +74,13 @@
                                                             color="primary"
                                                             :value="attribute.id"
                                                             :label="attribute.name"
-                                                            selected="isSelected(attribute)"
                                                         ></v-checkbox>
                                                     </v-col>
                                                     <v-col cols="12" md="8">
                                                         <v-select
                                                             :disabled="isSelected(attribute)"
                                                             multiple
-                                                            :items="attribute.attributeValues"
+                                                            :items="getAttributeValues(attribute.attribute_values)"
                                                             v-model="editedItem.attribute.values"
                                                             label="Attribute Values"
                                                             outlined dense></v-select>
@@ -231,19 +230,13 @@ export default {
         dialog(val) {
             val || this.close()
         },
-
-        "editedItem.attribute": function(attribute) {
-            if (attribute.value) {
-                this.getAttributeValues();
-            }
-        },
     },
 
     created() {
         this.initialize();
         this.getCategories();
         this.getVariations();
-        //this.getAttributes();
+        this.getAttributes();
     },
 
     methods: {
@@ -271,8 +264,7 @@ export default {
                 this.variations = response.data.data.map(item => {
                     return item = {
                         text: item.name,
-                        value: item.id,
-                        variationValues: item.variationValues
+                        value: item.id
                     }
                 });
             })
@@ -280,18 +272,41 @@ export default {
 
         getAttributes() {
             axios.get('/back/attributes').then(response => {
-                this.attributes = response.data.data;
+                this.attributes = response.data.data.map((item) => {
+                    item.attribute_values.map((value) => {
+                        value = {
+                            text: value.name,
+                            value: value.id
+                        }
+
+                        return value
+                    })
+
+                    return item
+                });
             })
+        },
+
+        getAttributeValues(value) {
+            return value.map(item => {
+                return item = {
+                    text: item.name,
+                    value: item.id
+                }
+            });
         },
 
         isSelected(item) {
             let selected = !this.editedItem.attribute.ids.includes(item.id)
             if (selected) {
-                item.attributeValues.forEach((value) => {
-                    let index = this.editedItem.attribute.values.indexOf(value.id)
+                item.attribute_values.forEach((value) => {
+                    if (this.editedItem.attribute.values.includes(value.id))
+                    {
+                        let index = this.editedItem.attribute.values.indexOf(value.id)
 
-                    if (index >  -1) {
-                        this.editedItem.attribute.values.splice(index)
+                        if (index >  -1) {
+                            this.editedItem.attribute.values.splice(index)
+                        }
                     }
                 })
             }
