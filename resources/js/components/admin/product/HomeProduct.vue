@@ -1,362 +1,338 @@
 <template>
-  <v-container>
-    <v-data-table show-select
-        :headers="table.headers"
-        :items="table.data"
-        :items-per-page="5"
-        class="elevation-1"
-    >
-      <template v-slot:top>
-        <v-toolbar flat color="white">
-          <v-toolbar-title>Products</v-toolbar-title>
-          <v-divider
-              class="mx-4"
-              inset
-              vertical
-          ></v-divider>
-          <v-spacer></v-spacer>
-          <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                  color="primary"
-                  dark
-                  class="mb-2"
-                  v-bind="attrs"
-                  v-on="on"
-              >New Product</v-btn>
+    <v-container>
+        <v-data-table show-select
+                      :headers="table.headers"
+                      :items="table.data"
+                      :items-per-page="5"
+                      class="elevation-1"
+        >
+            <template v-slot:top>
+                <v-toolbar flat color="white">
+                    <v-toolbar-title>Products</v-toolbar-title>
+                    <v-divider
+                        class="mx-4"
+                        inset
+                        vertical
+                    ></v-divider>
+                    <v-spacer></v-spacer>
+                    <v-dialog v-model="dialog" max-width="800px">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                                color="primary"
+                                dark
+                                class="mb-2"
+                                v-bind="attrs"
+                                v-on="on"
+                            >New Product
+                            </v-btn>
+                        </template>
+                        <v-card>
+                            <v-card-title>
+                                <span class="headline">{{ formTitle }}</span>
+                            </v-card-title>
+
+                            <v-card-text>
+                                <v-container>
+                                    <v-row>
+                                        <v-col cols="12">
+                                            <v-text-field v-model="editedItem.name" label="Produktname"></v-text-field>
+                                        </v-col>
+
+                                        <v-col cols="12">
+                                            <v-textarea
+                                                v-model="editedItem.description"
+                                                solo
+                                                name="input-7-4"
+                                                label="Beschreibung"
+                                            ></v-textarea>
+                                        </v-col>
+
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-select
+                                                v-model="editedItem.category"
+                                                :items="categories"
+                                                name="category"
+                                                label="Kategorie"
+                                                outlined dense></v-select>
+                                        </v-col>
+
+                                        <v-col cols="12" md="6">
+                                            <v-select
+                                                v-model="editedItem.variation"
+                                                :items="variations"
+                                                name="variation"
+                                                label="Variation"
+                                                outlined dense></v-select>
+                                        </v-col>
+
+                                        <v-col cols="12">
+                                            <v-row>
+                                                <template v-for="attribute in attributes">
+                                                    <v-col cols="12" md="4">
+                                                        <v-checkbox
+                                                            v-model="editedItem.attribute.ids"
+                                                            color="primary"
+                                                            :value="attribute.id"
+                                                            :label="attribute.name"
+                                                            selected="isSelected(attribute)"
+                                                        ></v-checkbox>
+                                                    </v-col>
+                                                    <v-col cols="12" md="8">
+                                                        <v-select
+                                                            :disabled="isSelected(attribute)"
+                                                            multiple
+                                                            :items="attribute.attributeValues"
+                                                            v-model="editedItem.attribute.values"
+                                                            label="Attribute Values"
+                                                            outlined dense></v-select>
+                                                    </v-col>
+                                                </template>
+                                            </v-row>
+                                        </v-col>
+
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.sku" label="SKU"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.stock" label="Stock"></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card-text>
+
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" text @click="close">Close</v-btn>
+                                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                </v-toolbar>
             </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">{{ formTitle }}</span>
-              </v-card-title>
-
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field v-model="editedItem.name" label="Produktname"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-select
-                          v-model="editedItem.category"
-                          :items="categories"
-                          name="category"
-                          label="Kategorie"
-                          outlined dense></v-select>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-textarea
-                          v-model="editedItem.description"
-                          solo
-                          name="input-7-4"
-                          label="Beschreibung"
-                      ></v-textarea>
-                    </v-col>
-                    <v-col cols="12" md="6">
-                      <v-select
-                          v-model="editedItem.variation"
-                          :items="variations"
-                          name="variation"
-                          label="Variation"
-                          outlined dense></v-select>
-                    </v-col>
-
-                    <v-col cols="12" md="6">
-                      <v-select
-                          v-model="editedItem.attribute"
-                          :items="attributes"
-                          name="attribute"
-                          label="Attribut"
-                          outlined dense></v-select>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.carbs" label="SKU"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.protein" label="Price"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.protein" label="Stock"></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close">Close</v-btn>
-                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-toolbar>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon
-            small
-            class="mr-2"
-            @click="editItem(item)"
-        >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-            small
-            @click="deleteItem(item)"
-        >
-          mdi-delete
-        </v-icon>
-      </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize">Reset</v-btn>
-      </template>
-    </v-data-table>
-  </v-container>
+            <template v-slot:item.actions="{ item }">
+                <v-icon
+                    small
+                    class="mr-2"
+                    @click="editItem(item)"
+                >
+                    mdi-pencil
+                </v-icon>
+                <v-icon
+                    small
+                    @click="deleteItem(item)"
+                >
+                    mdi-delete
+                </v-icon>
+            </template>
+            <template v-slot:no-data>
+                <v-btn color="primary" @click="initialize">Reset</v-btn>
+            </template>
+        </v-data-table>
+    </v-container>
 </template>
 
 <script>
 export default {
-  name: "HomeProduct",
+    name: "HomeProduct",
 
-  data () {
-    return {
-      table: {
-        headers: [
-          {
-            text: 'ID',
-            value: 'id'
-          },
-          {
-            text: 'Name',
-            value: 'name'
-          },
-          {
-            text: 'SKU',
-            value: 'sku'
-          },
-          {
-            text: 'Stock',
-            value: 'stock_quantity',
-            sortable: false,
-          },
-          {
-            text: 'Price',
-            value: 'price'
-          },
-          {
-            text: 'Category',
-            value: 'category',
-            sortable: false,
-          },
-          {
-            text: 'Date',
-            value: 'date'
-          },
-          {
-            text: 'Options',
-            value: 'actions'
-          },
-        ],
-        data: [
-          {
-            id: 1,
-            name: 'MPRCanna Sedation',
-            sku: null,
-            stock_quantity: 500,
-            price: '63.00 €',
-            category: null,
-            date: '2020/01/10',
-          },
-          {
-            id: 1,
-            name: 'MPRCanna Sedation',
-            sku: null,
-            stock_quantity: 500,
-            price: '63.00 €',
-            category: null,
-            date: '2020/01/10',
-          },
-          {
-            id: 1,
-            name: 'MPRCanna Sedation',
-            sku: null,
-            stock_quantity: 500,
-            price: '63.00 €',
-            category: null,
-            date: '2020/01/10',
-          },
-          {
-            id: 1,
-            name: 'MPRCanna Sedation',
-            sku: null,
-            stock_quantity: 500,
-            price: '63.00 €',
-            category: null,
-            date: '2020/01/10',
-          },
-        ]
-      },
+    data() {
+        return {
+            table: {
+                headers: [
+                    {
+                        text: 'ID',
+                        value: 'id'
+                    },
+                    {
+                        text: 'Name',
+                        value: 'name'
+                    },
+                    {
+                        text: 'SKU',
+                        value: 'sku'
+                    },
+                    {
+                        text: 'Stock',
+                        value: 'stock_quantity',
+                        sortable: false,
+                    },
+                    {
+                        text: 'Price',
+                        value: 'price'
+                    },
+                    {
+                        text: 'Category',
+                        value: 'category',
+                        sortable: false,
+                    },
+                    {
+                        text: 'Date',
+                        value: 'date'
+                    },
+                    {
+                        text: 'Options',
+                        value: 'actions'
+                    },
+                ],
+                data: [
 
-      categories: [],
-      variations: [],
-      attributes: [],
+                ]
+            },
 
-      dialog: false,
-      headers: [
-        {
-          text: 'Dessert (100g serving)',
-          align: 'start',
-          sortable: false,
-          value: 'name',
-        },
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
-        { text: 'Actions', value: 'actions', sortable: false },
-      ],
-      desserts: [],
+            categories: [],
+            variations: [],
+            attributes: [],
 
-      editedIndex: -1,
+            dialog: false,
 
-      editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
+            editedIndex: -1,
 
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
+            editedItem: {
+                name: '',
+                category: '',
+                description: '',
+                variation: null,
+                attribute: {
+                    ids: [],
+                    values: []
+                },
+                price: 0,
+                stock: 0,
+                sku: null,
+            },
 
-    }
-  },
+            defaultItem: {
+                name: '',
+                category: '',
+                description: '',
+                variation: null,
+                attribute: {
+                    ids: [],
+                    values: []
+                },
+                price: 0,
+                stock: 0,
+                sku: null,
+            },
 
-  computed: {
-    formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    },
-  },
-
-  watch: {
-    dialog (val) {
-      val || this.close()
-    },
-  },
-
-  created () {
-    this.initialize()
-  },
-
-  methods: {
-    initialize () {
-      this.desserts = [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-        },
-      ]
+        }
     },
 
-    editItem (item) {
-      this.editedIndex = this.table.data.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
+    computed: {
+        formTitle() {
+            return this.editedIndex === -1 ? 'New Product' : 'Edit Product'
+        },
     },
 
-    deleteItem (item) {
-      const index = this.table.data.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+    watch: {
+        dialog(val) {
+            val || this.close()
+        },
+
+        "editedItem.attribute": function(attribute) {
+            if (attribute.value) {
+                this.getAttributeValues();
+            }
+        },
     },
 
-    close () {
-      this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
+    created() {
+        this.initialize();
+        this.getCategories();
+        this.getVariations();
+        //this.getAttributes();
     },
 
-    save () {
-      if (this.editedIndex > -1) {
-        Object.assign(this.table.data[this.editedIndex], this.editedItem)
-      } else {
-        this.table.data.push(this.editedItem)
-      }
-      this.close()
+    methods: {
+        initialize() {
+            axios.get('/back/products').then(response => {
+                this.table.data = response.data.data;
+            }).catch(error => {
+                console.log(error.message);
+            });
+        },
+
+        getCategories() {
+            axios.get('/back/categories').then(response => {
+                this.categories = response.data.data.map(item => {
+                    return item = {
+                        text: item.name,
+                        value: item.id
+                    }
+                });
+            })
+        },
+
+        getVariations() {
+            axios.get('/back/variations').then(response => {
+                this.variations = response.data.data.map(item => {
+                    return item = {
+                        text: item.name,
+                        value: item.id,
+                        variationValues: item.variationValues
+                    }
+                });
+            })
+        },
+
+        getAttributes() {
+            axios.get('/back/attributes').then(response => {
+                this.attributes = response.data.data;
+            })
+        },
+
+        isSelected(item) {
+            let selected = !this.editedItem.attribute.ids.includes(item.id)
+            if (selected) {
+                item.attributeValues.forEach((value) => {
+                    let index = this.editedItem.attribute.values.indexOf(value.id)
+
+                    if (index >  -1) {
+                        this.editedItem.attribute.values.splice(index)
+                    }
+                })
+            }
+
+            return selected
+        },
+
+        editItem(item) {
+            this.editedIndex = this.table.data.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            this.dialog = true
+        },
+
+        deleteItem(item) {
+            const index = this.table.data.indexOf(item)
+            confirm('Are you sure you want to delete this item?') &&
+            axios.delete('/back/products/' + item.id).then(respones => {
+                this.initialize();
+            })
+        },
+
+        close() {
+            this.dialog = false
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedIndex = -1
+            })
+        },
+
+        save() {
+            if (this.editedIndex > -1) {
+                axios.patch('/back/products/' + this.editedItem.id, this.editedItem).then(response => {
+                    this.initialize();
+                })
+            } else {
+                axios.post('/back/products', this.editedItem).then(response => {
+                    this.initialize();
+                })
+            }
+            this.close()
+        },
     },
-  },
 }
 </script>

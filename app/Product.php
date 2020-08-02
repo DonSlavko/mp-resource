@@ -17,10 +17,10 @@ class Product extends Model
     }
 
     public function attributes() {
-        return $this->hasMany(Attribute::class);
+        return $this->belongsTo(Attribute::class);
     }
 
     public function attributeValues() {
-        return $this->hasMany(AttributeValue::class);
+        return $this->belongsToMany(AttributeValue::class, 'attribute_value_product');
     }
 }

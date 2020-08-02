@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,7 +15,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all()
+            ->load(['variation', 'attributes', 'attributeValues', 'category'])
+            ->first()->toArray();
+
+        return response(['data' => $products]);
     }
 
     /**
@@ -25,7 +30,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        return dd($data);
     }
 
     /**
