@@ -32,19 +32,22 @@
 
               <v-card-text>
                 <v-container>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field v-model="editedItem.name" label="Attribute Name"></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-textarea
-                          v-model="editedItem.description"
-                          solo
-                          name="input-7-4"
-                          label="Description"
-                      ></v-textarea>
-                    </v-col>
-                  </v-row>
+                  <v-form ref="modal">
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field :rules="rules" v-model="editedItem.name" label="Attribute Name"></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-textarea
+                            :rules="rules"
+                            v-model="editedItem.description"
+                            solo
+                            name="input-7-4"
+                            label="Description"
+                        ></v-textarea>
+                      </v-col>
+                    </v-row>
+                  </v-form>
                 </v-container>
               </v-card-text>
 
@@ -104,13 +107,7 @@ export default {
             value: 'actions'
           }
         ],
-        data: [
-          {
-            id: 1,
-            name: 'MPRCanna Sedation',
-            description: '',
-          },
-        ]
+        data: []
       },
 
       dialog: false,
@@ -144,13 +141,16 @@ export default {
         name: '',
         description: '',
       },
+      rules: [
+        value => !!value || "This field can't be empty"
+      ]
 
     }
   },
 
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+      return this.editedIndex === -1 ? 'New Attribute' : 'Edit Attribute'
     },
   },
 
@@ -196,17 +196,19 @@ export default {
     },
 
     save () {
-      if (this.editedIndex > -1) {
-        axios.patch('/back/attributes/'+this.editedItem.id, this.editedItem).then(response => {
-          this.initialize();
-        })
-      } else {
-        axios.post('/back/attributes', this.editedItem).then(response => {
-          this.initialize();
-        })
+      if (this.$refs.modal.validate()) {
+        if (this.editedIndex > -1) {
+          axios.patch('/back/attributes/' + this.editedItem.id, this.editedItem).then(response => {
+            this.initialize();
+          })
+        } else {
+          axios.post('/back/attributes', this.editedItem).then(response => {
+            this.initialize();
+          })
+        }
+        this.close()
       }
-      this.close()
-    },
+    }
   },
 }
 </script>

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
 
 @section('content')
-    <show-variation></show-variation>
+    <show-variation item_id="{{ $id }}"></show-variation>
 @endsection

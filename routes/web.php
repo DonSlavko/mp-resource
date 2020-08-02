@@ -33,6 +33,9 @@ Route::middleware(['auth'])->group(function () {
 Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
     Route::resource('users', 'UserController');
     Route::resource('categories', 'CategoryController');
+    Route::resource('variations', 'VariationController');
+    Route::resource('attributes', 'AttributeController');
+    Route::resource('products', 'ProductController');
 });
 
 

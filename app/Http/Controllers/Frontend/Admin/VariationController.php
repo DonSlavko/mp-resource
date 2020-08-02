@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Variation;
 use Illuminate\Http\Request;
 
 class VariationController extends Controller
@@ -44,9 +45,9 @@ class VariationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Variation $variation)
     {
-        //
+        return view('admin.variation.show')->with(['id' => $variation->id]);
     }
 
     /**
