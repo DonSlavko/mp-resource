@@ -85,16 +85,6 @@ export default {
             value: 'activated',
             sortable: false,
           },
-          {
-            text: 'Status',
-            value: 'status',
-            sortable: false,
-          },
-          {
-            text: 'Actions',
-            value: 'actions',
-            sortable: false,
-          },
         ],
         data: [
           {

@@ -33,13 +33,15 @@
 
                             <v-card-text>
                                 <v-container>
+                                  <v-form ref="modal">
                                     <v-row>
                                         <v-col cols="12">
-                                            <v-text-field v-model="editedItem.name" label="Produktname"></v-text-field>
+                                            <v-text-field v-model="editedItem.name" :rules="rules" label="Produktname"></v-text-field>
                                         </v-col>
 
                                         <v-col cols="12">
                                             <v-textarea
+                                                :rules="rules"
                                                 v-model="editedItem.description"
                                                 solo
                                                 name="input-7-4"
@@ -49,6 +51,7 @@
 
                                         <v-col cols="12" sm="6" md="6">
                                             <v-select
+                                                :rules="rules"
                                                 v-model="editedItem.category"
                                                 :items="categories"
                                                 name="category"
@@ -58,6 +61,7 @@
 
                                         <v-col cols="12" md="6">
                                             <v-select
+                                                :rules="rules"
                                                 v-model="editedItem.variation"
                                                 :items="variations"
                                                 name="variation"
@@ -90,15 +94,16 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.sku" label="SKU"></v-text-field>
+                                            <v-text-field :rules="rules" v-model="editedItem.sku" label="SKU"></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
+                                            <v-text-field :rules="rules" v-model="editedItem.price" label="Price"></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.stock" label="Stock"></v-text-field>
+                                            <v-text-field :rules="rules" v-model="editedItem.stock" label="Stock"></v-text-field>
                                         </v-col>
                                     </v-row>
+                                  </v-form>
                                 </v-container>
                             </v-card-text>
 
@@ -216,6 +221,9 @@ export default {
                 stock: 0,
                 sku: null,
             },
+          rules: [
+            value => !!value || "This field can't be empty"
+          ]
 
         }
     },
@@ -337,16 +345,18 @@ export default {
         },
 
         save() {
+          if (this.$refs.modal.validate()) {
             if (this.editedIndex > -1) {
-                axios.patch('/back/products/' + this.editedItem.id, this.editedItem).then(response => {
-                    this.initialize();
-                })
+              axios.patch('/back/products/' + this.editedItem.id, this.editedItem).then(response => {
+                this.initialize();
+              })
             } else {
-                axios.post('/back/products', this.editedItem).then(response => {
-                    this.initialize();
-                })
+              axios.post('/back/products', this.editedItem).then(response => {
+                this.initialize();
+              })
             }
             this.close()
+          }
         },
     },
 }
