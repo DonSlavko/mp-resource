@@ -44,7 +44,7 @@
                             Aktuelles</v-btn>
                         <v-btn href="{{ route('contact') }}" text class="text--secondary">
                             Kontakt</v-btn>
-                        <v-btn text class="text--secondary">
+                        <v-btn href="{{ route('login') }}" text class="text--secondary">
                             Shop</v-btn>
                     </v-row>
                 </v-container>
