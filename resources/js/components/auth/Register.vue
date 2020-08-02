@@ -203,6 +203,7 @@
                                 <v-file-input
                                     :rules="rules.file"
                                     v-model="input.file1"
+                                    accept="image/png, image/jpeg, application/pdf"
                                     label="Apothekenzulassung:"
                                     prepend-icon="mdi-paperclip"
                                     outlined
@@ -213,6 +214,7 @@
                                 <v-file-input
                                     :rules="rules.file"
                                     v-model="input.file2"
+                                    accept="image/png, image/jpeg, application/pdf"
                                     label=" BtM-Nummernzuweisung:"
                                     prepend-icon="mdi-paperclip"
                                     outlined
@@ -223,6 +225,7 @@
                                 <v-file-input
                                     :rules="rules.file"
                                     v-model="input.file3"
+                                    accept="image/png, image/jpeg, application/pdf"
                                     label=" Approbation:"
                                     prepend-icon="mdi-paperclip"
                                     outlined
@@ -241,8 +244,8 @@
                             <v-form ref="step4">
                                 <h4>Überprüfen Sie Ihre Angaben</h4>
 
-                                <p>Praxis {{ input.pharmacy }}</p>
-                                <p>Arzt: {{ input.honorific + ' ' + input.titles + ' ' + input.first_name + ' ' + input.last_name }}</p>
+                                <p>{{ input.title === 'Arzt/Ärztin' ? 'Praxis' : 'Apotheke' }} {{ input.pharmacy }}</p>
+                                <p>{{ input.title === 'Arzt/Ärztin' ? 'Arzt' : 'Apotheker' }}: {{ input.honorific + ' ' + input.titles + ' ' + input.first_name + ' ' + input.last_name }}</p>
                                 <p>Adresse: {{ input.street + ' ' + input.address + ', ' + input.postal + ' ' + input.city }}</p>
                                 <p>E-Mail: {{ input.email }}</p>
                                 <p>Telefon: {{ input.phone }}</p>
@@ -262,7 +265,7 @@
 
                                 <p>Ich möchte zeitnah über die Verfügbarkeit der Arzneimittel im Onlineshop benachrichtigt werden.</p>
 
-                                <v-btn color="primary" @click="validateStep4">weiter</v-btn>
+                                <v-btn color="primary" @click="validateStep4">Registrieren</v-btn>
                             </v-form>
                         </v-stepper-content>
                     </v-stepper-items>
@@ -450,6 +453,47 @@ export default {
             if (this.$refs.step3.validate()) {
                 this.complete_step3 = true;
                 this.complete = this.stepper = 4;
+            }
+        },
+
+        formData() {
+            let form = new FormData();
+
+            form.append("title", this.input.title);
+            form.append("username", this.input.username);
+            form.append("password", this.input.password);
+            form.append("email", this.input.email);
+
+            form.append("honorific", this.input.honorific);
+            form.append("titles", this.input.titles);
+            form.append("first_name", this.input.first_name);
+            form.append("last_name", this.input.last_name);
+            form.append("pharmacy", this.input.pharmacy);
+            form.append("street", this.input.street);
+            form.append("street", this.input.street);
+            form.append("address", this.input.address);
+            form.append("postal", this.input.postal);
+            form.append("city", this.input.city);
+            form.append("phone", this.input.phone);
+            form.append("fax", this.input.fax);
+
+            form.append("file1", this.input.file1, this.input.file1.name);
+            form.append("file2", this.input.file2, this.input.file2.name);
+            form.append("file3", this.input.file3, this.input.file3.name);
+
+            form.append("agree", this.input.agree);
+            form.append("subscribe", this.input.subscribe);
+
+            return form;
+        },
+
+        validateStep4() {
+            if (this.$refs.step4.validate()) {
+                axios.post('register', this.formData(), {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
             }
         }
     }
