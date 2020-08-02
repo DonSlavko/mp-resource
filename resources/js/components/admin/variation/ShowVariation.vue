@@ -2,7 +2,7 @@
   <v-container v-if="item">
     <v-data-table show-select
                   :headers="table.headers"
-                  :items="table.data"
+                  :items="item.variation_values"
                   :items-per-page="5"
                   class="elevation-1"
     >
@@ -154,13 +154,13 @@ export default {
     },
 
     editItem (item) {
-      this.editedIndex = this.table.data.indexOf(item)
+      this.editedIndex = this.item.variation_values.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
     deleteItem (item) {
-      const index = this.table.data.indexOf(item)
+      const index = this.item.variation_values.indexOf(item)
       confirm('Are you sure you want to delete this item?') &&
       axios.delete('/back/variation-values/'+item.id).then(respones => {
         this.initialize();
@@ -175,13 +175,21 @@ export default {
       })
     },
 
+    formData() {
+      return {
+        name: this.editedItem.name,
+        description: this.editedItem.description,
+        variation_id: this.item_id,
+      }
+    },
+
     save () {
       if (this.editedIndex > -1) {
-        axios.patch('/back/variation-values/'+this.editedItem.id, this.editedItem).then(response => {
+        axios.patch('/back/variation-values/'+this.editedItem.id, this.formData()).then(response => {
           this.initialize();
         })
       } else {
-        axios.post('/back/variation-values', this.editedItem).then(response => {
+        axios.post('/back/variation-values', this.formData()).then(response => {
           this.initialize();
         })
       }

@@ -23,18 +23,20 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::namespace('Frontend\Admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::resource('produkte', 'ProductController');
-        Route::resource('attribut', 'AttributeController');
+        Route::resource('product', 'ProductController');
+        Route::resource('attribute', 'AttributeController');
         Route::resource('variation', 'VariationController');
-        Route::resource('benutzer', 'UserController');
-        Route::resource('kategorie', 'CategoryController');
+        Route::resource('user', 'UserController');
+        Route::resource('category', 'CategoryController');
     });
 
 Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
     Route::resource('users', 'UserController');
     Route::resource('categories', 'CategoryController');
     Route::resource('variations', 'VariationController');
+    Route::resource('variation-values', 'VariationValueController');
     Route::resource('attributes', 'AttributeController');
+    Route::resource('attribute-values', 'AttributeValueController');
     Route::resource('products', 'ProductController');
 });
 

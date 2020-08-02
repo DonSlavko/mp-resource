@@ -61,6 +61,15 @@
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
+        <v-btn
+            small
+            class="mr-2"
+            :href="'attribute/'+item.id"
+            icon
+        >
+          <v-icon small
+          >mdi-magnify</v-icon>
+        </v-btn>
         <v-icon
             small
             class="mr-2"
@@ -141,6 +150,7 @@ export default {
         name: '',
         description: '',
       },
+
       rules: [
         value => !!value || "This field can't be empty"
       ]

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend\Admin;
 
+use App\Attribute;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -44,9 +45,9 @@ class AttributeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Attribute $attribute)
     {
-        //
+        return view('admin.attribute.show')->with(['id' => $attribute->id]);
     }
 
     /**

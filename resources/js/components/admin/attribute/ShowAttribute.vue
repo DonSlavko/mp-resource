@@ -2,7 +2,7 @@
   <v-container v-if="item">
     <v-data-table show-select
                   :headers="table.headers"
-                  :items="table.data"
+                  :items="item.attribute_values"
                   :items-per-page="5"
                   class="elevation-1"
     >
@@ -58,15 +58,6 @@
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-btn
-            small
-            class="mr-2"
-            :href="'variation/'+item.id"
-            icon
-        >
-          <v-icon small
-          >mdi-magnify</v-icon>
-        </v-btn>
         <v-icon
             small
             class="mr-2"
@@ -163,13 +154,13 @@ export default {
     },
 
     editItem (item) {
-      this.editedIndex = this.table.data.indexOf(item)
+      this.editedIndex = this.item.attribute_values.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
     deleteItem (item) {
-      const index = this.table.data.indexOf(item)
+      const index = this.item.attribute_values.indexOf(item)
       confirm('Are you sure you want to delete this item?') &&
       axios.delete('/back/attribute-values/'+item.id).then(respones => {
         this.initialize();
@@ -184,13 +175,21 @@ export default {
       })
     },
 
+    formData() {
+      return {
+        name: this.editedItem.name,
+        description: this.editedItem.description,
+        attribute_id: this.item_id,
+      }
+    },
+
     save () {
       if (this.editedIndex > -1) {
-        axios.patch('/back/attribute-values/'+this.editedItem.id, this.editedItem).then(response => {
+        axios.patch('/back/attribute-values/'+this.editedItem.id, this.formData()).then(response => {
           this.initialize();
         })
       } else {
-        axios.post('/back/attribute-values', this.editedItem).then(response => {
+        axios.post('/back/attribute-values', this.formData()).then(response => {
           this.initialize();
         })
       }

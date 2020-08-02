@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\AttributeValue;
 use App\Http\Controllers\Controller;
-use App\Variation;
 use Illuminate\Http\Request;
 
-class VariationController extends Controller
+class AttributeValueController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,7 @@ class VariationController extends Controller
      */
     public function index()
     {
-        $attribute = Variation::all()->load('variationValues')->toArray();
-
-        return response(['data' => $attribute]);
+        //
     }
 
     /**
@@ -30,9 +28,9 @@ class VariationController extends Controller
     {
         $data = $request->all();
 
-        Variation::create($data);
+        AttributeValue::create($data);
 
-        return response(['Variation created']);
+        return response(['Value created']);
     }
 
     /**
@@ -41,11 +39,9 @@ class VariationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Variation $variation)
+    public function show($id)
     {
-        $variation = $variation->load('variationValues')->toArray();
-
-        return response(['data' => $variation]);
+        //
     }
 
     /**
@@ -55,16 +51,16 @@ class VariationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Variation $variation)
+    public function update(Request $request, AttributeValue $attributeValue)
     {
         $data = [
             'name' => $request->get('name'),
             'description' => $request->get('description'),
         ];
 
-        $variation->update($data);
+        $attributeValue->update($data);
 
-        return response(['Variation updated']);
+        return response(['Value updated']);
     }
 
     /**
@@ -73,10 +69,10 @@ class VariationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Variation $variation)
+    public function destroy(AttributeValue $attributeValue)
     {
-        $variation->delete();
+        $attributeValue->delete();
 
-        return response(['Variation deleted']);
+        return response(['Value delete']);
     }
 }
