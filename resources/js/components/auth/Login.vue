@@ -24,7 +24,7 @@
                             <v-text-field
                                 :error="errors.password"
                                 :error-messages="errors.password"
-                                v-model="form.pass"
+                                v-model="form.password"
                                 :rules="rules.password"
                                 class="mt-1"
                                 label="Passwort"
@@ -113,7 +113,7 @@ export default {
 
             form: {
                 email: null,
-                pass: null,
+                password: null,
                 remember: null
             }
         }
