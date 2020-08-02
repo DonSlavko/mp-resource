@@ -1,14 +1,14 @@
 <template>
   <v-container>
     <v-data-table show-select
-        :headers="headers"
-        :items="desserts"
+        :headers="table.headers"
+        :items="table.data"
         :items-per-page="5"
         class="elevation-1"
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title>My CRUD</v-toolbar-title>
+          <v-toolbar-title>Meine Produkte</v-toolbar-title>
           <v-divider
               class="mx-4"
               inset
@@ -23,7 +23,7 @@
                   class="mb-2"
                   v-bind="attrs"
                   v-on="on"
-              >New Item</v-btn>
+              >Neues Produkt</v-btn>
             </template>
             <v-card>
               <v-card-title>
@@ -33,20 +33,51 @@
               <v-card-text>
                 <v-container>
                   <v-row>
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field v-model="editedItem.name" label="Produktname"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6">
+                      <v-select
+                          v-model="editedItem.category"
+                          :items="categories"
+                          name="category"
+                          label="Kategorie"
+                          outlined dense></v-select>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-textarea
+                          v-model="editedItem.description"
+                          solo
+                          name="input-7-4"
+                          label="Beschreibung"
+                      ></v-textarea>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-select
+                          v-model="editedItem.variation"
+                          :items="variations"
+                          name="variation"
+                          label="Variation"
+                          outlined dense></v-select>
+                    </v-col>
+
+                    <v-col cols="12" md="6">
+                      <v-select
+                          v-model="editedItem.attribute"
+                          :items="attributes"
+                          name="attribute"
+                          label="Attribut"
+                          outlined dense></v-select>
+                    </v-col>
+
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
+                      <v-text-field v-model="editedItem.carbs" label="SKU"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
+                      <v-text-field v-model="editedItem.protein" label="Price"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
+                      <v-text-field v-model="editedItem.protein" label="Stock"></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -54,8 +85,8 @@
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                <v-btn color="blue darken-1" text @click="close">Stornieren</v-btn>
+                <v-btn color="blue darken-1" text @click="save">Sparen</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -121,6 +152,10 @@ export default {
             text: 'Date',
             value: 'date'
           },
+          {
+            text: 'Options',
+            value: 'actions'
+          },
         ],
         data: [
           {
@@ -162,6 +197,10 @@ export default {
         ]
       },
 
+      categories: [],
+      variations: [],
+      attributes: [],
+
       dialog: false,
       headers: [
         {
@@ -201,7 +240,7 @@ export default {
 
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+      return this.editedIndex === -1 ? 'Neues Produkt' : 'Produkt Bearbeiten'
     },
   },
 
@@ -292,13 +331,13 @@ export default {
     },
 
     editItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.table.data.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
     deleteItem (item) {
-      const index = this.desserts.indexOf(item)
+      const index = this.table.data.indexOf(item)
       confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
     },
 
@@ -312,9 +351,9 @@ export default {
 
     save () {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        Object.assign(this.table.data[this.editedIndex], this.editedItem)
       } else {
-        this.desserts.push(this.editedItem)
+        this.table.data.push(this.editedItem)
       }
       this.close()
     },
