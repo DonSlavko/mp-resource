@@ -49,7 +49,7 @@
 
                                         <v-col cols="12" sm="6" md="6">
                                             <v-select
-                                                v-model="editedItem.category"
+                                                v-model="editedItem.category_id"
                                                 :items="categories"
                                                 name="category"
                                                 label="Kategorie"
@@ -58,7 +58,7 @@
 
                                         <v-col cols="12" md="6">
                                             <v-select
-                                                v-model="editedItem.variation"
+                                                v-model="editedItem.variation_id"
                                                 :items="variations"
                                                 name="variation"
                                                 label="Variation"
@@ -164,7 +164,7 @@ export default {
                     },
                     {
                         text: 'Category',
-                        value: 'category',
+                        value: 'category.name',
                         sortable: false,
                     },
                     {
@@ -176,9 +176,7 @@ export default {
                         value: 'actions'
                     },
                 ],
-                data: [
-
-                ]
+                data: [],
             },
 
             categories: [],
@@ -191,9 +189,9 @@ export default {
 
             editedItem: {
                 name: '',
-                category: '',
+                category_id: null,
                 description: '',
-                variation: null,
+                variation_id: null,
                 attribute: {
                     ids: [],
                     values: []
@@ -205,9 +203,9 @@ export default {
 
             defaultItem: {
                 name: '',
-                category: '',
+                category_id: null,
                 description: '',
-                variation: null,
+                variation_id: null,
                 attribute: {
                     ids: [],
                     values: []

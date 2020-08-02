@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Attribute;
+use App\AttributeValue;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
@@ -17,7 +19,16 @@ class ProductController extends Controller
     {
         $products = Product::all()
             ->load(['variation', 'attributes', 'attributeValues', 'category'])
-            ->first()->toArray();
+            ->map(function($prod) {
+                $prod->attribute = [
+                    'ids' => $prod->attributes->pluck('id'),
+                    'values' => $prod->attributeValues->pluck('id'),
+                ];
+                $prod->stock = $prod->stock_quantity;
+
+                return $prod;
+            })
+            ->toArray();
 
         return response(['data' => $products]);
     }
@@ -30,9 +41,24 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $attributes = $request->get('attribute');
 
-        return dd($data);
+        $data = [
+            'name' => $request->get('name'),
+            'category_id' => $request->get('category_id'),
+            'description' => $request->get('description'),
+            'variation_id' => $request->get('variation_id'),
+            'price' => $request->get('price'),
+            'stock_quantity' => $request->get('stock'),
+            'sku' => $request->get('sku'),
+        ];
+
+        $product = Product::create($data);
+
+        $product->attributes()->attach($attributes['ids']);
+        $product->attributeValues()->attach($attributes['values']);
+
+        return response('Product created');
     }
 
     /**
@@ -53,9 +79,29 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $attributes = $request->get('attribute');
+
+        $data = [
+            'name' => $request->get('name'),
+            'category_id' => $request->get('category_id'),
+            'description' => $request->get('description'),
+            'variation_id' => $request->get('variation_id'),
+            'price' => $request->get('price'),
+            'stock_quantity' => $request->get('stock'),
+            'sku' => $request->get('sku'),
+        ];
+
+        $product->update($data);
+
+        $product->attributes()->detach($product->attributes->pluck('id'));
+        $product->attributeValues()->detach($product->attributeValues->pluck('id'));
+
+        $product->attributes()->attach($attributes['ids']);
+        $product->attributeValues()->attach($attributes['values']);
+
+        return response('Product updated');
     }
 
     /**
@@ -64,8 +110,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->attributes()->detach($product->attributes->pluck('id'));
+        $product->attributeValues()->detach($product->attributeValues->pluck('id'));
+
+        $product->delete();
+
+        return response('Product deleted');
     }
 }
