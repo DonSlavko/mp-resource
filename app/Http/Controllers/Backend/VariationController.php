@@ -41,9 +41,11 @@ class VariationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Variation $variation)
     {
-        //
+        $variation = $variation->load('variationValues')->toArray();
+
+        return response(['data' => $variation]);
     }
 
     /**
@@ -55,7 +57,10 @@ class VariationController extends Controller
      */
     public function update(Request $request, Variation $variation)
     {
-        $data = $request->all();
+        $data = [
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+        ];
 
         $variation->update($data);
 

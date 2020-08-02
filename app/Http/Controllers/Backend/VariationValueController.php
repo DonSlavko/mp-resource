@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\Admin;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Variation;
+use App\VariationValue;
 use Illuminate\Http\Request;
 
-class VariationController extends Controller
+class VariationValueController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,16 +14,6 @@ class VariationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('admin.variation.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
     {
         //
     }
@@ -36,7 +26,11 @@ class VariationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        VariationValue::create($data);
+
+        return response(['Value created']);
     }
 
     /**
@@ -45,18 +39,7 @@ class VariationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Variation $variation)
-    {
-        return view('admin.variation.show')->with(['id' => $variation->id]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function show($id)
     {
         //
     }
@@ -68,9 +51,16 @@ class VariationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, VariationValue $variationValue)
     {
-        //
+        $data = [
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+        ];
+
+        $variationValue->update($data);
+
+        return response(['Value updated']);
     }
 
     /**
@@ -79,8 +69,10 @@ class VariationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(VariationValue $variationValue)
     {
-        //
+        $variationValue->delete();
+
+        return response(['Value delete']);
     }
 }

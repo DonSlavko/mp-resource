@@ -32,12 +32,14 @@
 
               <v-card-text>
                 <v-container>
+                  <v-form ref="modal">
                   <v-row>
                     <v-col cols="12">
-                      <v-text-field v-model="editedItem.name" label="Category Name"></v-text-field>
+                      <v-text-field :rules="rules" v-model="editedItem.name" label="Category Name"></v-text-field>
                     </v-col>
                     <v-col cols="12">
                       <v-textarea
+                          :rules="rules"
                           v-model="editedItem.description"
                           solo
                           name="input-7-4"
@@ -45,6 +47,7 @@
                       ></v-textarea>
                     </v-col>
                   </v-row>
+                  </v-form>
                 </v-container>
               </v-card-text>
 
@@ -126,13 +129,15 @@ export default {
         name: '',
         description: '',
       },
-
+      rules: [
+        value => !!value || "This field can't be empty"
+      ]
     }
   },
 
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+      return this.editedIndex === -1 ? 'New Category' : 'Edit Category'
     },
   },
 
@@ -178,17 +183,19 @@ export default {
     },
 
     save () {
-      if (this.editedIndex > -1) {
-        axios.patch('/back/categories/'+this.editedItem.id, this.editedItem).then(response => {
-          this.initialize();
-        })
-      } else {
-        axios.post('/back/categories', this.editedItem).then(response => {
-          this.initialize();
-        })
+      if (this.$refs.modal.validate()) {
+        if (this.editedIndex > -1) {
+          axios.patch('/back/categories/' + this.editedItem.id, this.editedItem).then(response => {
+            this.initialize();
+          })
+        } else {
+          axios.post('/back/categories', this.editedItem).then(response => {
+            this.initialize();
+          })
+        }
+        this.close()
       }
-      this.close()
-    },
+    }
   },
 }
 </script>

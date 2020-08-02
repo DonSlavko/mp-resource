@@ -29,14 +29,14 @@
 
                     <v-spacer></v-spacer>
 
-                    <v-btn href="{{ route('admin.produkte.index') }}" text class="text--secondary">
-                        Produkte</v-btn>
-                    <v-btn href="{{ route('admin.kategorie.index') }}" text class="text--secondary">
-                        Kategorie</v-btn>
-                    <v-btn href="{{ route('admin.attribut.index') }}" text class="text--secondary">
-                        Attribut</v-btn>
-                    <v-btn href="{{ route('admin.benutzer.index') }}" text class="text--secondary">
-                        Benutzer</v-btn>
+                    <v-btn href="{{ route('admin.product.index') }}" text class="text--secondary">
+                        Product</v-btn>
+                    <v-btn href="{{ route('admin.category.index') }}" text class="text--secondary">
+                        Category</v-btn>
+                    <v-btn href="{{ route('admin.attribute.index') }}" text class="text--secondary">
+                        Attribute</v-btn>
+                    <v-btn href="{{ route('admin.user.index') }}" text class="text--secondary">
+                        User</v-btn>
                     <v-btn href="{{ route('admin.variation.index') }}" text class="text--secondary">
                         Variation</v-btn>
                 </v-row>

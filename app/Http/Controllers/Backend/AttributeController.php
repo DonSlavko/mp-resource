@@ -41,9 +41,11 @@ class AttributeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Attribute $attribute)
     {
-        //
+        $attribute = $attribute->load('attributeValues')->toArray();
+
+        return response(['data' => $attribute]);
     }
 
     /**
@@ -55,7 +57,10 @@ class AttributeController extends Controller
      */
     public function update(Request $request, Attribute $attribute)
     {
-        $data = $request->all();
+        $data = [
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+        ];
 
         $attribute->update($data);
 

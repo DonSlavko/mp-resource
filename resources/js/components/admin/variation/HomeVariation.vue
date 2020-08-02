@@ -1,14 +1,14 @@
 <template>
   <v-container>
     <v-data-table show-select
-                  :headers="headers"
-                  :items="desserts"
+                  :headers="table.headers"
+                  :items="table.data"
                   :items-per-page="5"
                   class="elevation-1"
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title>My CRUD</v-toolbar-title>
+          <v-toolbar-title>Variation</v-toolbar-title>
           <v-divider
               class="mx-4"
               inset
@@ -23,7 +23,7 @@
                   class="mb-2"
                   v-bind="attrs"
                   v-on="on"
-              >New Item</v-btn>
+              >New Variation</v-btn>
             </template>
             <v-card>
               <v-card-title>
@@ -32,23 +32,22 @@
 
               <v-card-text>
                 <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
-                    </v-col>
-                  </v-row>
+                  <v-form ref="modal">
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field :rules="rules" v-model="editedItem.name" label="Variation name"></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-textarea
+                            :rules="rules"
+                            v-model="editedItem.description"
+                            solo
+                            name="input-7-4"
+                            label="Description"
+                        ></v-textarea>
+                      </v-col>
+                    </v-row>
+                  </v-form>
                 </v-container>
               </v-card-text>
 
@@ -62,6 +61,15 @@
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
+        <v-btn
+            small
+            class="mr-2"
+            :href="'variation/'+item.id"
+            icon
+        >
+          <v-icon small
+          >mdi-magnify</v-icon>
+        </v-btn>
         <v-icon
             small
             class="mr-2"
@@ -100,108 +108,39 @@ export default {
             value: 'name'
           },
           {
-            text: 'SKU',
-            value: 'sku'
+            text: 'Description',
+            value: 'description'
           },
           {
-            text: 'Stock',
-            value: 'stock_quantity',
-            sortable: false,
-          },
-          {
-            text: 'Price',
-            value: 'price'
-          },
-          {
-            text: 'Category',
-            value: 'category',
-            sortable: false,
-          },
-          {
-            text: 'Date',
-            value: 'date'
-          },
+            text: 'Actions',
+            value: 'actions'
+          }
         ],
-        data: [
-          {
-            id: 1,
-            name: 'MPRCanna Sedation',
-            sku: null,
-            stock_quantity: 500,
-            price: '63.00 €',
-            category: null,
-            date: '2020/01/10',
-          },
-          {
-            id: 1,
-            name: 'MPRCanna Sedation',
-            sku: null,
-            stock_quantity: 500,
-            price: '63.00 €',
-            category: null,
-            date: '2020/01/10',
-          },
-          {
-            id: 1,
-            name: 'MPRCanna Sedation',
-            sku: null,
-            stock_quantity: 500,
-            price: '63.00 €',
-            category: null,
-            date: '2020/01/10',
-          },
-          {
-            id: 1,
-            name: 'MPRCanna Sedation',
-            sku: null,
-            stock_quantity: 500,
-            price: '63.00 €',
-            category: null,
-            date: '2020/01/10',
-          },
-        ]
+        data: []
       },
 
       dialog: false,
-      headers: [
-        {
-          text: 'Dessert (100g serving)',
-          align: 'start',
-          sortable: false,
-          value: 'name',
-        },
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
-        { text: 'Actions', value: 'actions', sortable: false },
-      ],
-      desserts: [],
-
       editedIndex: -1,
 
       editedItem: {
         name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+        description: '',
       },
 
       defaultItem: {
         name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+        description: '',
       },
 
+      rules: [
+          value => !!value || "This field can't be empty"
+      ]
     }
   },
 
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+      return this.editedIndex === -1 ? 'New Variation' : 'Edit Variation'
     },
   },
 
@@ -217,89 +156,25 @@ export default {
 
   methods: {
     initialize () {
-      this.desserts = [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-        },
-      ]
+      axios.get('/back/variations').then(response => {
+        this.table.data = response.data.data;
+      }).catch(error => {
+        console.log(error.message);
+      });
     },
 
     editItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.table.data.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
     deleteItem (item) {
-      const index = this.desserts.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+      const index = this.table.data.indexOf(item)
+      confirm('Are you sure you want to delete this item?') &&
+      axios.delete('/back/variations/'+item.id).then(respones => {
+        this.initialize();
+      });
     },
 
     close () {
@@ -311,12 +186,18 @@ export default {
     },
 
     save () {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      } else {
-        this.desserts.push(this.editedItem)
+      if (this.$refs.modal.validate()) {
+        if (this.editedIndex > -1) {
+          axios.patch('/back/variations/' + this.editedItem.id, this.editedItem).then(response => {
+            this.initialize();
+          })
+        } else {
+          axios.post('/back/variations', this.editedItem).then(response => {
+            this.initialize();
+          })
+        }
+        this.close()
       }
-      this.close()
     },
   },
 }
