@@ -14,7 +14,7 @@ Route::namespace('Frontend')->group(function () {
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function () {
+//Route::middleware(['auth'])->group(function () {
 
     Route::namespace('Frontend')->name('user.')->group(function () {
         Route::get('neuigkeiten', 'UserController@news')->name('news');
@@ -41,4 +41,4 @@ Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
 });
 
 
-});
+//});
