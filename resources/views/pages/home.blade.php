@@ -57,67 +57,47 @@
 
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-web</v-icon>
                     <h3>Marktorientiert</h3>
 
                     <p>Wir passen uns kontinuirlich an die Bedürfnisse des Markets an.</p>
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-chart-pie</v-icon>
                     <h3>Abdeckung der Versorgungslücken</h3>
 
                     <p>Versorgungslücken werden von uns bestmöglich abgedeckt.</p>
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-account-plus</v-icon>
 
                     <h3>Patientenorientiert</h3>
                     <p>Einfuhr von Sorten für die am häufigsten diagnostizierten Krankheitssymptome.</p>
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col  cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-clock-time-three</v-icon>
 
                     <h3> Zeitnahe Verfügbarkeit</h3>
                     <p>Nach Absprache mit den involvierten Behörden und Überwachungsorganen wird der Einfuhrprozess bestmöglichist standardisiert, um eine dauerhafte und zeitnahe Verfügbarkeit zu gewährleisten.</p>
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-check</v-icon>
 
                     <h3>Pharmazeutische Qualität</h3>
                     <p>Die Reinheit (Qualität nach DAB) der medizinischen Cannabisprodukte steht bei uns im Mittelpunkt.</p>
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-account-multiple</v-icon>
 
                     <h3>Gute Zusammenarbeit</h3>
                     <p>Durch die Zusammenarbeit mit mehreren EU-GMP zertifizierten Herstellern, werden wir ein breites Sortiment an medizinischen Cannabisprodukten anbieten.</p>
                 </v-col>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </v-row>
         </section>
 
