@@ -58,48 +58,65 @@
                 </v-col>
 
                 <v-col cols="4" class="text-center">
-                    <v-icon x-large color="primary" class="mb-6">mdi-leaf</v-icon>
-                    <h3>Work-Life Balance</h3>
+                    <v-icon x-large color="primary" class="mb-6">mdi-web</v-icon>
+                    <h3>Marktorientiert</h3>
 
-                    <p>Weniger Stress und mehr Zeit für Familie oder Freizeitaktivitäten.</p>
+                    <p>Wir passen uns kontinuirlich an die Bedürfnisse des Markets an.</p>
                 </v-col>
 
                 <v-col cols="4" class="text-center">
-                    <v-icon x-large color="primary" class="mb-6">mdi-home</v-icon>
-                    <h3>Home-Office</h3>
+                    <v-icon x-large color="primary" class="mb-6">mdi-chart-pie</v-icon>
+                    <h3>Abdeckung der Versorgungslücken</h3>
 
-                    <p>Du kannst bis zu zwei mal die Woche vom
-                        Home-Office arbeiten.</p>
+                    <p>Versorgungslücken werden von uns bestmöglich abgedeckt.</p>
                 </v-col>
 
                 <v-col cols="4" class="text-center">
-                    <v-icon x-large color="primary" class="mb-6">mdi-clock-time-three-outline</v-icon>
+                    <v-icon x-large color="primary" class="mb-6">mdi-account-plus</v-icon>
 
-                    <h3>Flexible Arbeitszeiten</h3>
-                    <p>Gestalte flexibel deine Arbeitszeiten passend
-                        zu deinen Aufgaben.</p>
+                    <h3>Patientenorientiert</h3>
+                    <p>Einfuhr von Sorten für die am häufigsten diagnostizierten Krankheitssymptome.</p>
                 </v-col>
 
                 <v-col cols="4" class="text-center">
-                    <v-icon x-large color="primary" class="mb-6">mdi-star</v-icon>
+                    <v-icon x-large color="primary" class="mb-6">mdi-clock-time-three</v-icon>
 
-                    <h3> Kostenlose Snacks & Getränke</h3>
-                    <p>Wir stellen euch täglich Obst, Kaffeevariationen und Wasser zur Verfügung.</p>
+                    <h3> Zeitnahe Verfügbarkeit</h3>
+                    <p>Nach Absprache mit den involvierten Behörden und Überwachungsorganen wird der Einfuhrprozess bestmöglichist standardisiert, um eine dauerhafte und zeitnahe Verfügbarkeit zu gewährleisten.</p>
                 </v-col>
 
                 <v-col cols="4" class="text-center">
-                    <v-icon x-large color="primary" class="mb-6">mdi-rocket-launch</v-icon>
+                    <v-icon x-large color="primary" class="mb-6">mdi-check</v-icon>
 
-                    <h3>Mobilität</h3>
-                    <p>Jobtickets und Bahnvorteilskarten unterstützen Sie bei Ihrer Mobilität.</p>
+                    <h3>Pharmazeutische Qualität</h3>
+                    <p>Die Reinheit (Qualität nach DAB) der medizinischen Cannabisprodukte steht bei uns im Mittelpunkt.</p>
                 </v-col>
 
                 <v-col cols="4" class="text-center">
-                    <v-icon x-large color="primary" class="mb-6">mdi-presentation</v-icon>
+                    <v-icon x-large color="primary" class="mb-6">mdi-account-multiple</v-icon>
 
-                    <h3>Weiterbildung</h3>
-                    <p>Sie werden branchenspezifisch durch Schulungen, Seminare und Kurse zusätzlich gefördert.</p>
+                    <h3>Gute Zusammenarbeit</h3>
+                    <p>Durch die Zusammenarbeit mit mehreren EU-GMP zertifizierten Herstellern, werden wir ein breites Sortiment an medizinischen Cannabisprodukten anbieten.</p>
                 </v-col>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             </v-row>
         </section>
