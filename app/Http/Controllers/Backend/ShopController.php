@@ -19,7 +19,8 @@ class ShopController extends Controller
     }
 
     public function show(Product $product) {
-        $product = new ProductResource($product);
+
+        $product = new ProductResource($product->load(['variation.variationValues']));
 
         return response($product);
     }

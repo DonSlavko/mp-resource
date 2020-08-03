@@ -49,7 +49,8 @@ Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
     Route::resource('attributes', 'AttributeController');
     Route::resource('attribute-values', 'AttributeValueController');
     Route::resource('products', 'ProductController');
-    Route::resource('shop', 'ShopController')->only(['index']);
+    Route::get('shop', 'ShopController@index');
+    Route::get('shop/{product}', 'ShopController@show');
 });
 
 

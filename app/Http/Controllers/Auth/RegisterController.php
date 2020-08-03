@@ -107,11 +107,15 @@ class RegisterController extends Controller
             'subscribed' => $data['subscribe'] ? 1 : 0,
         ]);
 
-        $user->addMedia($data['file1']->path())->toMediaCollection('upload_files');
-        $user->addMedia($data['file2']->path())->toMediaCollection('upload_files');
-        $user->addMedia($data['file3']->path())->toMediaCollection('upload_files');
-
-        return dd($user);
+        $user->addMedia($data['file1']->path())
+            ->setFileName($data['file1']->getClientOriginalName())
+            ->toMediaCollection('upload_files');
+        $user->addMedia($data['file2']->path())
+            ->setFileName($data['file2']->getClientOriginalName())
+            ->toMediaCollection('upload_files');
+        $user->addMedia($data['file3']->path())
+            ->setFileName($data['file3']->getClientOriginalName())
+            ->toMediaCollection('upload_files');
 
         return $user;
     }
