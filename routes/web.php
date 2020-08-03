@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 
+Route::get('/home', function () {
+    return view('pages.home');
+});
+
 Route::get('/agb', function () {
     return view('includes.agb');
 });
@@ -22,9 +26,9 @@ Route::namespace('Frontend')->group(function () {
     Route::get('kontakt', 'LandingController@contact')->name('contact');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-//Route::middleware(['auth'])->group(function () {
+//Route::middleware(['auth','verified'])->group(function () {
 
     Route::namespace('Frontend')->name('user.')->group(function () {
         Route::get('neuigkeiten', 'UserController@news')->name('news');
@@ -51,6 +55,8 @@ Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
     Route::resource('products', 'ProductController');
     Route::get('shop', 'ShopController@index');
     Route::get('shop/{product}', 'ShopController@show');
+    Route::post('users/{user}/activate', 'UserController@activate');
+    Route::post('users/{user}/deactivate', 'UserController@deactivate');
 });
 
 

@@ -3105,6 +3105,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HomeUser",
   data: function data() {
@@ -3144,30 +3150,7 @@ __webpack_require__.r(__webpack_exports__);
           value: 'activated',
           sortable: false
         }],
-        data: [{
-          id: 1,
-          username: 'Slavconi',
-          name: 'Slavco',
-          email: 'sl@example.com',
-          role: 'customer',
-          activated_at: null,
-          show_files: false,
-          file_1: {
-            name: 'fajl 1',
-            path: '/assdf/image.png'
-          },
-          file_2: {
-            name: 'fal2',
-            path: '/assdfe/image.png'
-          },
-          file_3: {
-            name: 'fajlic 3',
-            path: '/assdfw/image.png'
-          },
-          created_at: 234,
-          email_verified: 234,
-          status: 234
-        }]
+        data: []
       }
     };
   },
@@ -3189,7 +3172,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/back/users').then(function (response) {
-        console.log(response);
         _this.table.data = response.data.data.map(function (item) {
           var date = new Date(item.created_at);
           var year = date.getFullYear();
@@ -3205,10 +3187,14 @@ __webpack_require__.r(__webpack_exports__);
       item.show_files = !item.show_files;
     },
     activateAcc: function activateAcc(item) {
-      return item.activated_at = true;
+      axios.post('/back/users/' + item.id + '/activate').then(function (response) {
+        item.active = true;
+      });
     },
     deactivateAcc: function deactivateAcc(item) {
-      return item.activated_at = false;
+      axios.post('/back/users/' + item.id + '/deactivate').then(function (response) {
+        item.active = false;
+      });
     }
   }
 });
@@ -42323,11 +42309,22 @@ var render = function() {
             }
           },
           {
+            key: "item.email_verified",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                item.email_verified_at === null
+                  ? _c("p", [_vm._v("Unverified")])
+                  : _c("p", [_vm._v("Verified")])
+              ]
+            }
+          },
+          {
             key: "item.activated",
             fn: function(ref) {
               var item = ref.item
               return [
-                !item.activated_at
+                item.active
                   ? _c(
                       "v-btn",
                       {

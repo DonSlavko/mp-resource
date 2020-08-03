@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration
             $table->string('fax');
 
             $table->boolean('subscribed')->default(0)->nullable();
-            $table->timestamp('activated_at')->nullable();
+            $table->boolean('active')->default(0);
 
             $table->rememberToken();
             $table->timestamps();

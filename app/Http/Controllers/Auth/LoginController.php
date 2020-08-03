@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,11 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
+    protected function credentials(Request $request)
+    {
+        return [$this->username() => $request->{$this->username()}, 'password' => $request->password, 'active' => 1];
+    }
 
     protected function validateLogin(Request $request)
     {
@@ -42,7 +48,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/shop';
 
     /**
      * Create a new controller instance.
