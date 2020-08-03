@@ -177,7 +177,7 @@ export default {
           },
           {
             text: 'Date',
-            value: 'date'
+            value: 'created_at'
           },
           {
             text: 'Options',
@@ -251,7 +251,15 @@ export default {
   methods: {
     initialize() {
       axios.get('/back/products').then(response => {
-        this.table.data = response.data.data;
+        this.table.data = response.data.data.map(item => {
+                    let date = new Date(item.created_at);
+                    let year = date.getFullYear();
+                    let month = (1 + date.getMonth()).toString().padStart(2, '0');
+                    let day = date.getDate().toString().padStart(2, '0');
+
+                    item.created_at =  year + '/' + month + '/' + day;
+                    return item;
+                })
       }).catch(error => {
         console.log(error.message);
       });
