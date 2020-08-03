@@ -8,10 +8,10 @@
         <div
             style="z-index: 1; mix-blend-mode: normal; position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
         <v-row style="z-index: 100;"
-               align="center"
+               align="top"
                justify="center"
         >
-            <v-col class="text-center" style="color: #1b1b1b" cols="12">
+            <v-col class="text-center mt-16" style="color: #1b1b1b" cols="12">
                 <h1 class="text-h2 font-weight-bold mb-4">
                     Gesundheit ist die erste <br> Pflicht im Leben
                 </h1>
