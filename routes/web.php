@@ -9,13 +9,13 @@ Route::get('/home', function () {
 
 Route::get('/agb', function () {
     return view('includes.agb');
-});
+})->name('inc.agb');
 Route::get('/datenschutzerklaerung', function () {
     return view('includes.datenschutzerklaerung');
-});
+})->name('inc.dat');
 Route::get('/impressum', function () {
     return view('includes.impressum');
-});
+})->name('inc.imp');
 
 Route::namespace('Frontend')->group(function () {
     //Route::get('/', 'LandingController@home')->name('home');
