@@ -4294,6 +4294,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Product",
   props: {
@@ -44163,12 +44193,106 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("v-col", { attrs: { cols: "12", sm: "6", md: "7" } }, [
-            _vm._v("\n      product details\n    ")
+            _c(
+              "h2",
+              {
+                staticClass: "text-h6 mb-3",
+                staticStyle: { "text-transform": "uppercase" }
+              },
+              [_vm._v("Product Details")]
+            ),
+            _vm._v(" "),
+            _c("hr", {
+              staticStyle: {
+                background: "#efefef",
+                color: "rgba(68,68,68,1)",
+                height: "1px",
+                width: "80%",
+                border: "none"
+              }
+            }),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "Wir werden unmittelbar vor dem Eintreffen der Arznei bzw. vor Beginn des\n        Vorbestellungsprozesses, den Produktnamen inkl. Beschreibung veröffentlichen und Sie zeitnah über\n        unseren Newsletter benachrichtigen. Wir werden hier später das Wirkungsprofil einer gleichermaßen THC\n        und CBD-haltigen Cannabiskreuzung darstellen."
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "Das Wirkungsprofil richtet sich auf das Beruhigen der körperlichen Symptome wie z.B.\n        Muskelpasmen und Parkinson. CBD verstärkt zudem die schmerzstillenden Eigenschaften von THC."
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "Diese Cannabiskreuzungen werden deshalb von den Patienten für einen symptomlosen\n        Start am Morgen angewendet."
+              )
+            ]),
+            _vm._v(" "),
+            _c("b", [_vm._v("Importeur:")]),
+            _vm._v(" Medical Pharma Resource GmbH "),
+            _c("br"),
+            _vm._v(" "),
+            _c("b", [_vm._v("Hersteller:")]),
+            _vm._v(" #### #### "),
+            _c("br"),
+            _vm._v(" "),
+            _c("b", [_vm._v("Darreichungsform:")]),
+            _vm._v(" Cannabisblüten "),
+            _c("br"),
+            _vm._v(" "),
+            _c("b", [_vm._v("Genetik:")]),
+            _vm._v(" Indica Dominant Hybrid (Siehe Arzneibroschüre) "),
+            _c("br"),
+            _vm._v(" "),
+            _c("b", [_vm._v("Wirkstoffe:")]),
+            _vm._v(" 1:1 THC zu CBD-Anteile "),
+            _c("br"),
+            _vm._v(" "),
+            _c("b", [_vm._v("PZN:")]),
+            _vm._v("   5g ######## "),
+            _c("br"),
+            _vm._v(" "),
+            _c("b", [_vm._v("PZN:")]),
+            _vm._v(" 15g ######## "),
+            _c("br")
           ]),
           _vm._v(" "),
-          _c("v-col", { attrs: { cols: "12" } }, [
-            _vm._v("\n      pdf etc.\n    ")
-          ])
+          _c(
+            "v-col",
+            { attrs: { cols: "12" } },
+            [
+              [
+                _c(
+                  "div",
+                  { staticClass: "text-center" },
+                  [
+                    _vm._v("\n          Arzneibroschüre\n          "),
+                    _c(
+                      "v-btn",
+                      {
+                        staticClass: "ma-2",
+                        attrs: { outlined: "", color: "primary" }
+                      },
+                      [_vm._v("Download")]
+                    ),
+                    _vm._v("\n          Chargenanalyse\n          "),
+                    _c(
+                      "v-btn",
+                      {
+                        staticClass: "ma-2",
+                        attrs: { outlined: "", color: "primary" }
+                      },
+                      [_vm._v("Download")]
+                    )
+                  ],
+                  1
+                )
+              ]
+            ],
+            2
+          )
         ],
         1
       )
