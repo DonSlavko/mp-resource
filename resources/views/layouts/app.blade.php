@@ -53,6 +53,63 @@
             <v-main>
                 @yield('content')
             </v-main>
+            <div style="align-items: center; min-height: 6px; flex-direction: row; flex-wrap: nowrap; display: flex;">
+                <div style="width: 25%; min-height: 6px; align-items: stretch; display: flex; background: rgba(153,198,86,1);"></div>
+                <div style="width: 25%; min-height: 6px; align-items: stretch; display: flex; background-color: rgba(134,175,74,1);"></div>
+                <div style="width: 25%; min-height: 6px; align-items: stretch; display: flex; background-color: rgba(115,150,64,1);"></div>
+                <div style="width: 25%; min-height: 6px; align-items: stretch; display: flex; background-color: rgba(82,108,46,1);"></div>
+            </div>
+            <v-footer
+                    padless
+            >
+
+                <v-row
+                        justify="center"
+                        no-gutters
+                >
+                    <v-col offset="1" cols="3">
+                        <v-img class="mt-2" max-width="162" src="{{ asset('storage/Logo-Original.png') }}"></v-img>
+                    </v-col>
+                    <v-col cols="5">
+                        <v-btn href="{{ route('user.news') }}"
+                               text
+                               rounded>
+                            Neuigkeiten</v-btn>
+                        <v-btn href="{{ route('user.shop') }}"
+                               text
+                               rounded>
+                            Produkte</v-btn>
+                        <v-btn href="{{ route('user.preorder') }}"
+                               text
+                               rounded>
+                            Vorbestellungen</v-btn>
+                        <v-btn href="/admin/product"
+                               text
+                               rounded>
+                            Admin</v-btn>
+                        <v-divider></v-divider>
+                        <v-btn href="{{ route('inc.agb') }}"
+                               text
+                               rounded>
+                            AGB</v-btn>
+                        <v-btn href="{{ route('inc.dat') }}"
+                               text
+                               rounded>
+                            Datenschutzerklaerung</v-btn>
+                        <v-btn href="{{ route('inc.imp') }}"
+                               text
+                               rounded>
+                            Impressum</v-btn>
+                    </v-col>
+                    <v-col cols="3"></v-col>
+                    <v-col
+                            class=" py-4 text-center"
+                            cols="12"
+                    >
+                        <p>Copyright©2019-2020, Medical Pharma Resource GmbH</p>
+                    </v-col>
+                </v-row>
+            </v-footer>
         </v-app>
     </div>
 
