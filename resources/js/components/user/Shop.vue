@@ -11,7 +11,7 @@
               height="450px"
               src="storage/MPR-Canna-Insomnia-5-Gramm-500x601.png"
           >
-            <v-card-title>MPRCanna® Insomnia </v-card-title>
+            <v-card-title>MPRCanna® Insomnia</v-card-title>
           </v-img>
 
           <v-card-subtitle class="pb-0">N/A €</v-card-subtitle>
@@ -24,12 +24,14 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -57,12 +59,14 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -89,12 +93,14 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -121,12 +127,14 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -153,12 +161,14 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -185,12 +195,15 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -217,12 +230,14 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -249,12 +264,16 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+
+
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -281,12 +300,16 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+
+
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -313,12 +336,16 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+
+
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -345,12 +372,16 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+
+
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -377,12 +408,16 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+
+
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -409,12 +444,16 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+
+
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -441,12 +480,16 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+
+
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -473,12 +516,16 @@
               Ausführung wählen
             </v-btn>
 
-            <v-btn
-                color="orange"
-                text
-            >
-              Details
-            </v-btn>
+
+
+            <v-row justify="end" class="pr-3">
+              <v-btn
+                  color="orange"
+                  text
+              >
+                Details
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-col>
