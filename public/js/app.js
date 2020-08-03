@@ -2750,6 +2750,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HomeProduct",
   data: function data() {
@@ -2800,7 +2841,10 @@ __webpack_require__.r(__webpack_exports__);
         },
         price: 0,
         stock: 0,
-        sku: null
+        sku: null,
+        images: null,
+        brochure: null,
+        analysis: null
       },
       defaultItem: {
         name: '',
@@ -2813,7 +2857,10 @@ __webpack_require__.r(__webpack_exports__);
         },
         price: 0,
         stock: 0,
-        sku: null
+        sku: null,
+        images: null,
+        brochure: null,
+        analysis: null
       },
       rules: [function (value) {
         return !!value || "This field can't be empty";
@@ -2942,16 +2989,64 @@ __webpack_require__.r(__webpack_exports__);
         _this7.editedIndex = -1;
       });
     },
+    formData: function formData() {
+      var form = new FormData();
+      form.append("name", this.editedItem.name);
+      form.append("description", this.editedItem.description);
+      form.append("category_id", this.editedItem.category_id);
+      form.append("variation_id", this.editedItem.variation_id);
+
+      if (this.editedItem.attribute.ids.length) {
+        this.editedItem.attribute.ids.forEach(function (id, index) {
+          form.append("attribute[ids][" + index + "]", id);
+        });
+      }
+
+      if (this.editedItem.attribute.values.length) {
+        this.editedItem.attribute.values.forEach(function (values, index) {
+          form.append("attribute[values][" + index + "]", values);
+        });
+      }
+
+      form.append("sku", this.editedItem.sku);
+      form.append("price", this.editedItem.price);
+      form.append("stock", this.editedItem.stock);
+
+      if (this.editedItem.images.length) {
+        for (var i = 0; i < this.editedItem.images.length; i++) {
+          var image = this.editedItem.images[i];
+          form.append('images[' + i + ']', image, image.name);
+        }
+      }
+
+      if (this.editedItem.brochure) {
+        form.append("brochure", this.editedItem.brochure, this.editedItem.brochure.name);
+      }
+
+      if (this.editedItem.analysis) {
+        form.append("analysis", this.editedItem.analysis, this.editedItem.analysis.name);
+      }
+
+      return form;
+    },
     save: function save() {
       var _this8 = this;
 
       if (this.$refs.modal.validate()) {
         if (this.editedIndex > -1) {
-          axios.patch('/back/products/' + this.editedItem.id, this.editedItem).then(function (response) {
+          axios.patch('/back/products/' + this.editedItem.id, this.formData(), {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(function (response) {
             _this8.initialize();
           });
         } else {
-          axios.post('/back/products', this.editedItem).then(function (response) {
+          axios.post('/back/products', this.formData(), {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(function (response) {
             _this8.initialize();
           });
         }
@@ -4166,6 +4261,73 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/Product.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/Product.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Product",
+  props: {
+    item_id: null
+  },
+  data: function data() {
+    return {
+      items: [{
+        src: '/storage/Fortis-6-500x601.png'
+      }, {
+        src: '/storage/MPR-Canna-Fortis-5-Gramm-500x601.png'
+      }, {
+        src: '/storage/Sedation2-500x601.png'
+      }, {
+        src: '/storage/Vesper-7-500x601.png'
+      }]
+    };
+  },
+  created: function created() {
+    this.initialize();
+  },
+  methods: {
+    initialize: function initialize() {
+      axios.get('/back/shop/' + this.item_id).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error.message);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/Shop.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/Shop.vue?vue&type=script&lang=js& ***!
@@ -4217,461 +4379,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Shop",
+  data: function data() {
+    return {
+      items: []
+    };
+  },
   created: function created() {
     this.initialize();
   },
   methods: {
     initialize: function initialize() {
+      var _this = this;
+
       axios.get('/back/shop').then(function (response) {
-        console.log(response.data);
+        _this.items = response.data;
       })["catch"](function (error) {
         console.log(error.message);
       });
@@ -41846,7 +41569,11 @@ var render = function() {
                                     ),
                                     on
                                   ),
-                                  [_vm._v("New Product\n            ")]
+                                  [
+                                    _vm._v(
+                                      "New Product\n                        "
+                                    )
+                                  ]
                                 )
                               ]
                             }
@@ -41891,7 +41618,7 @@ var render = function() {
                                                 _c("v-text-field", {
                                                   attrs: {
                                                     rules: _vm.rules,
-                                                    label: "Produktname"
+                                                    label: "Name"
                                                   },
                                                   model: {
                                                     value: _vm.editedItem.name,
@@ -41919,7 +41646,7 @@ var render = function() {
                                                     rules: _vm.rules,
                                                     solo: "",
                                                     name: "input-7-4",
-                                                    label: "Beschreibung"
+                                                    label: "Description"
                                                   },
                                                   model: {
                                                     value:
@@ -41942,6 +41669,41 @@ var render = function() {
                                             _vm._v(" "),
                                             _c(
                                               "v-col",
+                                              { attrs: { cols: "12" } },
+                                              [
+                                                _c("v-file-input", {
+                                                  attrs: {
+                                                    accept:
+                                                      "image/png, image/jpeg",
+                                                    label:
+                                                      "Select product images",
+                                                    "prepend-icon": "mdi-image",
+                                                    outlined: "",
+                                                    "show-size": 1000,
+                                                    dense: "",
+                                                    multiple: "",
+                                                    clearable: ""
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.editedItem.images,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "images",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.images"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-col",
                                               {
                                                 attrs: {
                                                   cols: "12",
@@ -41955,7 +41717,7 @@ var render = function() {
                                                     rules: _vm.rules,
                                                     items: _vm.categories,
                                                     name: "category",
-                                                    label: "Kategorie",
+                                                    label: "Category",
                                                     outlined: "",
                                                     dense: ""
                                                   },
@@ -42218,6 +41980,78 @@ var render = function() {
                                                 })
                                               ],
                                               1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-col",
+                                              {
+                                                attrs: { cols: "12", md: "6" }
+                                              },
+                                              [
+                                                _c("v-file-input", {
+                                                  attrs: {
+                                                    accept:
+                                                      "image/png, image/jpeg, application/pdf",
+                                                    label: "Arzneibroschüre",
+                                                    "prepend-icon":
+                                                      "mdi-paperclip",
+                                                    outlined: "",
+                                                    "show-size": 1000,
+                                                    dense: "",
+                                                    clearable: ""
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.editedItem.brochure,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "brochure",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.brochure"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-col",
+                                              {
+                                                attrs: { cols: "12", md: "6" }
+                                              },
+                                              [
+                                                _c("v-file-input", {
+                                                  attrs: {
+                                                    accept:
+                                                      "image/png, image/jpeg, application/pdf",
+                                                    label: "Chargenanalyse",
+                                                    "prepend-icon":
+                                                      "mdi-paperclip",
+                                                    outlined: "",
+                                                    "show-size": 1000,
+                                                    dense: "",
+                                                    clearable: ""
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.editedItem.analysis,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "analysis",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.analysis"
+                                                  }
+                                                })
+                                              ],
+                                              1
                                             )
                                           ],
                                           1
@@ -42286,7 +42120,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("\n        mdi-pencil\n      ")]
+                  [_vm._v("\n                mdi-pencil\n            ")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -42299,7 +42133,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("\n        mdi-delete\n      ")]
+                  [_vm._v("\n                mdi-delete\n            ")]
                 )
               ]
             }
@@ -44288,6 +44122,67 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/Product.vue?vue&type=template&id=4d8af654&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/Product.vue?vue&type=template&id=4d8af654& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-container",
+    [
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "12", sm: "6", md: "5" } },
+            [
+              _c(
+                "v-carousel",
+                { attrs: { "hide-delimiters": "" } },
+                _vm._l(_vm.items, function(item, i) {
+                  return _c("v-carousel-item", {
+                    key: i,
+                    attrs: { src: item.src }
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-col", { attrs: { cols: "12", sm: "6", md: "7" } }, [
+            _vm._v("\n      product details\n    ")
+          ]),
+          _vm._v(" "),
+          _c("v-col", { attrs: { cols: "12" } }, [
+            _vm._v("\n      pdf etc.\n    ")
+          ])
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/Shop.vue?vue&type=template&id=238fd81f&":
 /*!************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/Shop.vue?vue&type=template&id=238fd81f& ***!
@@ -44308,8 +44203,8 @@ var render = function() {
     [
       _c(
         "v-row",
-        [
-          _c(
+        _vm._l(_vm.items, function(item) {
+          return _c(
             "v-col",
             { attrs: { cols: "12", sm: "6", md: "4" } },
             [
@@ -44317,21 +44212,20 @@ var render = function() {
                 "v-card",
                 { staticClass: "mx-auto", attrs: { "max-width": "400" } },
                 [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/MPR-Canna-Insomnia-5-Gramm-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Insomnia")])],
-                    1
-                  ),
+                  item.images.length > 0
+                    ? _c(
+                        "v-img",
+                        {
+                          staticClass: "black--text align-end",
+                          attrs: { height: "450px", src: item.images[0].path }
+                        },
+                        [_c("v-card-title", [_vm._v(_vm._s(item.name))])],
+                        1
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
+                    _vm._v(_vm._s(item.price) + " €")
                   ]),
                   _vm._v(" "),
                   _c(
@@ -44343,697 +44237,24 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/Insomnia-1-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Insomnia")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/MPR-Canna-Levatio-5-Gramm-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Levatio")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/Levatio-4-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Levatio")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/MPR-Canna-Levatio-30-Stk.-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Levatio")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/Fortis-6-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Fortis")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/MPR-Canna-Fortis-5-Gramm-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Fortis")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/MPR-Canna-Fortis-30-Stk.-1-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Fortis")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/MPR-Canna-Vigor-5-Gramm-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Vigor")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/MPR-Canna-Vesper-5-Gramm-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Vesper")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/Vesper-7-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Vesper")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/MPR-Canna-Vesper-30-Stk.-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Vesper")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/MPR-Canna-Mane-15-Gramm-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Mane")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/MPR-Canna-Luce-5-Gramm-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Luce")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto", attrs: { "max-width": "400" } },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "black--text align-end",
-                      attrs: {
-                        height: "450px",
-                        src: "storage/Sedation2-500x601.png"
-                      }
-                    },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Sedation")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-card-subtitle", { staticClass: "pb-0" }, [
-                    _vm._v("N/A €")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Ausführung wählen\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v(
-                          "\n                        Details\n                    "
-                        )
-                      ])
+                      _c(
+                        "v-row",
+                        { staticClass: "pr-3", attrs: { justify: "end" } },
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: {
+                                color: "orange",
+                                text: "",
+                                href: "/shop/product/" + item.id
+                              }
+                            },
+                            [_vm._v("\n            Details\n          ")]
+                          )
+                        ],
+                        1
+                      )
                     ],
                     1
                   )
@@ -45043,7 +44264,7 @@ var render = function() {
             ],
             1
           )
-        ],
+        }),
         1
       )
     ],
@@ -101112,6 +100333,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_variation_HomeVariation__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/variation/HomeVariation */ "./resources/js/components/admin/variation/HomeVariation.vue");
 /* harmony import */ var _components_admin_variation_ShowVariation__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/variation/ShowVariation */ "./resources/js/components/admin/variation/ShowVariation.vue");
 /* harmony import */ var _components_user_Shop__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/user/Shop */ "./resources/js/components/user/Shop.vue");
+/* harmony import */ var _components_user_Product__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/user/Product */ "./resources/js/components/user/Product.vue");
+
 
 
 
@@ -101133,6 +100356,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('home-user', _components_ad
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('home-variation', _components_admin_variation_HomeVariation__WEBPACK_IMPORTED_MODULE_8__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('show-variation', _components_admin_variation_ShowVariation__WEBPACK_IMPORTED_MODULE_9__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('shop', _components_user_Shop__WEBPACK_IMPORTED_MODULE_10__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('product', _components_user_Product__WEBPACK_IMPORTED_MODULE_11__["default"]);
 
 /***/ }),
 
@@ -101752,6 +100976,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Register_vue_vue_type_template_id_d4f9cbe2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Register_vue_vue_type_template_id_d4f9cbe2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/Product.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/user/Product.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Product_vue_vue_type_template_id_4d8af654___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Product.vue?vue&type=template&id=4d8af654& */ "./resources/js/components/user/Product.vue?vue&type=template&id=4d8af654&");
+/* harmony import */ var _Product_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Product.vue?vue&type=script&lang=js& */ "./resources/js/components/user/Product.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Product_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Product_vue_vue_type_template_id_4d8af654___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Product_vue_vue_type_template_id_4d8af654___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/Product.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/Product.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/user/Product.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Product_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Product.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/Product.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Product_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/Product.vue?vue&type=template&id=4d8af654&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/user/Product.vue?vue&type=template&id=4d8af654& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Product_vue_vue_type_template_id_4d8af654___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Product.vue?vue&type=template&id=4d8af654& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/Product.vue?vue&type=template&id=4d8af654&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Product_vue_vue_type_template_id_4d8af654___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Product_vue_vue_type_template_id_4d8af654___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

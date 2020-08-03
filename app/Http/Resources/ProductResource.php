@@ -29,6 +29,27 @@ class ProductResource extends JsonResource
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
 
+            'images' => $this->getMedia('images')->map(function ($image) {
+                return [
+                    'name' => $image->file_name,
+                    'path' => $image->getFullUrl()
+                ];
+            }),
+
+            'brochure' => $this->getMedia('brochure')->map(function ($image) {
+                return [
+                    'name' => $image->file_name,
+                    'path' => $image->getFullUrl()
+                ];
+            }),
+
+            'analysis' => $this->getMedia('analysis')->map(function ($image) {
+                return [
+                    'name' => $image->file_name,
+                    'path' => $image->getFullUrl()
+                ];
+            }),
+
             'category' => new CategoryResource($this->whenLoaded('category')),
             'variation' => new VariationResource($this->whenLoaded('variation')),
             'attributes' => AttributeResource::collection($this->whenLoaded('attributes')),

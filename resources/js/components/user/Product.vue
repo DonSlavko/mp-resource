@@ -48,5 +48,19 @@ export default {
       ],
     }
   },
+
+    created() {
+        this.initialize();
+    },
+
+    methods: {
+        initialize() {
+            axios.get('/back/shop/'+this.item_id).then(response => {
+                console.log(response.data);
+            }).catch(error => {
+                console.log(error.message);
+            });
+        },
+    }
 }
 </script>

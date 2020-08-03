@@ -43,6 +43,10 @@ class ProductController extends Controller
     {
         $attributes = $request->get('attribute');
 
+        $images = $request->file('images');
+        $brochure = $request->file('brochure');
+        $analysis = $request->file('analysis');
+
         $data = [
             'name' => $request->get('name'),
             'category_id' => $request->get('category_id'),
@@ -57,6 +61,25 @@ class ProductController extends Controller
 
         $product->attributes()->attach($attributes['ids']);
         $product->attributeValues()->attach($attributes['values']);
+
+        if ($brochure) {
+            $product->addMedia($brochure->path())
+                ->setFileName($brochure->getClientOriginalName())
+                ->toMediaCollection('brochure');
+        }
+
+        if ($analysis) {
+            $product->addMedia($analysis->path())
+                ->setFileName($analysis->getClientOriginalName())
+                ->toMediaCollection('analysis');
+        }
+
+        if ($images) {
+            foreach ($images as $image)
+            $product->addMedia($image->path())
+                ->setFileName($image->getClientOriginalName())
+                ->toMediaCollection('images');
+        }
 
         return response('Product created');
     }
@@ -81,6 +104,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+
         $attributes = $request->get('attribute');
 
         $data = [
