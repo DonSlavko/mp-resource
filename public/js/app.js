@@ -4664,7 +4664,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Shop"
+  name: "Shop",
+  created: function created() {
+    this.initialize();
+  },
+  methods: {
+    initialize: function initialize() {
+      axios.get('/back/shop').then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error.message);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -44314,7 +44326,7 @@ var render = function() {
                         src: "storage/MPR-Canna-Insomnia-5-Gramm-500x601.png"
                       }
                     },
-                    [_c("v-card-title", [_vm._v("MPRCanna® Insomnia ")])],
+                    [_c("v-card-title", [_vm._v("MPRCanna® Insomnia")])],
                     1
                   ),
                   _vm._v(" "),
@@ -44326,11 +44338,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44371,11 +44387,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44416,11 +44436,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44461,11 +44485,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44506,11 +44534,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44551,11 +44583,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44596,11 +44632,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44641,11 +44681,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44686,11 +44730,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44731,11 +44779,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44776,11 +44828,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44821,11 +44877,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44866,11 +44926,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44911,11 +44975,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
@@ -44956,11 +45024,15 @@ var render = function() {
                     "v-card-actions",
                     [
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Ausführung wählen\n          ")
+                        _vm._v(
+                          "\n                        Ausführung wählen\n                    "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("v-btn", { attrs: { color: "orange", text: "" } }, [
-                        _vm._v("\n            Details\n          ")
+                        _vm._v(
+                          "\n                        Details\n                    "
+                        )
                       ])
                     ],
                     1
