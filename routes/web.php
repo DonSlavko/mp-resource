@@ -3,6 +3,16 @@
 use Illuminate\Support\Facades\Route;
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 
+Route::get('/agb', function () {
+    return view('includes.agb');
+});
+Route::get('/datenschutzerklaerung', function () {
+    return view('includes.datenschutzerklaerung');
+});
+Route::get('/impressum', function () {
+    return view('includes.impressum');
+});
+
 Route::namespace('Frontend')->group(function () {
     //Route::get('/', 'LandingController@home')->name('home');
     Route::get('produkte', 'LandingController@product')->name('product');
