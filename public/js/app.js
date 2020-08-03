@@ -4324,6 +4324,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Product",
   props: {
@@ -4331,24 +4339,28 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      items: [{
-        src: '/storage/Fortis-6-500x601.png'
-      }, {
-        src: '/storage/MPR-Canna-Fortis-5-Gramm-500x601.png'
-      }, {
-        src: '/storage/Sedation2-500x601.png'
-      }, {
-        src: '/storage/Vesper-7-500x601.png'
-      }]
+      item: null,
+      selected: null,
+      quantity: 1
     };
   },
   created: function created() {
     this.initialize();
   },
   methods: {
+    addProduct: function addProduct() {
+      this.quantity++;
+    },
+    subProduct: function subProduct() {
+      if (this.quantity > 1) {
+        this.quantity--;
+      }
+    },
     initialize: function initialize() {
+      var _this = this;
+
       axios.get('/back/shop/' + this.item_id).then(function (response) {
-        console.log(response.data);
+        _this.item = response.data;
       })["catch"](function (error) {
         console.log(error.message);
       });
@@ -44180,10 +44192,10 @@ var render = function() {
               _c(
                 "v-carousel",
                 { attrs: { "hide-delimiters": "" } },
-                _vm._l(_vm.items, function(item, i) {
+                _vm._l(_vm.item.images, function(item, i) {
                   return _c("v-carousel-item", {
                     key: i,
-                    attrs: { src: item.src }
+                    attrs: { src: item.path }
                   })
                 }),
                 1
@@ -44192,72 +44204,134 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("v-col", { attrs: { cols: "12", sm: "6", md: "7" } }, [
-            _c(
-              "h2",
-              {
-                staticClass: "text-h6 mb-3",
-                staticStyle: { "text-transform": "uppercase" }
-              },
-              [_vm._v("Product Details")]
-            ),
-            _vm._v(" "),
-            _c("hr", {
-              staticStyle: {
-                background: "#efefef",
-                color: "rgba(68,68,68,1)",
-                height: "1px",
-                width: "80%",
-                border: "none"
-              }
-            }),
-            _vm._v(" "),
-            _c("p", [
+          _c(
+            "v-col",
+            { attrs: { cols: "12", sm: "6", md: "7" } },
+            [
+              _c(
+                "h2",
+                {
+                  staticClass: "text-h6 mb-3",
+                  staticStyle: { "text-transform": "uppercase" }
+                },
+                [_vm._v(_vm._s(_vm.item.name))]
+              ),
+              _vm._v(" "),
+              _c("hr", {
+                staticStyle: {
+                  background: "#efefef",
+                  color: "rgba(68,68,68,1)",
+                  height: "1px",
+                  width: "80%",
+                  border: "none"
+                }
+              }),
               _vm._v(
-                "Wir werden unmittelbar vor dem Eintreffen der Arznei bzw. vor Beginn des\n        Vorbestellungsprozesses, den Produktnamen inkl. Beschreibung veröffentlichen und Sie zeitnah über\n        unseren Newsletter benachrichtigen. Wir werden hier später das Wirkungsprofil einer gleichermaßen THC\n        und CBD-haltigen Cannabiskreuzung darstellen."
+                "\n\n            " +
+                  _vm._s(_vm.item.description) +
+                  "\n\n\n            "
+              ),
+              _c(
+                "v-row",
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12" } },
+                    [
+                      _c(
+                        "v-btn-toggle",
+                        {
+                          attrs: { rounded: "" },
+                          model: {
+                            value: _vm.selected,
+                            callback: function($$v) {
+                              _vm.selected = $$v
+                            },
+                            expression: "selected"
+                          }
+                        },
+                        [
+                          _vm._l(_vm.item.variation.values, function(value) {
+                            return [
+                              _c("v-btn", { attrs: { value: value.id } }, [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(value.name) +
+                                    "\n                            "
+                                )
+                              ])
+                            ]
+                          })
+                        ],
+                        2
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", md: "3" } },
+                    [
+                      _c(
+                        "v-text-field",
+                        {
+                          attrs: { label: "Quantity", solo: "", flat: "" },
+                          model: {
+                            value: _vm.quantity,
+                            callback: function($$v) {
+                              _vm.quantity = $$v
+                            },
+                            expression: "quantity"
+                          }
+                        },
+                        [
+                          _c(
+                            "v-icon",
+                            {
+                              attrs: { slot: "append", color: "red" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.addProduct()
+                                }
+                              },
+                              slot: "append"
+                            },
+                            [_vm._v("mdi-plus")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-icon",
+                            {
+                              attrs: { slot: "prepend", color: "green" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.subProduct()
+                                }
+                              },
+                              slot: "prepend"
+                            },
+                            [_vm._v("mdi-minus")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", md: "3" } },
+                    [_c("v-btn", [_vm._v("In Den Warenkorb")])],
+                    1
+                  )
+                ],
+                1
               )
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "Das Wirkungsprofil richtet sich auf das Beruhigen der körperlichen Symptome wie z.B.\n        Muskelpasmen und Parkinson. CBD verstärkt zudem die schmerzstillenden Eigenschaften von THC."
-              )
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "Diese Cannabiskreuzungen werden deshalb von den Patienten für einen symptomlosen\n        Start am Morgen angewendet."
-              )
-            ]),
-            _vm._v(" "),
-            _c("b", [_vm._v("Importeur:")]),
-            _vm._v(" Medical Pharma Resource GmbH "),
-            _c("br"),
-            _vm._v(" "),
-            _c("b", [_vm._v("Hersteller:")]),
-            _vm._v(" #### #### "),
-            _c("br"),
-            _vm._v(" "),
-            _c("b", [_vm._v("Darreichungsform:")]),
-            _vm._v(" Cannabisblüten "),
-            _c("br"),
-            _vm._v(" "),
-            _c("b", [_vm._v("Genetik:")]),
-            _vm._v(" Indica Dominant Hybrid (Siehe Arzneibroschüre) "),
-            _c("br"),
-            _vm._v(" "),
-            _c("b", [_vm._v("Wirkstoffe:")]),
-            _vm._v(" 1:1 THC zu CBD-Anteile "),
-            _c("br"),
-            _vm._v(" "),
-            _c("b", [_vm._v("PZN:")]),
-            _vm._v("   5g ######## "),
-            _c("br"),
-            _vm._v(" "),
-            _c("b", [_vm._v("PZN:")]),
-            _vm._v(" 15g ######## "),
-            _c("br")
-          ]),
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "v-col",
@@ -44268,21 +44342,33 @@ var render = function() {
                   "div",
                   { staticClass: "text-center" },
                   [
-                    _vm._v("\n          Arzneibroschüre\n          "),
+                    _vm._v(
+                      "\n                    Arzneibroschüre\n                    "
+                    ),
                     _c(
                       "v-btn",
                       {
                         staticClass: "ma-2",
-                        attrs: { outlined: "", color: "primary" }
+                        attrs: {
+                          href: _vm.item.brochure[0].path,
+                          outlined: "",
+                          color: "primary"
+                        }
                       },
                       [_vm._v("Download")]
                     ),
-                    _vm._v("\n          Chargenanalyse\n          "),
+                    _vm._v(
+                      "\n                    Chargenanalyse\n                    "
+                    ),
                     _c(
                       "v-btn",
                       {
                         staticClass: "ma-2",
-                        attrs: { outlined: "", color: "primary" }
+                        attrs: {
+                          href: _vm.item.analysis[0].path,
+                          outlined: "",
+                          color: "primary"
+                        }
                       },
                       [_vm._v("Download")]
                     )
@@ -44330,7 +44416,7 @@ var render = function() {
         _vm._l(_vm.items, function(item) {
           return _c(
             "v-col",
-            { attrs: { cols: "12", sm: "6", md: "4" } },
+            { key: item.id, attrs: { cols: "12", sm: "6", md: "4" } },
             [
               _c(
                 "v-card",
