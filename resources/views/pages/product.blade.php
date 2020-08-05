@@ -35,7 +35,7 @@
                     <h2 class="text-h6" style="text-transform: uppercase">Cannabis die Heilpflanze</h2>
                     <hr style="background: #efefef; color: rgba(68,68,68,1); height: 1px; width: 50%; border: none;">
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="12" md="6">
                     <h4>Entourage-Effekt</h4>
                     <p>Die Bezeichnung „Entourage-Effekt“ stammt aus der Cannabis–Forschung und beschreibt ein
                         therapeutisches Zusammenspiel zwischen Cannabinoide und Terpenoide. Diese definiert, dass ein
@@ -50,7 +50,7 @@
                         CBG die bekanntesten.</p>
 
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="12" md="6">
                     <h4>Terpene und Terpenoide</h4>
                     <p>Terpene sind eine Gruppierung chemischer Verbindungen und kommen in natürlichen Organismen vor.
                         Ätherische Öle sind zum Beispiel reich an Terpenen. Ihnen wird eine antimikrobielle Eigenschaft
@@ -82,7 +82,7 @@
                     <hr style="background: #efefef; color: rgba(68,68,68,1); height: 1px; width: 50%; border: none;">
                 </v-col>
 
-                <v-col cols="6">
+                <v-col cols="12" md="6">
 
                     <h4>EU-/GMP- und GDP- zertifizierte Qualität</h4>
                     <p>Unsere medizinischen Cannabisprodukte werden sich durch eine gleichbleibende Qualität
@@ -115,7 +115,7 @@
 
                 </v-col>
 
-                <v-col cols="6">
+                <v-col cols="12" md="6">
                     <v-img position="bottom left" height="100%" width="100%" sizes="cover" src="{{ asset('storage/AdobeStock_310714620-scaled.jpeg')  }}"></v-img>
                 </v-col>
 
@@ -123,7 +123,7 @@
                     <h2 class="text-center text-h6 mt-14" style="text-transform: uppercase">Produktpalette - MPRCanna®</h2>
                 </v-col>
 
-                <v-col offset="1" cols="10">
+                <v-col offset-md="1" cols="10">
                     <v-img src="{{ asset('storage/MPRCanna.docx-Word.png')  }}"></v-img>
                 </v-col>
 

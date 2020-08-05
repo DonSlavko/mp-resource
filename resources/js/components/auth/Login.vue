@@ -1,10 +1,10 @@
 <template>
     <v-container fluid>
         <v-row>
-            <v-col offset="5" cols="2">
+            <v-col offset-md="5" cols="12" md="2">
                 <v-img max-width="200" src="/storage/Logo-Original.png" contain></v-img>
             </v-col>
-            <v-col offset="4" cols="4">
+            <v-col offset-md="4" cols="12" md="4">
                 <v-form method="POST" action="login" ref="form">
                     <v-row>
                         <v-col cols="12" class="py-0">
@@ -36,7 +36,7 @@
                             <v-checkbox v-model="form.remember" name="remember" label="Angemeldet bleiben"></v-checkbox>
                         </v-col>
 
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-btn color="primary"
                                    style="text-transform: none!important;"
                                    @click="submit"
@@ -44,7 +44,7 @@
                             </v-btn>
                         </v-col>
 
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-btn href="/register" color="secondary"
                                    class="text--secondary"
                                    style="text-transform: none!important;"
@@ -74,20 +74,20 @@
                 </v-form>
             </v-col>
 
-            <v-col offset="3" cols="6">
+            <v-col offset-md="3" cols="12" md="6">
                 <v-row>
-                    <v-col offset="1" cols="3">
+                    <v-col offset-md="1" cols="3">
                         <v-btn href="datenschutzerklaerung_" text class="text--secondary"
                                style="text-transform: none!important;">
                             Datenschutzerklärung
                         </v-btn>
                     </v-col>
-                    <v-col cols="4" class="text-center">
+                    <v-col cols="12" md="4" class="text-center">
                         <v-btn href="agb_" text class="text--secondary" style="text-transform: none!important;">
                             AGB
                         </v-btn>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col cols="12" md="4">
                         <v-btn href="impressum" text class="text--secondary" style="text-transform: none!important;">
                             Impressum
                         </v-btn>

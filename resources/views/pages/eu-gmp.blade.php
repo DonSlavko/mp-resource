@@ -36,7 +36,7 @@
                     <h2 class="text-h6 mb-3" style="text-transform: uppercase">EU-/GMP Zertifizierung für Europe</h2>
                     <hr style="background: #efefef; color: rgba(68,68,68,1); height: 1px; width: 50%; border: none;">
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="12" md="6">
                     <h4>EU-/GMP-zertifiziert für den europäischen Markt</h4>
                     <p>Sie möchten medizinisches Cannabis produzieren, konfektionieren und
                         exportieren/importieren? Wir haben die Möglichkeit, Sie weltweit bei der
@@ -81,7 +81,7 @@
                         ebenfalls dabei unterstützen.</p>
                 </v-col>
 
-                <v-col cols="6">
+                <v-col cols="12" md="6">
                     <v-img height="100%" width="100%" contain
                            src="{{ asset('storage/Europa3.jpg')  }}"></v-img>
                 </v-col>

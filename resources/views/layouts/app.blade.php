@@ -67,10 +67,10 @@
                         justify="center"
                         no-gutters
                 >
-                    <v-col offset="1" cols="3">
+                    <v-col cols="12" md="3" offset-md="1">
                         <v-img class="mt-2" max-width="162" src="{{ asset('storage/Logo-Original.png') }}"></v-img>
                     </v-col>
-                    <v-col cols="5">
+                    <v-col cols="12" md="5">
                         <v-btn href="{{ route('user.news') }}"
                                text
                                rounded>
@@ -101,7 +101,7 @@
                                rounded>
                             Impressum</v-btn>
                     </v-col>
-                    <v-col cols="3"></v-col>
+                    <v-col cols="12" md="3"></v-col>
                     <v-col
                             class=" py-4 text-center"
                             cols="12"

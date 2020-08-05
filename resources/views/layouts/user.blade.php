@@ -54,11 +54,11 @@
                     justify="center"
                     no-gutters
             >
-                <v-col offset="1" cols="3">
+                <v-col offset-md="1" cols="3">
                     <v-img class="mt-2" max-width="162" src="{{ asset('storage/Logo-white-300x134.png') }}"></v-img>
                     <v-img class="mt-2" max-width="162" src="{{ asset('storage/MPR-Canna-white-200x32.png') }}"></v-img>
                 </v-col>
-                <v-col cols="5">
+                <v-col cols="12" md="5">
                     <v-btn href="{{ route('user.news') }}"
                            color="white"
                            text
@@ -95,7 +95,7 @@
                            rounded>
                         Impressum</v-btn>
                 </v-col>
-                <v-col cols="3"></v-col>
+                <v-col cols="12" md="3"></v-col>
                 <v-col
                         class="primary py-4 text-center white--text"
                         cols="12"

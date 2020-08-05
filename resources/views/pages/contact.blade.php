@@ -31,7 +31,7 @@
     </div>
 
     <v-row justify="center">
-        <v-col cols="4" class="text-center" style="background-color: rgba(222,222,222,1);">
+        <v-col cols="12" md="4" class="text-center" style="background-color: rgba(222,222,222,1);">
             <v-icon x-large color="primary" class="mb-6">mdi-microphone-outline</v-icon>
             <h3>FÜR PRESSEANFRAGEN</h3>
 
@@ -41,7 +41,7 @@
             </p>
         </v-col>
 
-        <v-col cols="4" class="text-center" style="background-color: rgba(234,234,234,1);">
+        <v-col cols="12" md="4" class="text-center" style="background-color: rgba(234,234,234,1);">
             <v-icon x-large color="primary" class="mb-6">mdi-card-account-details-outline</v-icon>
             <h3>FACHGERECHTE AUFKLÄRUNG</h3>
 
@@ -49,7 +49,7 @@
                Medizinal-Cannabis haben, steht Ihnen unser Ärzteberatungsteam für jegliche Fragen zur Seite.</p>
         </v-col>
 
-        <v-col cols="4" class="text-center" style="background-color: rgba(246,246,246,1);">
+        <v-col cols="12" md="4" class="text-center" style="background-color: rgba(246,246,246,1);">
             <v-icon x-large color="primary" class="mb-6">mdi-phone</v-icon>
 
             <h3>EXKLUSIVE KUNDENBETREUUNG</h3>
@@ -64,12 +64,12 @@
             <v-row>
 
 
-                <v-col cols="8" class="mt-8">
+                <v-col cols="12" md="8" class="mt-8">
                     <h2 class="text-h6 mb-5" style="text-transform: uppercase">HABEN SIE FRAGEN ODER ANREGUNGEN?</h2>
                     <hr style="background: #efefef; color: rgba(68,68,68,1); height: 1px; border: none;">
                 </v-col>
 
-                <v-col cols="7">
+                <v-col cols="12" md="7">
                     <v-text-field
                             label="Name *" :rules="validate.name" name="name"
                     ></v-text-field>
@@ -99,9 +99,9 @@
                     </template>
                 </v-col>
 
-                <v-col offset="1" cols="4">
+                <v-col offset-md="1" cols="12" md="4">
                     <v-row style="border-left: #444444 1px solid">
-                        <v-col cols="2">
+                        <v-col cols="12" md="2">
                             <v-icon x-large color="primary" class="mb-6">mdi-phone</v-icon>
                         </v-col>
                         <v-col cols="10">
@@ -109,7 +109,7 @@
 
                             <p>+49 (2173) 940 9591</p>
                         </v-col>
-                        <v-col cols="2">
+                        <v-col cols="12" md="2">
                             <v-icon x-large color="primary" class="mb-6">mdi-fax</v-icon>
                         </v-col>
                         <v-col cols="10">
@@ -117,7 +117,7 @@
 
                             <p>+49 (2173) 940 9599</p>
                         </v-col>
-                        <v-col cols="2">
+                        <v-col cols="12" md="2">
                             <v-icon x-large color="primary" class="mb-6">mdi-email-outline</v-icon>
                         </v-col>
                         <v-col cols="10">

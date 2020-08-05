@@ -50,7 +50,7 @@
 
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-checkbox-marked-outline</v-icon>
                     <h3>Partner</h3>
 
@@ -60,30 +60,30 @@
                     </p>
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-cart-minus</v-icon>
                     <h3>Direktverkauf</h3>
 
                     <p>Direkter Verkauf an Apotheken über unseren eigenen hochmodernen CRM- und ERP-System.</p>
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-account-supervisor</v-icon>
 
                     <h3>Unser Mitarbeiter</h3>
                     <p>Hochbegabte Mitarbeiter, die sich auf med. Cannabisprodukte spezialisiert haben.</p>
                 </v-col>
 
-                <v-col cols="8" class="mt-8">
+                <v-col cols="12" md="8" class="mt-8">
                     <h2 class="text-h6 mb-5" style="text-transform: uppercase">Wollen sie in Medical Pharma Resource GmbH investieren?</h2>
                     <hr style="background: #efefef; color: rgba(68,68,68,1); height: 1px; border: none;">
                 </v-col>
 
-                <v-col cols="4" class="mt-8">
+                <v-col cols="12" md="4" class="mt-8">
                     <h2 class="text-h6 mb-5" style="text-transform: uppercase">Auf EINEN BLICK</h2>
                 </v-col>
 
-                <v-col cols="7">
+                <v-col cols="12" md="7">
                     <v-text-field
                             label="Name *" :rules="validate.name" name="name"
                     ></v-text-field>
@@ -103,19 +103,19 @@
                     <p class="text--secondary">Unternehmenstyp</p>
 
                     <v-row>
-                        <v-col cols="4" class="pa-0 ma-0">
+                        <v-col cols="12" md="4" class="pa-0 ma-0">
                             <v-checkbox name="venture_capital" label="Venture Capital"></v-checkbox>
                         </v-col>
-                        <v-col cols="4" class="pa-0 ma-0">
+                        <v-col cols="12" md="4" class="pa-0 ma-0">
                             <v-checkbox name="private_equity" label="Private Equity"></v-checkbox>
                         </v-col>
-                        <v-col cols="4" class="pa-0 ma-0">
+                        <v-col cols="12" md="4" class="pa-0 ma-0">
                             <v-checkbox name="family_office" label="Family Office"></v-checkbox>
                         </v-col>
-                        <v-col cols="4" class="pa-0 ma-0">
+                        <v-col cols="12" md="4" class="pa-0 ma-0">
                             <v-checkbox name="general_banking" label="General Banking"></v-checkbox>
                         </v-col>
-                        <v-col cols="4" class="pa-0 ma-0">
+                        <v-col cols="12" md="4" class="pa-0 ma-0">
                             <v-checkbox name="other" label="Sonstige"></v-checkbox>
                         </v-col>
                     </v-row>
@@ -149,9 +149,9 @@
                     </template>
                 </v-col>
 
-                <v-col offset="1" cols="4">
+                <v-col offset-md="1" cols="12" md="4">
                     <v-row style="border-left: #444444 1px solid">
-                        <v-col cols="2">
+                        <v-col cols="12" md="2">
                             <v-icon x-large color="primary" class="mb-6">mdi-earth</v-icon>
                         </v-col>
                         <v-col cols="10">
@@ -160,7 +160,7 @@
                             <p>Wir gewährleisten eine dauerhafte und zeitnahe Verfügbarkeit für die
                                 zu behandelnden Krankheitssymptome.</p>
                         </v-col>
-                        <v-col cols="2">
+                        <v-col cols="12" md="2">
                             <v-icon x-large color="primary" class="mb-6">mdi-check-circle-outline</v-icon>
                         </v-col>
                         <v-col cols="10">
@@ -168,7 +168,7 @@
 
                             <p>Wir sichern Ihnen eine gleichbleibende Qualität unserer eingeführten Produkte.</p>
                         </v-col>
-                        <v-col cols="2">
+                        <v-col cols="12" md="2">
                             <v-icon x-large color="primary" class="mb-6">mdi-star-outline</v-icon>
                         </v-col>
                         <v-col cols="10">

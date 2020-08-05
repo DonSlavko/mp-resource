@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="6">
+            <v-col cols="12" md="6">
                 <v-stepper v-model="stepper" alt-labels>
                     <v-stepper-header class="m-0 p-0">
                         <v-stepper-step :complete="complete_step1" step="1" :editable="complete > 0">Anmeldedaten
@@ -289,7 +289,7 @@
                 </v-stepper>
             </v-col>
 
-            <v-col cols="6">
+            <v-col cols="12" md="6">
                 <v-timeline dense align-top>
                     <v-timeline-item large fill-dot icon="mdi-square-edit-outline">
                         <h3>REGISTRIEREN UND NACHWEISERBRINGUNG</h3>

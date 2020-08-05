@@ -59,14 +59,14 @@
                     <hr style="background: #efefef; color: rgba(68,68,68,1); height: 1px; width: 50%; border: none;">
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-leaf</v-icon>
                     <h3>Work-Life Balance</h3>
 
                     <p>Weniger Stress und mehr Zeit für Familie oder Freizeitaktivitäten.</p>
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-home</v-icon>
                     <h3>Home-Office</h3>
 
@@ -74,7 +74,7 @@
                     Home-Office arbeiten.</p>
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-clock-time-three-outline</v-icon>
 
                     <h3>Flexible Arbeitszeiten</h3>
@@ -82,21 +82,21 @@
                         zu deinen Aufgaben.</p>
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-star</v-icon>
 
                     <h3> Kostenlose Snacks & Getränke</h3>
                     <p>Wir stellen euch täglich Obst, Kaffeevariationen und Wasser zur Verfügung.</p>
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-rocket-launch</v-icon>
 
                     <h3>Mobilität</h3>
                     <p>Jobtickets und Bahnvorteilskarten unterstützen Sie bei Ihrer Mobilität.</p>
                 </v-col>
 
-                <v-col cols="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                     <v-icon x-large color="primary" class="mb-6">mdi-presentation</v-icon>
 
                     <h3>Weiterbildung</h3>
