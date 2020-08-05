@@ -26,6 +26,7 @@ Route::namespace('Frontend')->group(function () {
     Route::get('kontakt', 'LandingController@contact')->name('contact');
 });
 
+Route::post('/exists', 'Auth\RegisterController@checkIfExists');
 Auth::routes(['verify' => true]);
 
 //Route::middleware(['auth','verified'])->group(function () {

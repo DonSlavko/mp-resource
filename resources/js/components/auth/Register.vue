@@ -4,15 +4,18 @@
             <v-col cols="6">
                 <v-stepper v-model="stepper" alt-labels>
                     <v-stepper-header class="m-0 p-0">
-                        <v-stepper-step :complete="complete_step1" step="1" :editable="complete > 0">Anmeldedaten</v-stepper-step>
+                        <v-stepper-step :complete="complete_step1" step="1" :editable="complete > 0">Anmeldedaten
+                        </v-stepper-step>
 
                         <v-divider></v-divider>
 
-                        <v-stepper-step :complete="complete_step2" step="2" :editable="complete > 1">Kontaktdaten</v-stepper-step>
+                        <v-stepper-step :complete="complete_step2" step="2" :editable="complete > 1">Kontaktdaten
+                        </v-stepper-step>
 
                         <v-divider></v-divider>
 
-                        <v-stepper-step :complete="complete_step3" step="3" :editable="complete > 2">Nachweise</v-stepper-step>
+                        <v-stepper-step :complete="complete_step3" step="3" :editable="complete > 2">Nachweise
+                        </v-stepper-step>
 
                         <v-divider></v-divider>
 
@@ -35,7 +38,8 @@
                                 <p class="font-weight-bold text-subtitle-1 mb-2">Anmeldedaten</p>
 
                                 <v-text-field
-                                    :rules="[rules.username, checkIfExists]"
+                                    :error="errors.username" :error-messages="errors.username"
+                                    :rules="[rules.username]"
                                     v-model="input.username"
                                     id="username"
                                     name="username"
@@ -66,6 +70,7 @@
                                     class="mt-10"
                                     outlined dense></v-text-field>
                                 <v-text-field
+                                    :error="errors.email" :error-messages="errors.email"
                                     :rules="rules.email"
                                     v-model="input.email"
                                     id="email"
@@ -91,7 +96,8 @@
 
                         <v-stepper-content step="2">
                             <v-form ref="step2">
-                                <p class="font-weight-bold text-subtitle-1 mb-2">Ansprechpartner\in (Rechnungsempfänger\in) </p>
+                                <p class="font-weight-bold text-subtitle-1 mb-2">Ansprechpartner\in
+                                    (Rechnungsempfänger\in) </p>
 
                                 <v-select
                                     :rules="rules.honorific"
@@ -126,7 +132,8 @@
                                     type="text"
                                     outlined dense></v-text-field>
 
-                                <p class="font-weight-bold text-subtitle-1 mb-2">Kontaktdaten (Liefer- und Rechnungsadresse)</p>
+                                <p class="font-weight-bold text-subtitle-1 mb-2">Kontaktdaten (Liefer- und
+                                    Rechnungsadresse)</p>
 
                                 <v-text-field
                                     :rules="rules.pharmacy"
@@ -234,7 +241,9 @@
                                     clearable
                                 ></v-file-input>
 
-                                <div class="mb-10">(Folgende Dateiformate werden unterstützt: .pdf, .jpg, .png und eine Dateigröße von max. 6 MB)</div>
+                                <div class="mb-10">(Folgende Dateiformate werden unterstützt: .pdf, .jpg, .png und eine
+                                    Dateigröße von max. 6 MB)
+                                </div>
 
                                 <v-btn color="primary" @click="validateStep3">weiter</v-btn>
                             </v-form>
@@ -245,8 +254,12 @@
                                 <h4>Überprüfen Sie Ihre Angaben</h4>
 
                                 <p>{{ input.title === 'Arzt/Ärztin' ? 'Praxis' : 'Apotheke' }} {{ input.pharmacy }}</p>
-                                <p>{{ input.title === 'Arzt/Ärztin' ? 'Arzt' : 'Apotheker' }}: {{ input.honorific + ' ' + input.titles + ' ' + input.first_name + ' ' + input.last_name }}</p>
-                                <p>Adresse: {{ input.street + ' ' + input.address + ', ' + input.postal + ' ' + input.city }}</p>
+                                <p>{{ input.title === 'Arzt/Ärztin' ? 'Arzt' : 'Apotheker' }}: {{
+                                        input.honorific + ' ' + input.titles + ' ' + input.first_name + ' ' + input.last_name
+                                    }}</p>
+                                <p>Adresse: {{
+                                        input.street + ' ' + input.address + ', ' + input.postal + ' ' + input.city
+                                    }}</p>
                                 <p>E-Mail: {{ input.email }}</p>
                                 <p>Telefon: {{ input.phone }}</p>
                                 <p>Fax: {{ input.fax }}</p>
@@ -254,16 +267,20 @@
                                 <v-checkbox :rules="rules.checkbox" v-model="input.agree" name="agree"></v-checkbox>
 
                                 <p>Ich habe Gelegenheit gehabt, die Inhalte der</p>
-                                <p>Datenschutzerklärung zur Kenntnis zu nehmen und willige in die Datenverarbeitung meiner
-                                    personenbezogenen Daten durch die Medical Pharma Resource GmbH ein. Insbesondere stimme
+                                <p>Datenschutzerklärung zur Kenntnis zu nehmen und willige in die Datenverarbeitung
+                                    meiner
+                                    personenbezogenen Daten durch die Medical Pharma Resource GmbH ein. Insbesondere
+                                    stimme
                                     ich der Weitergabe meiner personenbezogenen Daten an Dritte im Rahmen von
                                     Auftragsdatenverarbeitungsvereinbarungen zu. Mir ist bekannt, dass ich obige
-                                    Einwilligung jederzeit mit Wirkung für die Zukunft durch eine Nachricht an uns widerrufen kann.*</p>
+                                    Einwilligung jederzeit mit Wirkung für die Zukunft durch eine Nachricht an uns
+                                    widerrufen kann.*</p>
 
 
                                 <v-checkbox v-model="input.subscribe" name="subscribe"></v-checkbox>
 
-                                <p>Ich möchte zeitnah über die Verfügbarkeit der Arzneimittel im Onlineshop benachrichtigt werden.</p>
+                                <p>Ich möchte zeitnah über die Verfügbarkeit der Arzneimittel im Onlineshop
+                                    benachrichtigt werden.</p>
 
                                 <v-btn color="primary" @click="validateStep4">Registrieren</v-btn>
                             </v-form>
@@ -277,27 +294,41 @@
                     <v-timeline-item large fill-dot icon="mdi-square-edit-outline">
                         <h3>REGISTRIEREN UND NACHWEISERBRINGUNG</h3>
 
-                        Füllen Sie bitte das Registrierungsformular aus und erbringen zusätzlich die verlangten Nachweise. Durch Ihre Registrierung erhalten Sie Zugriff auf den Fachbereich und unseren Onlineshop. Bitte beachten Sie, dass wir unsere Fachinformationen und Produkte nach §10 Heilmittelwerbegesetz (HWG) nur engeren medizinischen Fachkreisen wie Ärzten oder Apothekern zugänglich machen dürfen.
+                        Füllen Sie bitte das Registrierungsformular aus und erbringen zusätzlich die verlangten
+                        Nachweise. Durch Ihre Registrierung erhalten Sie Zugriff auf den Fachbereich und unseren
+                        Onlineshop. Bitte beachten Sie, dass wir unsere Fachinformationen und Produkte nach §10
+                        Heilmittelwerbegesetz (HWG) nur engeren medizinischen Fachkreisen wie Ärzten oder Apothekern
+                        zugänglich machen dürfen.
 
                     </v-timeline-item>
                     <v-timeline-item large fill-dot icon="mdi-calendar-check">
                         <h3>REGISTRIERUNG BESTÄTIGEN</h3>
 
-                        Im nächsten Schritt erhalten Sie nach dem Absenden des Registrierungsformulars eine Bestätigungs-E-Mail mit dem Betreff: REGISTRIERUNG BESTÄTIGEN bitte. Sie gilt für Ihre und unsere Sicherheit. Bestätigen Sie Ihre Registrierung, indem Sie auf den Link in der Bestätigungs-E-Mail klicken.
+                        Im nächsten Schritt erhalten Sie nach dem Absenden des Registrierungsformulars eine
+                        Bestätigungs-E-Mail mit dem Betreff: REGISTRIERUNG BESTÄTIGEN bitte. Sie gilt für Ihre und
+                        unsere Sicherheit. Bestätigen Sie Ihre Registrierung, indem Sie auf den Link in der
+                        Bestätigungs-E-Mail klicken.
 
                     </v-timeline-item>
 
                     <v-timeline-item large fill-dot icon="mdi-card-account-details-outline">
                         <h3>VERIFIZIERUNG UND FREISCHALTUNG</h3>
 
-                        Nachdem Sie Ihre Registrierung bestätigt und wir parallel Ihre hochgeladenen Nachweise erfolgreich verifiziert haben, erhalten Sie zeitnah eine Benachrichtigungs-E-Mail mit dem Betreff: VERIFIZIERUNG UND FREISCHALTUNG erfolgreich abgeschlossen. Falls die Verifizierung nicht erfolgreich abgeschlossen wird, werden Sie zeitnah via E-Mail oder Telefon von uns kontaktiert.
+                        Nachdem Sie Ihre Registrierung bestätigt und wir parallel Ihre hochgeladenen Nachweise
+                        erfolgreich verifiziert haben, erhalten Sie zeitnah eine Benachrichtigungs-E-Mail mit dem
+                        Betreff: VERIFIZIERUNG UND FREISCHALTUNG erfolgreich abgeschlossen. Falls die Verifizierung
+                        nicht erfolgreich abgeschlossen wird, werden Sie zeitnah via E-Mail oder Telefon von uns
+                        kontaktiert.
 
                     </v-timeline-item>
 
                     <v-timeline-item large fill-dot icon="mdi-account-check">
                         <h3>SUPPORT ZUM ONLINESHOP</h3>
 
-                        Falls Sie aber Fragen zu unserem Onlineshop oder Probleme bei der Registrierung haben, wenden Sie sich bitte an unseren Kundensupport. Sie erreichen uns telefonisch von Montag bis Freitag zwischen 10:00 und 18:00 Uhr unter der 02173 / 940 9591 oder 24/7 per E-Mail unter support@mp-resource.shop.  Wir helfen Ihnen gerne!
+                        Falls Sie aber Fragen zu unserem Onlineshop oder Probleme bei der Registrierung haben, wenden
+                        Sie sich bitte an unseren Kundensupport. Sie erreichen uns telefonisch von Montag bis Freitag
+                        zwischen 10:00 und 18:00 Uhr unter der 02173 / 940 9591 oder 24/7 per E-Mail unter
+                        support@mp-resource.shop. Wir helfen Ihnen gerne!
                     </v-timeline-item>
                 </v-timeline>
             </v-col>
@@ -309,7 +340,7 @@
 export default {
     name: "Register",
 
-    data () {
+    data() {
         return {
             stepper: 1,
             complete: 4,
@@ -329,7 +360,7 @@ export default {
             honorifics: ['Herr', 'Frau'],
 
             rules: {
-                title: [ value => !!value || 'Bitte auswählen! ' ],
+                title: [value => !!value || 'Bitte auswählen! '],
                 username: value => !!value || 'Bitte geben Sie einen Benutzer-/Loginnamen an! ',
                 password: [
                     value => !!value || 'Passwort angeben',
@@ -360,22 +391,22 @@ export default {
                         return pattern.test(value) || 'Ihre E-Mail sollte ein gültiges Format haben z.B. name@domain.de'
                     },
                 },
-                honorific: [ value => !!value || 'Bitte auswählen' ],
-                first_name: [ value => !!value || 'Bitte geben Sie Ihren Vornamen an' ],
-                last_name: [ value => !!value || 'Bitte geben Sie Ihren Nachnamen an' ],
-                pharmacy: [ value => !!value || 'Bitte geben Sie einen Namen an!' ],
-                street: [ value => !!value || 'Bitte geben Sie Ihre Adresse an!' ],
-                postal: [ value => !!value || 'Bitte geben Sie eine Postleitzahl an!' ],
-                city: [ value => !!value || 'Bitte geben Sie einen Ort an!' ],
-                phone: [ value => !!value || 'Bitte geben Sie eine Telefonnummer an!' ],
-                fax: [ value => !!value || 'This field is required.' ],
+                honorific: [value => !!value || 'Bitte auswählen'],
+                first_name: [value => !!value || 'Bitte geben Sie Ihren Vornamen an'],
+                last_name: [value => !!value || 'Bitte geben Sie Ihren Nachnamen an'],
+                pharmacy: [value => !!value || 'Bitte geben Sie einen Namen an!'],
+                street: [value => !!value || 'Bitte geben Sie Ihre Adresse an!'],
+                postal: [value => !!value || 'Bitte geben Sie eine Postleitzahl an!'],
+                city: [value => !!value || 'Bitte geben Sie einen Ort an!'],
+                phone: [value => !!value || 'Bitte geben Sie eine Telefonnummer an!'],
+                fax: [value => !!value || 'This field is required.'],
 
                 file: [
                     value => !!value || 'No file selected',
                     value => value.size < 6000000,
                 ],
 
-                checkbox: [ value => !!value || 'Bitte akzeptieren!' ],
+                checkbox: [value => !!value || 'Bitte akzeptieren!'],
             },
 
             input: {
@@ -406,7 +437,7 @@ export default {
                 subscribe: null,
             },
 
-            errors: {},
+            errors: [],
 
             form: {
                 email: null,
@@ -416,17 +447,23 @@ export default {
         }
     },
 
+    watch: {
+        "input.username": function(username) {
+            this.checkIfUsernameExists(username)
+        },
+
+        "input.email": function(email) {
+            this.checkIfEmailExists(email)
+        },
+    },
+
     computed: {
         confirmPassword() {
-            return (this.input.password === this.input.password_repeat)  || 'Die Passwörter stimmen nicht überein';
+            return (this.input.password === this.input.password_repeat) || 'Die Passwörter stimmen nicht überein';
         },
 
         confirmEmail() {
-            return (this.input.email === this.input.email_repeat)  || 'E-Mail stimmt nicht überein';
-        },
-
-        checkIfExists() {
-            return (this.input.username !== 'mark') || 'Benutzername existiert bereits.'; //for testing
+            return (this.input.email === this.input.email_repeat) || 'E-Mail stimmt nicht überein';
         },
 
         labelForPharmacy() {
@@ -441,6 +478,30 @@ export default {
                 this.complete = this.stepper = 2;
             }
         },
+
+        checkIfUsernameExists: _.debounce(function(value) {
+            axios.post('/exists', {
+                username: value
+            }).then((response) => {
+                if (response.data.value) {
+                    this.errors = {
+                        username: 'Benutzername existiert bereits.'
+                    }
+                }
+            })
+        }, 500),
+
+        checkIfEmailExists: _.debounce(function(value) {
+            axios.post('/exists', {
+                email: value
+            }).then((response) => {
+                if (response.data.value) {
+                    this.errors = {
+                        email: 'E-Mail existiert bereits.'
+                    }
+                }
+            })
+        }, 500),
 
         validateStep2() {
             if (this.$refs.step2.validate()) {
@@ -493,7 +554,12 @@ export default {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
-                })
+                }).then((response) => {
+                    window.location = "/"
+                }).catch((error) => {
+                    console.log(error.response.data.errors)
+                   // let errors = error.response.data.errors;
+                });
             }
         }
     }

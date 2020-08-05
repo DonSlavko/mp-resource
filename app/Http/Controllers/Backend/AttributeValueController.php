@@ -26,11 +26,15 @@ class AttributeValueController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        try {
+            $data = $request->all();
 
-        AttributeValue::create($data);
+            AttributeValue::create($data);
 
-        return response(['Value created']);
+            return response(['Value created']);
+        } catch (\Exception $exception) {
+            return response(['message' => 'There was an error. Please try again later'], 500);
+        }
     }
 
     /**
@@ -53,14 +57,18 @@ class AttributeValueController extends Controller
      */
     public function update(Request $request, AttributeValue $attributeValue)
     {
-        $data = [
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-        ];
+        try {
+            $data = [
+                'name' => $request->get('name'),
+                'description' => $request->get('description'),
+            ];
 
-        $attributeValue->update($data);
+            $attributeValue->update($data);
 
-        return response(['Value updated']);
+            return response(['Value updated']);
+        } catch (\Exception $exception) {
+            return response(['message' => 'There was an error. Please try again later'], 500);
+        }
     }
 
     /**
@@ -71,8 +79,12 @@ class AttributeValueController extends Controller
      */
     public function destroy(AttributeValue $attributeValue)
     {
-        $attributeValue->delete();
+        try {
+            $attributeValue->delete();
 
-        return response(['Value delete']);
+            return response(['Value delete']);
+        } catch (\Exception $exception) {
+            return response(['message' => 'There was an error. Please try again later'], 500);
+        }
     }
 }

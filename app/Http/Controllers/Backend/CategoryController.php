@@ -28,11 +28,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        try {
+            $data = $request->all();
 
-        Category::create($data);
+            Category::create($data);
 
-        return response(['Category created']);
+            return response(['Category created']);
+        } catch (\Exception $exception) {
+            return response(['message' => 'There was an error. Please try again later'], 500);
+        }
     }
 
     /**
@@ -55,16 +59,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        try {
+            $data = [
+                'name' => $request->get('name'),
+                'description' => $request->get('description'),
+            ];
 
-        $data = [
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-        ];
-
-        $category->update($data);
+            $category->update($data);
 
 
-        return response(['Category updated']);
+            return response(['Category updated']);
+        } catch (\Exception $exception) {
+            return response(['message' => 'There was an error. Please try again later'], 500);
+        }
     }
 
     /**
@@ -75,8 +82,12 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        try {
+            $category->delete();
 
-        return response(['Category deleted']);
+            return response(['Category deleted']);
+        } catch (\Exception $exception) {
+            return response(['message' => 'There was an error. Please try again later'], 500);
+        }
     }
 }

@@ -36,18 +36,16 @@
                                     <v-form ref="modal">
                                         <v-row>
                                             <v-col cols="12">
-                                                <v-text-field v-model="editedItem.name" :rules="rules"
-                                                              label="Name"></v-text-field>
+                                                <v-text-field
+                                                    :error="errors.name" :error-messages="errors.name"
+                                                    :rules="rules.name" :counter="255"
+                                                    v-model="editedItem.name" label="Name"></v-text-field>
                                             </v-col>
 
                                             <v-col cols="12">
                                                 <v-textarea
-                                                    :rules="rules"
                                                     v-model="editedItem.description"
-                                                    solo
-                                                    name="input-7-4"
-                                                    label="Description"
-                                                ></v-textarea>
+                                                    label="Description"></v-textarea>
                                             </v-col>
 
                                             <v-col cols="12">
@@ -66,7 +64,7 @@
 
                                             <v-col cols="12" sm="6" md="6">
                                                 <v-select
-                                                    :rules="rules"
+                                                    :rules="rules.select"
                                                     v-model="editedItem.category_id"
                                                     :items="categories"
                                                     name="category"
@@ -76,7 +74,7 @@
 
                                             <v-col cols="12" md="6">
                                                 <v-select
-                                                    :rules="rules"
+                                                    :rules="rules.select"
                                                     v-model="editedItem.variation_id"
                                                     :items="variations"
                                                     name="variation"
@@ -109,16 +107,22 @@
                                             </v-col>
 
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field :rules="rules" v-model="editedItem.sku"
-                                                              label="SKU"></v-text-field>
+                                                <v-text-field
+                                                    :error="errors.sku" :error-messages="errors.sku"
+                                                    :rules="rules.sku" :counter="255"
+                                                    v-model="editedItem.sku" label="SKU"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field :rules="rules" type="number" v-model="editedItem.price"
-                                                              label="Price"></v-text-field>
+                                                <v-text-field
+                                                    :error="errors.price" :error-messages="errors.price"
+                                                    :rules="rules.price" :counter="255"
+                                                    v-model="editedItem.price" type="number" label="Price"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field :rules="rules" type="number" v-model="editedItem.stock"
-                                                              label="Stock"></v-text-field>
+                                                <v-text-field
+                                                    :error="errors.stock" :error-messages="errors.stock"
+                                                    :rules="rules.stock" :counter="255"
+                                                    v-model="editedItem.stock" type="number" label="Stock"></v-text-field>
                                             </v-col>
 
                                             <v-col cols="12" md="6">
@@ -145,6 +149,12 @@
                                                     dense
                                                     clearable
                                                 ></v-file-input>
+                                            </v-col>
+
+                                            <v-col cols="12">
+                                                <v-alert v-if="errors.message" type="error">
+                                                    {{ errors.message }}
+                                                </v-alert>
                                             </v-col>
                                         </v-row>
                                     </v-form>
@@ -228,6 +238,8 @@ export default {
                 data: [],
             },
 
+            errors: [],
+
             categories: [],
             variations: [],
             attributes: [],
@@ -269,10 +281,27 @@ export default {
                 brochure: null,
                 analysis: null,
             },
-            rules: [
-                value => !!value || "This field can't be empty"
-            ]
 
+            rules: {
+                name: [
+                    value => !!value || "Name field is required",
+                    value => value.length <= 255 || "Name must be less than 255 characters long",
+                ],
+                select: [
+                    value => !!value || "Please select one of the given values"
+                ],
+                sku: [
+                    value => value.length <= 255 || "SKU must be less than 255 characters long",
+                ],
+                price: [
+                    value => !!value || "Price field is required",
+                    value => value.length <= 255 || "Price must be less than 255 characters long",
+                ],
+                stock: [
+                    value => !!value || "Stock field is required",
+                    value => value.length <= 255 || "Stock must be less than 255 characters long",
+                ],
+            },
         }
     },
 
@@ -448,19 +477,24 @@ export default {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
-                    }).then(response => {
+                    }).then((response) => {
                         this.initialize();
-                    })
+                        this.close()
+                    }).catch((error) => {
+                        this.errors = error.response.data;
+                    });
                 } else {
                     axios.post('/back/products', this.formData(), {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
-                    }).then(response => {
+                    }).then((response) => {
                         this.initialize();
-                    })
+                        this.close()
+                    }).catch((error) => {
+                        this.errors = error.response.data;
+                    });
                 }
-                this.close()
             }
         },
     },

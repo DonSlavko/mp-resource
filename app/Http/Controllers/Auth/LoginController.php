@@ -25,7 +25,9 @@ class LoginController extends Controller
 
     protected function credentials(Request $request)
     {
-        return [$this->username() => $request->{$this->username()}, 'password' => $request->password, 'active' => 1];
+        return [filter_var($request->input($this->username()), FILTER_VALIDATE_EMAIL )
+            ? 'email'
+            : 'username' => $request->{$this->username()}, 'password' => $request->password, 'active' => 1];
     }
 
     protected function validateLogin(Request $request)

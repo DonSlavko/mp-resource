@@ -119,4 +119,23 @@ class RegisterController extends Controller
 
         return $user;
     }
+
+    public function checkIfExists(Request $request) {
+        $email = $request->get('email', null);
+        $username = $request->get('username', null);
+
+        if ($username) {
+            if (optional(User::where('username', $username)->first())->exists()) {
+                return response(['value' => true]);
+            }
+        }
+
+        if ($email) {
+            if(optional(User::where('email', $email)->first())->exists()) {
+                return response(['value' => true]);
+            }
+        }
+
+        return response(['value' => false]);
+    }
 }

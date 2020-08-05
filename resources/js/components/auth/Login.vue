@@ -40,21 +40,24 @@
                             <v-btn color="primary"
                                    style="text-transform: none!important;"
                                    @click="submit"
-                                   depressed large block>Anmelden</v-btn>
+                                   depressed large block>Anmelden
+                            </v-btn>
                         </v-col>
 
                         <v-col cols="6">
                             <v-btn href="/register" color="secondary"
                                    class="text--secondary"
                                    style="text-transform: none!important;"
-                                   large block>Registrieren</v-btn>
+                                   large block>Registrieren
+                            </v-btn>
                         </v-col>
 
                         <v-col cols="12">
                             <v-btn href="/password-resset"
                                    class="text--secondary"
                                    style="text-transform: none!important;"
-                                   outlined text block>Haben Sie Ihr Passwort vergessen?</v-btn>
+                                   outlined text block>Haben Sie Ihr Passwort vergessen?
+                            </v-btn>
                         </v-col>
 
                         <v-col cols="12" class="text-center">
@@ -64,7 +67,8 @@
                         <v-col cols="12">
                             <v-btn color="primary"
                                    style="text-transform: none!important;"
-                                   depressed large block>DocCheck Login</v-btn>
+                                   depressed large block>DocCheck Login
+                            </v-btn>
                         </v-col>
                     </v-row>
                 </v-form>
@@ -73,16 +77,20 @@
             <v-col offset="3" cols="6">
                 <v-row>
                     <v-col offset="1" cols="3">
-                        <v-btn href="datenschutzerklaerung_" text class="text--secondary" style="text-transform: none!important;">
-                            Datenschutzerklärung</v-btn>
+                        <v-btn href="datenschutzerklaerung_" text class="text--secondary"
+                               style="text-transform: none!important;">
+                            Datenschutzerklärung
+                        </v-btn>
                     </v-col>
                     <v-col cols="4" class="text-center">
                         <v-btn href="agb_" text class="text--secondary" style="text-transform: none!important;">
-                            AGB</v-btn>
+                            AGB
+                        </v-btn>
                     </v-col>
                     <v-col cols="4">
                         <v-btn href="impressum" text class="text--secondary" style="text-transform: none!important;">
-                            Impressum</v-btn>
+                            Impressum
+                        </v-btn>
                     </v-col>
                 </v-row>
             </v-col>
@@ -98,7 +106,7 @@
 export default {
     name: "login",
 
-    data () {
+    data() {
         return {
             rules: {
                 email: [
@@ -121,19 +129,17 @@ export default {
 
     methods: {
         submit() {
-
             if (this.$refs.form.validate()) {
-                axios.post('/login', this.form)
-                    .then((response) => {
-                    })
-                    .catch((error) => {
-                        let errors = error.response.data.errors;
+                axios.post('/login', this.form).then((response) => {
+                    window.location = "/shop"
+                }).catch((error) => {
+                    let errors = error.response.data.errors;
 
-                        this.errors = {
-                            password: errors.password ? 'Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.' : null,
-                            email: errors.username ? 'Unbekannter Benutzername. Überprüfe ihn noch einmal oder versuche es mit deiner E-Mail-Adresse.' : null
-                        }
-                    });
+                    this.errors = {
+                        password: errors.password ? 'Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.' : null,
+                        email: errors.email ? 'Unbekannter Benutzername. Überprüfe ihn noch einmal oder versuche es mit deiner E-Mail-Adresse.' : null
+                    }
+                });
             }
         }
     }

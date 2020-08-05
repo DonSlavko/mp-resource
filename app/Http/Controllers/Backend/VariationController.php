@@ -28,11 +28,15 @@ class VariationController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        try {
+            $data = $request->all();
 
-        Variation::create($data);
+            Variation::create($data);
 
-        return response(['Variation created']);
+            return response(['Variation created']);
+        } catch (\Exception $exception) {
+            return response(['message' => 'There was an error. Please try again later'], 500);
+        }
     }
 
     /**
@@ -57,14 +61,18 @@ class VariationController extends Controller
      */
     public function update(Request $request, Variation $variation)
     {
-        $data = [
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-        ];
+        try {
+            $data = [
+                'name' => $request->get('name'),
+                'description' => $request->get('description'),
+            ];
 
-        $variation->update($data);
+            $variation->update($data);
 
-        return response(['Variation updated']);
+            return response(['Variation updated']);
+        } catch (\Exception $exception) {
+            return response(['message' => 'There was an error. Please try again later'], 500);
+        }
     }
 
     /**
@@ -75,8 +83,12 @@ class VariationController extends Controller
      */
     public function destroy(Variation $variation)
     {
-        $variation->delete();
+        try {
+            $variation->delete();
 
-        return response(['Variation deleted']);
+            return response(['Variation deleted']);
+        } catch (\Exception $exception) {
+            return response(['message' => 'There was an error. Please try again later'], 500);
+        }
     }
 }

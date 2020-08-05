@@ -1,204 +1,220 @@
 <template>
-  <v-container>
-    <v-data-table show-select
-                  :headers="table.headers"
-                  :items="table.data"
-                  :items-per-page="5"
-                  class="elevation-1"
-    >
-      <template v-slot:top>
-        <v-toolbar flat color="white">
-          <v-toolbar-title>Variation</v-toolbar-title>
-          <v-divider
-              class="mx-4"
-              inset
-              vertical
-          ></v-divider>
-          <v-spacer></v-spacer>
-          <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                  color="primary"
-                  dark
-                  class="mb-2"
-                  v-bind="attrs"
-                  v-on="on"
-              >New Variation</v-btn>
+    <v-container>
+        <v-data-table show-select
+                      :headers="table.headers"
+                      :items="table.data"
+                      :items-per-page="5"
+                      class="elevation-1"
+        >
+            <template v-slot:top>
+                <v-toolbar flat color="white">
+                    <v-toolbar-title>Variation</v-toolbar-title>
+                    <v-divider
+                        class="mx-4"
+                        inset
+                        vertical
+                    ></v-divider>
+                    <v-spacer></v-spacer>
+                    <v-dialog v-model="dialog" max-width="500px">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                                color="primary"
+                                dark
+                                class="mb-2"
+                                v-bind="attrs"
+                                v-on="on"
+                            >New Variation
+                            </v-btn>
+                        </template>
+                        <v-card>
+                            <v-card-title>
+                                <span class="headline">{{ formTitle }}</span>
+                            </v-card-title>
+
+                            <v-card-text>
+                                <v-container>
+                                    <v-form ref="modal">
+                                        <v-row>
+                                            <v-col cols="12">
+                                                <v-text-field
+                                                    :error="errors.name" :error-messages="errors.name"
+                                                    :rules="rules" :counter="255"
+                                                    v-model="editedItem.name" label="Variation name"></v-text-field>
+                                            </v-col>
+
+                                            <v-col cols="12">
+                                                <v-textarea
+                                                    v-model="editedItem.description"
+                                                    label="Description"></v-textarea>
+                                            </v-col>
+
+                                            <v-col cols="12">
+                                                <v-alert v-if="errors.message" type="error">
+                                                    {{ errors.message }}
+                                                </v-alert>
+                                            </v-col>
+                                        </v-row>
+                                    </v-form>
+                                </v-container>
+                            </v-card-text>
+
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+                                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                </v-toolbar>
             </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">{{ formTitle }}</span>
-              </v-card-title>
-
-              <v-card-text>
-                <v-container>
-                  <v-form ref="modal">
-                    <v-row>
-                      <v-col cols="12">
-                        <v-text-field :rules="rules" v-model="editedItem.name" label="Variation name"></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-textarea
-                            :rules="rules"
-                            v-model="editedItem.description"
-                            solo
-                            name="input-7-4"
-                            label="Description"
-                        ></v-textarea>
-                      </v-col>
-                    </v-row>
-                  </v-form>
-                </v-container>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-toolbar>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-btn
-            small
-            class="mr-2"
-            :href="'variation/'+item.id"
-            icon
-        >
-          <v-icon small
-          >mdi-magnify</v-icon>
-        </v-btn>
-        <v-icon
-            small
-            class="mr-2"
-            @click="editItem(item)"
-        >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-            small
-            @click="deleteItem(item)"
-        >
-          mdi-delete
-        </v-icon>
-      </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize">Reset</v-btn>
-      </template>
-    </v-data-table>
-  </v-container>
+            <template v-slot:item.actions="{ item }">
+                <v-btn
+                    small
+                    class="mr-2"
+                    :href="'variation/'+item.id"
+                    icon
+                >
+                    <v-icon small
+                    >mdi-magnify
+                    </v-icon>
+                </v-btn>
+                <v-icon
+                    small
+                    class="mr-2"
+                    @click="editItem(item)"
+                >
+                    mdi-pencil
+                </v-icon>
+                <v-icon
+                    small
+                    @click="deleteItem(item)"
+                >
+                    mdi-delete
+                </v-icon>
+            </template>
+            <template v-slot:no-data>
+                <v-btn color="primary" @click="initialize">Reset</v-btn>
+            </template>
+        </v-data-table>
+    </v-container>
 </template>
 
 <script>
 export default {
-  name: "HomeVariation",
+    name: "HomeVariation",
 
-  data () {
-    return {
-      table: {
-        headers: [
-          {
-            text: 'ID',
-            value: 'id'
-          },
-          {
-            text: 'Name',
-            value: 'name'
-          },
-          {
-            text: 'Description',
-            value: 'description'
-          },
-          {
-            text: 'Actions',
-            value: 'actions'
-          }
-        ],
-        data: []
-      },
+    data() {
+        return {
+            table: {
+                headers: [
+                    {
+                        text: 'ID',
+                        value: 'id'
+                    },
+                    {
+                        text: 'Name',
+                        value: 'name'
+                    },
+                    {
+                        text: 'Description',
+                        value: 'description'
+                    },
+                    {
+                        text: 'Actions',
+                        value: 'actions'
+                    }
+                ],
+                data: []
+            },
 
-      dialog: false,
-      editedIndex: -1,
+            errors: [],
 
-      editedItem: {
-        name: '',
-        description: '',
-      },
+            dialog: false,
+            editedIndex: -1,
 
-      defaultItem: {
-        name: '',
-        description: '',
-      },
+            editedItem: {
+                name: '',
+                description: '',
+            },
 
-      rules: [
-          value => !!value || "This field can't be empty"
-      ]
-    }
-  },
+            defaultItem: {
+                name: '',
+                description: '',
+            },
 
-  computed: {
-    formTitle () {
-      return this.editedIndex === -1 ? 'New Variation' : 'Edit Variation'
-    },
-  },
-
-  watch: {
-    dialog (val) {
-      val || this.close()
-    },
-  },
-
-  created () {
-    this.initialize()
-  },
-
-  methods: {
-    initialize () {
-      axios.get('/back/variations').then(response => {
-        this.table.data = response.data.data;
-      }).catch(error => {
-        console.log(error.message);
-      });
-    },
-
-    editItem (item) {
-      this.editedIndex = this.table.data.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
-    },
-
-    deleteItem (item) {
-      const index = this.table.data.indexOf(item)
-      confirm('Are you sure you want to delete this item?') &&
-      axios.delete('/back/variations/'+item.id).then(respones => {
-        this.initialize();
-      });
-    },
-
-    close () {
-      this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
-    },
-
-    save () {
-      if (this.$refs.modal.validate()) {
-        if (this.editedIndex > -1) {
-          axios.patch('/back/variations/' + this.editedItem.id, this.editedItem).then(response => {
-            this.initialize();
-          })
-        } else {
-          axios.post('/back/variations', this.editedItem).then(response => {
-            this.initialize();
-          })
+            rules: [
+                value => !!value || "Name field is required",
+                value => value.length <= 255 || "Name must be less than 255 characters long",
+            ],
         }
-        this.close()
-      }
     },
-  },
+
+    computed: {
+        formTitle() {
+            return this.editedIndex === -1 ? 'New Variation' : 'Edit Variation'
+        },
+    },
+
+    watch: {
+        dialog(val) {
+            val || this.close()
+        },
+    },
+
+    created() {
+        this.initialize()
+    },
+
+    methods: {
+        initialize() {
+            axios.get('/back/variations').then(response => {
+                this.table.data = response.data.data;
+            }).catch(error => {
+                console.log(error.message);
+            });
+        },
+
+        editItem(item) {
+            this.editedIndex = this.table.data.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            this.dialog = true
+        },
+
+        deleteItem(item) {
+            const index = this.table.data.indexOf(item)
+            confirm('Are you sure you want to delete this item?') &&
+            axios.delete('/back/variations/' + item.id).then(respones => {
+                this.initialize();
+            });
+        },
+
+        close() {
+            this.dialog = false
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedIndex = -1
+            })
+        },
+
+        save() {
+            if (this.$refs.modal.validate()) {
+                if (this.editedIndex > -1) {
+                    axios.patch('/back/variations/' + this.editedItem.id, this.editedItem).then((response) => {
+                        this.initialize();
+                        this.close()
+                    }).catch((error) => {
+                        this.errors = error.response.data;
+                    });
+                } else {
+                    axios.post('/back/variations', this.editedItem).then((response) => {
+                        this.initialize();
+                        this.close()
+                    }).catch((error) => {
+                        this.errors = error.response.data;
+                    });
+                }
+            }
+        },
+    },
 }
 </script>
