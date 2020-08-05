@@ -109,20 +109,22 @@
                                             <v-col cols="12" sm="6" md="4">
                                                 <v-text-field
                                                     :error="errors.sku" :error-messages="errors.sku"
-                                                    :rules="rules.sku" :counter="255"
+                                                    :rules="rules.sku"
                                                     v-model="editedItem.sku" label="SKU"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
                                                 <v-text-field
                                                     :error="errors.price" :error-messages="errors.price"
-                                                    :rules="rules.price" :counter="255"
-                                                    v-model="editedItem.price" type="number" label="Price"></v-text-field>
+                                                    :rules="rules.price"
+                                                    v-model="editedItem.price" type="number" step="0.01"
+                                                    label="Price"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
                                                 <v-text-field
                                                     :error="errors.stock" :error-messages="errors.stock"
-                                                    :rules="rules.stock" :counter="255"
-                                                    v-model="editedItem.stock" type="number" label="Stock"></v-text-field>
+                                                    :rules="rules.stock"
+                                                    v-model="editedItem.stock" type="number"
+                                                    label="Stock"></v-text-field>
                                             </v-col>
 
                                             <v-col cols="12" md="6">
@@ -295,10 +297,14 @@ export default {
                 ],
                 price: [
                     value => !!value || "Price field is required",
+                    value => !isNaN(parseFloat(value)) || "Price must be number",
+                    value => value > 0 || "Price must be grater then 0",
                     value => value.length <= 255 || "Price must be less than 255 characters long",
                 ],
                 stock: [
                     value => !!value || "Stock field is required",
+                    value => !isNaN(parseFloat(value)) || "Stock must be number",
+                    value => value > 0 || "Stock must be grater then 0",
                     value => value.length <= 255 || "Stock must be less than 255 characters long",
                 ],
             },

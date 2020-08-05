@@ -67,6 +67,9 @@
                     </v-dialog>
                 </v-toolbar>
             </template>
+            <template v-slot:item.description="{ item }">
+                {{ item.description.slice(0, 60) }}
+            </template>
             <template v-slot:item.actions="{ item }">
                 <v-btn
                     small
@@ -130,24 +133,6 @@ export default {
             errors: [],
 
             dialog: false,
-            headers: [
-                {
-                    text: 'ID',
-                    value: 'id'
-                },
-                {
-                    text: 'Name',
-                    value: 'name'
-                },
-                {
-                    text: 'Description',
-                    value: 'description'
-                },
-                {
-                    text: 'Actions',
-                    value: 'actions'
-                }
-            ],
 
             editedIndex: -1,
 
