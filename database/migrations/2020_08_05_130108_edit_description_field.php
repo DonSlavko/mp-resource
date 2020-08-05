@@ -14,22 +14,22 @@ class EditDescriptionField extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->text('description')->nullable();
+            $table->text('description')->nullable()->change();
         });
         Schema::table('categories', function (Blueprint $table) {
-            $table->text('description')->nullable();
+            $table->text('description')->nullable()->change();
         });
         Schema::table('attributes', function (Blueprint $table) {
-            $table->text('description')->nullable();
+            $table->text('description')->nullable()->change();
         });
         Schema::table('attribute_values', function (Blueprint $table) {
-            $table->text('description')->nullable();
+            $table->text('description')->nullable()->change();
         });
         Schema::table('variations', function (Blueprint $table) {
-            $table->text('description')->nullable();
+            $table->text('description')->nullable()->change();
         });
         Schema::table('variation_values', function (Blueprint $table) {
-            $table->text('description')->nullable();
+            $table->text('description')->nullable()->change();
         });
     }
 
@@ -41,22 +41,22 @@ class EditDescriptionField extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('description');
+            $table->string('description')->change();
         });
         Schema::table('categories', function (Blueprint $table) {
-            $table->string('description');
+            $table->string('description')->change();
         });
         Schema::table('attributes', function (Blueprint $table) {
-            $table->string('description');
+            $table->string('description')->change();
         });
         Schema::table('attribute_values', function (Blueprint $table) {
-            $table->string('description');
+            $table->string('description')->change();
         });
         Schema::table('variations', function (Blueprint $table) {
-            $table->string('description');
+            $table->string('description')->change();
         });
         Schema::table('variation_values', function (Blueprint $table) {
-            $table->string('description');
+            $table->string('description')->change();
         });
     }
 }

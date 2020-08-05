@@ -437,7 +437,10 @@ export default {
                 subscribe: null,
             },
 
-            errors: [],
+            errors: {
+                email: null,
+                username: null,
+            },
 
             form: {
                 email: null,
@@ -484,24 +487,20 @@ export default {
                 username: value
             }).then((response) => {
                 if (response.data.value) {
-                    this.errors = {
-                        username: 'Benutzername existiert bereits.'
-                    }
+                    this.errors.username = 'Benutzername existiert bereits.';
                 }
             })
-        }, 500),
+        }, 100),
 
         checkIfEmailExists: _.debounce(function(value) {
             axios.post('/exists', {
                 email: value
             }).then((response) => {
                 if (response.data.value) {
-                    this.errors = {
-                        email: 'E-Mail existiert bereits.'
-                    }
+                    this.errors.email = 'E-Mail existiert bereits.';
                 }
             })
-        }, 500),
+        }, 100),
 
         validateStep2() {
             if (this.$refs.step2.validate()) {
