@@ -29,7 +29,7 @@ Route::namespace('Frontend')->group(function () {
 Route::post('/exists', 'Auth\RegisterController@checkIfExists');
 Auth::routes(['verify' => true]);
 
-//Route::middleware(['auth','verified'])->group(function () {
+Route::middleware(['auth','verified'])->group(function () {
 
     Route::namespace('Frontend')->name('user.')->group(function () {
         Route::get('neuigkeiten', 'UserController@news')->name('news');
@@ -38,27 +38,30 @@ Auth::routes(['verify' => true]);
         Route::get('vorbestellungen/my-pre-orders', 'UserController@preorder')->name('preorder');
     });
 
-    Route::namespace('Frontend\Admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::resource('product', 'ProductController');
-        Route::resource('attribute', 'AttributeController');
-        Route::resource('variation', 'VariationController');
-        Route::resource('user', 'UserController');
-        Route::resource('category', 'CategoryController');
+    Route::middleware(['isAdmin'])->group(function () {
+        Route::namespace('Frontend\Admin')->prefix('admin')->name('admin.')->group(function () {
+            Route::resource('product', 'ProductController');
+            Route::resource('attribute', 'AttributeController');
+            Route::resource('variation', 'VariationController');
+            Route::resource('user', 'UserController');
+            Route::resource('category', 'CategoryController');
+        });
+
+        Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
+            Route::resource('users', 'UserController');
+            Route::resource('categories', 'CategoryController');
+            Route::resource('variations', 'VariationController');
+            Route::resource('variation-values', 'VariationValueController');
+            Route::resource('attributes', 'AttributeController');
+            Route::resource('attribute-values', 'AttributeValueController');
+            Route::resource('products', 'ProductController');
+            Route::post('users/{user}/activate', 'UserController@activate');
+            Route::post('users/{user}/deactivate', 'UserController@deactivate');
+        });
     });
 
-Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
-    Route::resource('users', 'UserController');
-    Route::resource('categories', 'CategoryController');
-    Route::resource('variations', 'VariationController');
-    Route::resource('variation-values', 'VariationValueController');
-    Route::resource('attributes', 'AttributeController');
-    Route::resource('attribute-values', 'AttributeValueController');
-    Route::resource('products', 'ProductController');
-    Route::get('shop', 'ShopController@index');
-    Route::get('shop/{product}', 'ShopController@show');
-    Route::post('users/{user}/activate', 'UserController@activate');
-    Route::post('users/{user}/deactivate', 'UserController@deactivate');
+    Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
+        Route::get('shop', 'ShopController@index');
+        Route::get('shop/{product}', 'ShopController@show');
+    });
 });
-
-
-//});

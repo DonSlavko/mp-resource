@@ -44,5 +44,13 @@ const app = new Vue({
                 },
             ]
         }
+    },
+
+    methods: {
+        logout() {
+            axios.post('/logout').then((response) => {
+                window.location = "/"
+            })
+        }
     }
 });

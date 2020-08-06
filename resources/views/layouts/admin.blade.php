@@ -39,6 +39,8 @@
                         User</v-btn>
                     <v-btn href="{{ route('admin.variation.index') }}" text class="text--secondary">
                         Variation</v-btn>
+                    <v-btn href="{{ route('user.shop') }}" text class="text--secondary">
+                        Shop</v-btn>
                 </v-row>
             </v-container>
 

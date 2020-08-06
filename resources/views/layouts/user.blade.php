@@ -35,8 +35,12 @@
                         Produkte</v-btn>
                     <v-btn href="{{ route('user.preorder') }}" text class="text--secondary">
                         Vorbestellungen</v-btn>
+                    @if(Auth::user()->is_admin)
                     <v-btn href="/admin/product" text class="text--secondary">
                         Admin</v-btn>
+                    @endif
+                    <v-btn  @click="logout()" text class="text--secondary">
+                        Logout</v-btn>
 
                 </v-row>
             </v-container>
