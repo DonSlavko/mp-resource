@@ -3,27 +3,16 @@
 use Illuminate\Support\Facades\Route;
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 
-Route::get('/home', function () {
-    return view('pages.home');
-});
-
-Route::get('/agb', function () {
-    return view('includes.agb');
-})->name('inc.agb');
-Route::get('/datenschutzerklaerung', function () {
-    return view('includes.datenschutzerklaerung');
-})->name('inc.dat');
-Route::get('/impressum', function () {
-    return view('includes.impressum');
-})->name('inc.imp');
-
 Route::namespace('Frontend')->group(function () {
-    //Route::get('/', 'LandingController@home')->name('home');
+    Route::get('/home', 'LandingController@home')->name('landingHome');
     Route::get('produkte', 'LandingController@product')->name('product');
     Route::get('eu-gmp', 'LandingController@eugmp')->name('eu-gmp');
     Route::get('investoren', 'LandingController@investor')->name('investor');
     Route::get('karriere', 'LandingController@career')->name('career');
     Route::get('kontakt', 'LandingController@contact')->name('contact');
+    Route::get('/agb', 'LandingController@agb')->name('inc.agb');
+    Route::get('/datenschutzerklaerung', 'LandingController@dat')->name('inc.dat');
+    Route::get('/impressum', 'LandingController@imp')->name('inc.imp');
 });
 
 Route::post('/exists', 'Auth\RegisterController@checkIfExists');

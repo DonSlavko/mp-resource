@@ -30,4 +30,16 @@ class LandingController extends Controller
     public function contact() {
         return view('pages.contact');
     }
+
+    public function agb() {
+        return view('includes.agb');
+    }
+
+    public function dat() {
+        return view('includes.datenschutzerklaerung');
+    }
+
+    public function imp() {
+        return view('includes.impressum');
+    }
 }

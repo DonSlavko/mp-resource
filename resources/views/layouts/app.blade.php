@@ -36,7 +36,7 @@
                             Produkte</v-btn>
                         <v-btn href="{{ route('eu-gmp') }}" text class="text--secondary">
                             EU-\GMP</v-btn>
-                        <v-btn href="{{ route('investor') }}"text class="text--secondary">
+                        <v-btn href="{{ route('investor') }}" text class="text--secondary">
                             Investoren</v-btn>
                         <v-btn href="{{ route('career') }}" text class="text--secondary">
                             Karriere</v-btn>
@@ -71,22 +71,24 @@
                         <v-img class="mt-2" max-width="162" src="{{ asset('storage/Logo-Original.png') }}"></v-img>
                     </v-col>
                     <v-col cols="12" md="5">
-                        <v-btn href="{{ route('user.news') }}"
-                               text
-                               rounded>
-                            Neuigkeiten</v-btn>
-                        <v-btn href="{{ route('user.shop') }}"
-                               text
+                        <v-btn href="{{ route('product') }}" text
                                rounded>
                             Produkte</v-btn>
-                        <v-btn href="{{ route('user.preorder') }}"
-                               text
+                        <v-btn href="{{ route('eu-gmp') }}" text
                                rounded>
-                            Vorbestellungen</v-btn>
-                        <v-btn href="/admin/product"
-                               text
+                            EU-\GMP</v-btn>
+                        <v-btn href="{{ route('investor') }}" text
                                rounded>
-                            Admin</v-btn>
+                            Investoren</v-btn>
+                        <v-btn href="{{ route('career') }}" text
+                               rounded>
+                            Karriere</v-btn>
+                        <v-btn href="{{ route('contact') }}" text
+                               rounded>
+                            Kontakt</v-btn>
+                        <v-btn href="{{ route('login') }}" text
+                               rounded>
+                            Shop</v-btn>
                         <v-divider></v-divider>
                         <v-btn href="{{ route('inc.agb') }}"
                                text
