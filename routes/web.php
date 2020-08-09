@@ -25,6 +25,7 @@ Route::middleware(['auth','verified'])->group(function () {
         Route::get('shop', 'UserController@shop')->name('shop');
         Route::get('shop/product/{product}', 'UserController@product')->name('shop.product');
         Route::get('vorbestellungen/my-pre-orders', 'UserController@preorder')->name('preorder');
+        Route::get('warenkorb', 'UserController@cart')->name('cart');
     });
 
     Route::middleware(['isAdmin'])->group(function () {
@@ -52,5 +53,11 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
         Route::get('shop', 'ShopController@index');
         Route::get('shop/{product}', 'ShopController@show');
+        Route::get('in-cart', 'ShopController@inCart');
+        Route::post('add-to-cart', 'ShopController@addToCart');
+        Route::delete('remove-from-cart/{cart}', 'ShopController@removeFromCart');
+        Route::post('make-order', 'ShopController@makeOrder');
+        Route::get('get-orders', 'ShopController@getOrders');
+
     });
 });

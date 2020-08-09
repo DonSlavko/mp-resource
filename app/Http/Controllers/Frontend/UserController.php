@@ -23,4 +23,8 @@ class UserController extends Controller
     public function preorder() {
         return view('user.preorder');
     }
+
+    public function cart() {
+        return view('user.cart');
+    }
 }

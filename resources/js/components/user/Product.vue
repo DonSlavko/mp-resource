@@ -12,7 +12,9 @@
             </v-col>
 
             <v-col cols="12" sm="6" md="7">
-                <h2 class="text-h6 mb-3" style="text-transform: uppercase">{{ item.name }}</h2>
+                <h2 class="text-h5 mb-3" style="text-transform: uppercase">{{ item.name }}</h2>
+                <h3 class="text-subtitle-1 mb-3 primary--text">{{ item.price }} €</h3>
+                <h3 class="text-subtitle-1 mb-8 primary--text">In stock: {{ item.stock_quantity }}</h3>
                 <hr style="background: #efefef; color: rgba(68,68,68,1); height: 1px; width: 80%; border: none;">
 
                 {{ item.description }}
@@ -41,7 +43,7 @@
                     </v-col>
 
                     <v-col cols="12" md="3">
-                        <v-btn>In Den Warenkorb</v-btn>
+                        <v-btn @click="addToCart()" :disabled="!canAddToCart">In Den Warenkorb</v-btn>
                     </v-col>
                 </v-row>
             </v-col>
@@ -76,6 +78,12 @@ export default {
         }
     },
 
+    computed: {
+        canAddToCart() {
+            return this.selected && this.quantity < this.item.stock_quantity
+        },
+    },
+
     created() {
         this.initialize();
     },
@@ -97,6 +105,23 @@ export default {
             }).catch(error => {
                 console.log(error.message);
             });
+        },
+
+        formData() {
+            return {
+                'product': this.item_id,
+                'variation_value': this.selected,
+                'quantity': this.quantity,
+            }
+        },
+
+        addToCart() {
+            axios.post('/back/add-to-cart', this.formData()).then((response) => {
+                console.log(response.data)
+
+                this.selected = null;
+                this.quantity = 1;
+            })
         },
     }
 }

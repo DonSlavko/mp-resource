@@ -2,6 +2,7 @@
 
 @section('content')
 <v-container>
+    <v-btn href="/" text class="text--secondary">Back</v-btn>
 
     <h2>Allgemeine Geschäftsbedingungen der Medical Pharma Resource GmbH</h2>
     <h3 class="my-4">Inhaltsverzeichnis</h3>

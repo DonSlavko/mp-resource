@@ -18,6 +18,8 @@ import ShowVariation from "./components/admin/variation/ShowVariation";
 
 import Shop from "./components/user/Shop";
 import Product from "./components/user/Product";
+import Cart from "./components/user/Cart";
+import Order from "./components/user/Order";
 
 Vue.component('login', Login);
 Vue.component('register', Register);
@@ -36,3 +38,5 @@ Vue.component('show-variation', ShowVariation);
 
 Vue.component('shop', Shop);
 Vue.component('product', Product);
+Vue.component('cart', Cart);
+Vue.component('order', Order);

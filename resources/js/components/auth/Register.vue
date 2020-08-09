@@ -290,6 +290,8 @@
             </v-col>
 
             <v-col cols="12" md="6">
+                <v-btn href="/" text class="text--secondary">Back</v-btn>
+
                 <v-timeline dense align-top>
                     <v-timeline-item large fill-dot icon="mdi-square-edit-outline">
                         <h3>REGISTRIEREN UND NACHWEISERBRINGUNG</h3>

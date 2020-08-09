@@ -35,6 +35,12 @@
                         Produkte</v-btn>
                     <v-btn href="{{ route('user.preorder') }}" text class="text--secondary">
                         Vorbestellungen</v-btn>
+                    <v-btn href="{{ route('user.cart') }}" text class="text--secondary">
+                        <v-icon>mdi-cart</v-icon>
+                        <v-chip class="ma-2" pill>
+                            {{ Auth::user()->inCart()->count() }}
+                        </v-chip>
+                    </v-btn>
                     @if(Auth::user()->is_admin)
                     <v-btn href="/admin/product" text class="text--secondary">
                         Admin</v-btn>
@@ -78,10 +84,6 @@
                            text
                            rounded>
                         Vorbestellungen</v-btn>
-                    <v-btn href="/admin/product" color="white"
-                           text
-                           rounded>
-                        Admin</v-btn>
                     <v-divider></v-divider>
                     <v-btn href="{{ route('inc.agb') }}"
                            color="white"

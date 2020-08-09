@@ -2,7 +2,7 @@
 
 @section('content')
     <v-container>
-
+        <v-btn href="/" text class="text--secondary">Back</v-btn>
 
         <h2>Datenschutzerklärung der Medical Pharma Resource GmbH</h2>
 

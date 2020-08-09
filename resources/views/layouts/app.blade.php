@@ -26,8 +26,7 @@
             <v-app-bar app height="100" flat>
                 <v-container>
                     <v-row align="center" justify="center">
-                        <v-img max-width="162" src="{{ asset('storage/Logo-Original.png') }}" contain></v-img>
-
+                        <a href="/"><v-img max-width="162" src="{{ asset('storage/Logo-Original.png') }}" contain></v-img></a>
                         <v-spacer></v-spacer>
 
                         <v-btn href="/" text class="text--secondary">

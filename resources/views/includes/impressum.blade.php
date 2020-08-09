@@ -2,6 +2,8 @@
 
 @section('content')
     <v-container>
+        <v-btn href="/" text class="text--secondary">Back</v-btn>
+
         <h1>Impressum</h1>
 
         <h3 class="my-4">Medical Pharma Resource GmbH</h3>
