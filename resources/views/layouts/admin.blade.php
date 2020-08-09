@@ -29,17 +29,19 @@
                     <v-spacer></v-spacer>
 
                     <v-btn href="{{ route('admin.product.index') }}" text class="text--secondary">
-                        Product</v-btn>
+                        Products</v-btn>
                     <v-btn href="{{ route('admin.category.index') }}" text class="text--secondary">
-                        Category</v-btn>
+                        Categories</v-btn>
                     <v-btn href="{{ route('admin.attribute.index') }}" text class="text--secondary">
-                        Attribute</v-btn>
-                    <v-btn href="{{ route('admin.user.index') }}" text class="text--secondary">
-                        User</v-btn>
+                        Attributes</v-btn>
                     <v-btn href="{{ route('admin.variation.index') }}" text class="text--secondary">
-                        Variation</v-btn>
+                        Variations</v-btn>
+                    <v-btn href="{{ route('admin.user.index') }}" text class="text--secondary">
+                        Users</v-btn>
+                    <v-btn href="{{ route('admin.order.index') }}" text class="text--secondary">
+                        Orders</v-btn>
                     <v-btn href="{{ route('user.shop') }}" text class="text--secondary">
-                        Shop</v-btn>
+                        Back to Shop</v-btn>
                 </v-row>
             </v-container>
 

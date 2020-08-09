@@ -34,6 +34,7 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::resource('attribute', 'AttributeController');
             Route::resource('variation', 'VariationController');
             Route::resource('user', 'UserController');
+            Route::resource('order', 'OrderController');
             Route::resource('category', 'CategoryController');
         });
 
@@ -45,6 +46,7 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::resource('attributes', 'AttributeController');
             Route::resource('attribute-values', 'AttributeValueController');
             Route::resource('products', 'ProductController');
+            Route::resource('orders', 'OrderController');
             Route::post('users/{user}/activate', 'UserController@activate');
             Route::post('users/{user}/deactivate', 'UserController@deactivate');
         });

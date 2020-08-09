@@ -172,6 +172,9 @@
                     </v-dialog>
                 </v-toolbar>
             </template>
+            <template v-slot:item.date="{ item }">
+                {{ getDate(item.created_at) }}
+            </template>
             <template v-slot:item.actions="{ item }">
                 <v-icon
                     small
@@ -230,7 +233,7 @@ export default {
                     },
                     {
                         text: 'Date',
-                        value: 'created_at'
+                        value: 'date'
                     },
                     {
                         text: 'Options',
@@ -333,18 +336,16 @@ export default {
     methods: {
         initialize() {
             axios.get('/back/products').then(response => {
-                this.table.data = response.data.data.map(item => {
-                    let date = new Date(item.created_at);
-                    let year = date.getFullYear();
-                    let month = (1 + date.getMonth()).toString().padStart(2, '0');
-                    let day = date.getDate().toString().padStart(2, '0');
-
-                    item.created_at = year + '/' + month + '/' + day;
-                    return item;
-                })
+                this.table.data = response.data.data;
             }).catch(error => {
                 console.log(error.message);
             });
+        },
+
+        getDate(date) {
+            return new Date(date).toLocaleString('en-gb', {
+                year: 'numeric', month: '2-digit', day: '2-digit'
+            }).replace(/(\d+)\/(\d+)\/(\d+)/, '$3/$1/$2');
         },
 
         getCategories() {
