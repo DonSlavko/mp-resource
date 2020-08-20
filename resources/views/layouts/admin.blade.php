@@ -42,6 +42,8 @@
                         Orders</v-btn>
                     <v-btn href="{{ route('user.shop') }}" text class="text--secondary">
                         Back to Shop</v-btn>
+                    <v-btn @click="logout()" text class="text--secondary">
+                        Logout</v-btn>
                 </v-row>
             </v-container>
 

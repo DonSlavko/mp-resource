@@ -9,21 +9,13 @@
             <template v-slot:item.btmnr="{ item }">
                 <v-btn small dense @click="showFiles(item)">Show Files</v-btn>
                 <v-list-item-group color="primary" v-if="item.show_files">
-                    <v-list-item dense :href="item.file_1.path">
-                        <v-list-item-content>
-                            <v-list-item-title v-text="item.file_1.name"></v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item dense :href="item.file_2.path">
-                        <v-list-item-content>
-                            <v-list-item-title v-text="item.file_2.name"></v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item dense :href="item.file_3.path">
-                        <v-list-item-content>
-                            <v-list-item-title v-text="item.file_3.name"></v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
+                    <template v-for="file in item.files">
+                        <v-list-item dense :href="file.path" >
+                            <v-list-item-content>
+                                <v-list-item-title v-text="file.name"></v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </template>
                 </v-list-item-group>
             </template>
             <template v-slot:item.email_verified="{ item }">
@@ -33,9 +25,8 @@
 
             </template>
             <template v-slot:item.activated="{ item }">
-                <v-btn small dense v-if="item.active" @click="activateAcc(item)">Activate</v-btn>
-                <v-btn small dense v-else @click="deactivateAcc(item)">Deactivate</v-btn>
-
+                <v-btn small dense v-if="item.active" @click="deactivateAcc(item)">Deactivate</v-btn>
+                <v-btn small dense v-else @click="activateAcc(item)">Activate</v-btn>
             </template>
         </v-data-table>
     </v-container>

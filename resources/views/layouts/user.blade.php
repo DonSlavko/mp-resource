@@ -45,7 +45,7 @@
                     <v-btn href="/admin/product" text class="text--secondary">
                         Admin</v-btn>
                     @endif
-                    <v-btn  @click="logout()" text class="text--secondary">
+                    <v-btn @click="logout()" text class="text--secondary">
                         Logout</v-btn>
 
                 </v-row>

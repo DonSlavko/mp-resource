@@ -29,7 +29,7 @@
                         <a href="/"><v-img max-width="162" src="{{ asset('storage/Logo-Original.png') }}" contain></v-img></a>
                         <v-spacer></v-spacer>
 
-                        <v-btn href="/" text class="text--secondary">
+                        <v-btn href="/home" text class="text--secondary">
                             Unternehmen</v-btn>
                         <v-btn href="{{ route('product') }}" text class="text--secondary">
                             Produkte</v-btn>
@@ -39,12 +39,16 @@
                             Investoren</v-btn>
                         <v-btn href="{{ route('career') }}" text class="text--secondary">
                             Karriere</v-btn>
-                        <v-btn text class="text--secondary">
-                            Aktuelles</v-btn>
+                        {{--<v-btn text class="text--secondary">
+                            Aktuelles</v-btn>--}}
                         <v-btn href="{{ route('contact') }}" text class="text--secondary">
                             Kontakt</v-btn>
                         <v-btn href="{{ route('login') }}" text class="text--secondary">
                             Shop</v-btn>
+                        @auth
+                            <v-btn @click="logout()" text class="text--secondary">
+                                Logout</v-btn>
+                        @endauth
                     </v-row>
                 </v-container>
 

@@ -20,18 +20,13 @@ class UserController extends Controller
             $uploads = $user->getMedia('upload_files');
 
             if (!$uploads->isEmpty()) {
-                $user->file_1 = [
-                    'name' => $uploads[0]->file_name,
-                    'path' => $uploads[0]->getFullUrl()
-                ];
-                $user->file_2 = [
-                    'name' => $uploads[1]->file_name,
-                    'path' => $uploads[1]->getFullUrl()
-                ];
-                $user->file_3 = [
-                    'name' => $uploads[2]->file_name,
-                    'path' => $uploads[2]->getFullUrl()
-                ];
+
+                $user->files = $uploads->map(function($file) {
+                    return [
+                        'name' => $file->file_name,
+                        'path' => $file->getFullUrl()
+                    ];
+                });
             }
 
             return $user;
