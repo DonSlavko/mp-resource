@@ -53,7 +53,7 @@
                         </v-col>
 
                         <v-col cols="12">
-                            <v-btn href="/password-resset"
+                            <v-btn href="/password/reset"
                                    class="text--secondary"
                                    style="text-transform: none!important;"
                                    outlined text block>Haben Sie Ihr Passwort vergessen?

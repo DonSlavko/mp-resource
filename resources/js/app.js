@@ -32,6 +32,10 @@ const app = new Vue({
     el: '#app',
 
     data: {
+        input: {
+            password: null,
+            password_repeat: null,
+        },
         validate: {
             name: [
                 value => !!value || 'Dieses Feld ist erforderlich.'
@@ -42,8 +46,29 @@ const app = new Vue({
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     return pattern.test(value) || 'Bitte gib eine gültige E-Mail-Adresse an.'
                 },
-            ]
+            ],
+            password: [
+                value => !!value || 'Passwort angeben',
+                value => {
+                    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!\$%&\*?\,\_])(?=.{8,})/;
+                    return (
+                        pattern.test(value) ||
+                        "Minimum 10 Zeichen\n" +
+                        "mind. ein Großbuchstaben\n" +
+                        "einen Kleinbuchstaben\n" +
+                        "eine Zahl\n" +
+                        "ein Sonderzeichen ( !$%&?*,_ )"
+                    );
+                }
+            ],
+            password_repeat: value => !!value || 'Passwort wiederholen',
         }
+    },
+
+    computed: {
+        confirmPassword() {
+            return (this.input.password === this.input.password_repeat) || 'Die Passwörter stimmen nicht überein';
+        },
     },
 
     methods: {
