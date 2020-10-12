@@ -40,6 +40,8 @@
                         Users</v-btn>
                     <v-btn href="{{ route('admin.order.index') }}" text class="text--secondary">
                         Orders</v-btn>
+                    <v-btn href="{{ route('admin.call-service') }}" text class="text--secondary">
+                        Call Service</v-btn>
                     <v-btn href="{{ route('user.shop') }}" text class="text--secondary">
                         Back to Shop</v-btn>
                     <v-btn @click="logout()" text class="text--secondary">

@@ -23,6 +23,9 @@ import Product from "./components/user/Product";
 import Cart from "./components/user/Cart";
 import Order from "./components/user/Order";
 
+import CallService from "./components/modals/CallService";
+import HomeCallService from "./components/admin/call-service/HomeCallService";
+
 Vue.component('login', Login);
 Vue.component('register', Register);
 
@@ -40,7 +43,11 @@ Vue.component('show-variation', ShowVariation);
 
 Vue.component('home-order', HomeOrder);
 
+Vue.component('home-call-service', HomeCallService)
+
 Vue.component('shop', Shop);
 Vue.component('product', Product);
 Vue.component('cart', Cart);
 Vue.component('order', Order);
+
+Vue.component('call-service', CallService);

@@ -100,6 +100,8 @@
                            text
                            rounded>
                         Impressum</v-btn>
+
+                    <call-service></call-service>
                 </v-col>
                 <v-col cols="12" md="3"></v-col>
                 <v-col

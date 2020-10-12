@@ -36,6 +36,8 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::resource('user', 'UserController');
             Route::resource('order', 'OrderController');
             Route::resource('category', 'CategoryController');
+
+            Route::get('call-service', 'CallServiceController@index')->name('call-service');
         });
 
         Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
@@ -49,6 +51,9 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::resource('orders', 'OrderController');
             Route::post('users/{user}/activate', 'UserController@activate');
             Route::post('users/{user}/deactivate', 'UserController@deactivate');
+
+            route::get('call-service', 'CallServiceController@index');
+            route::post('call-service', 'CallServiceController@store');
         });
     });
 
