@@ -52,9 +52,11 @@
                 <template>
                     <div class="text-center">
                         Arzneibroschüre
-                        <v-btn :href="item.brochure[0].path" class="ma-2" outlined color="primary">Download</v-btn>
+                        <v-btn v-if="item.brochure[0]" :href="item.brochure[0].path" class="ma-2" outlined color="primary">Download</v-btn>
+                        <v-btn v-else class="ma-2" outlined color="primary" disabled>Download</v-btn>
                         Chargenanalyse
-                        <v-btn :href="item.analysis[0].path" class="ma-2" outlined color="primary">Download</v-btn>
+                        <v-btn v-if="item.brochure[1]" :href="item.analysis[0].path" class="ma-2" outlined color="primary">Download</v-btn>
+                        <v-btn v-else class="ma-2" outlined color="primary" disabled>Download</v-btn>
                     </div>
                 </template>
             </v-col>

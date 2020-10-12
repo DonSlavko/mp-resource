@@ -254,17 +254,13 @@
                                 <h4>Überprüfen Sie Ihre Angaben</h4>
 
                                 <p>{{ input.title === 'Arzt/Ärztin' ? 'Praxis' : 'Apotheke' }} {{ input.pharmacy }}</p>
-                                <p>{{ input.title === 'Arzt/Ärztin' ? 'Arzt' : 'Apotheker' }}: {{
-                                        input.honorific + ' ' + input.titles + ' ' + input.first_name + ' ' + input.last_name
-                                    }}</p>
-                                <p>Adresse: {{
-                                        input.street + ' ' + input.address + ', ' + input.postal + ' ' + input.city
-                                    }}</p>
-                                <p>E-Mail: {{ input.email }}</p>
-                                <p>Telefon: {{ input.phone }}</p>
-                                <p>Fax: {{ input.fax }}</p>
+                                <p>{{ input.title === 'Arzt/Ärztin' ? 'Arzt' : 'Apotheker' }}: {{ getFullName }}</p>
+                                <p>Adresse: {{ getFullAddress || '' }}</p>
+                                <p>E-Mail: {{ input.email || '' }}</p>
+                                <p>Telefon: {{ input.phone || '' }}</p>
+                                <p>Fax: {{ input.fax || '' }}</p>
 
-                                <v-checkbox :rules="rules.checkbox" v-model="input.agree" name="agree"></v-checkbox>
+                                <v-checkbox dense :rules="rules.checkbox" v-model="input.agree" name="agree"></v-checkbox>
 
                                 <p>Ich habe Gelegenheit gehabt, die Inhalte der</p>
                                 <p>Datenschutzerklärung zur Kenntnis zu nehmen und willige in die Datenverarbeitung
@@ -277,7 +273,7 @@
                                     widerrufen kann.*</p>
 
 
-                                <v-checkbox v-model="input.subscribe" name="subscribe"></v-checkbox>
+                                <v-checkbox dense v-model="input.subscribe" name="subscribe"></v-checkbox>
 
                                 <p>Ich möchte zeitnah über die Verfügbarkeit der Arzneimittel im Onlineshop
                                     benachrichtigt werden.</p>
@@ -473,6 +469,49 @@ export default {
 
         labelForPharmacy() {
             return this.input.title === 'Arzt/Ärztin' ? 'Name der Praxis' : 'Name der Apotheke';
+        },
+
+        getFullName() {
+            let fullName = '';
+
+            if (this.input.honorific) {
+                fullName += this.input.honorific + ' ';
+            }
+
+            if (this.input.titles) {
+                fullName += this.input.titles + ' ';
+            }
+
+            if (this.input.first_name) {
+                fullName += this.input.first_name + ' ';
+            }
+
+            if (this.input.last_name) {
+                fullName += this.input.last_name;
+            }
+
+            return fullName;
+        },
+
+        getFullAddress() {
+            let fullAddress = '';
+            if (this.input.street) {
+                fullAddress += this.input.street + ' ';
+            }
+
+            if (this.input.address) {
+                fullAddress += this.this.input.address + ', ';
+            }
+
+            if (this.input.postal) {
+                fullAddress += this.input.postal + ' ';
+            }
+
+            if (this.input.city) {
+                fullAddress += this.input.city;
+            }
+
+            return fullAddress;
         }
     },
 
