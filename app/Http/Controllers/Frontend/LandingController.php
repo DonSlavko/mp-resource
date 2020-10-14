@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class LandingController extends Controller
 {
-    public function home() {
+    /*public function home() {
         return view('pages.home');
     }
 
@@ -29,7 +29,7 @@ class LandingController extends Controller
 
     public function contact() {
         return view('pages.contact');
-    }
+    }*/
 
     public function agb() {
         return view('includes.agb');

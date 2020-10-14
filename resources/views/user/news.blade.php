@@ -2,7 +2,7 @@
 
 @section('content')
     <v-container style="color: #505050">
-        <v-img src="{{ asset('storage/Banner-MPR_2.png') }}"></v-img>
+        <v-img src="Banner-MPR_2.png"></v-img>
 
         <h2 class="py-14">WIR SIND MPR!</h2>
 
@@ -34,7 +34,8 @@
             <li>Die Auswahl unserer medizinischen Cannabisprodukten und therapeutischen Geräten im Onlineshop</li>
         </ul>
 
-        <p>Kontaktieren Sie uns! Wir beantworten gerne Ihre Fragen, freuen uns über einen fachlichen Austausch und auf eine gute Zusammenarbeit!</p>
+        <p>Kontaktieren Sie uns! Wir beantworten gerne Ihre Fragen, freuen uns über einen fachlichen Austausch und auf
+            eine gute Zusammenarbeit!</p>
 
         <p>Mit dankenden Grüßen</p>
 

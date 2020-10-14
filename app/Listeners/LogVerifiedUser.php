@@ -13,19 +13,17 @@ class LogVerifiedUser
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         //
     }
 
     /**
      * Handle the event.
      *
-     * @param  Verified  $event
+     * @param Verified $event
      * @return void
      */
-    public function handle(Verified $event)
-    {
+    public function handle(Verified $event) {
         //
     }
 }

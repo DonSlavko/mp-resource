@@ -23,15 +23,13 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    protected function credentials(Request $request)
-    {
-        return [filter_var($request->input($this->username()), FILTER_VALIDATE_EMAIL )
+    protected function credentials(Request $request) {
+        return [filter_var($request->input($this->username()), FILTER_VALIDATE_EMAIL)
             ? 'email'
             : 'username' => $request->{$this->username()}, 'password' => $request->password, 'active' => 1];
     }
 
-    protected function validateLogin(Request $request)
-    {
+    protected function validateLogin(Request $request) {
         if ($request->exists('username')) {
             $request->validate([
                 'username' => 'required|string|exists:users',
@@ -57,14 +55,12 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request)
-    {
-        $login_type = filter_var($request->input($this->username()), FILTER_VALIDATE_EMAIL )
+    public function login(Request $request) {
+        $login_type = filter_var($request->input($this->username()), FILTER_VALIDATE_EMAIL)
             ? 'email'
             : 'username';
 

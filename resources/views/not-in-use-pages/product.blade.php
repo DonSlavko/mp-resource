@@ -7,12 +7,13 @@
     >
         <div style="z-index: 1; background: rgba(255,255,255,0.55); mix-blend-mode: normal; position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
         <v-row style="z-index: 100;"
-                align="center"
-                justify="center"
+               align="center"
+               justify="center"
         >
             <v-col class="text-center" style="color: #444444" cols="12">
                 <h4 class="text-body-1 font-weight-medium mb-4">PRODUKTE</h4>
-                <h1 class="text-h3 font-weight-bold mb-4">Eine gute therapeutische und <br> medizinische Alternative</h1>
+                <h1 class="text-h3 font-weight-bold mb-4">Eine gute therapeutische und <br> medizinische Alternative
+                </h1>
                 <h4 class="text-body-1 font-weight-medium">
                     Bei der Therapie/Behandlung mit medizinischen Cannabisprodukten steht die
                     <br>Reduzierung von Schmerzen und Krankheitssymptomen im Mittelpunkt.
@@ -39,7 +40,8 @@
                     <h4>Entourage-Effekt</h4>
                     <p>Die Bezeichnung „Entourage-Effekt“ stammt aus der Cannabis–Forschung und beschreibt ein
                         therapeutisches Zusammenspiel zwischen Cannabinoide und Terpenoide. Diese definiert, dass ein
-                        Pflanzenstoffgemisch eine höhere biologische Aktivität besitzt als die isolierte Reinsubstanz selbst.</p>
+                        Pflanzenstoffgemisch eine höhere biologische Aktivität besitzt als die isolierte Reinsubstanz
+                        selbst.</p>
 
                     <h4>Cannabinoide</h4>
                     <p>Cannabinoide sind ein Sammelbegriff für alle Stoffe, die über die Cannabinoid Rezeptoren
@@ -88,26 +90,26 @@
                     <p>Unsere medizinischen Cannabisprodukte werden sich durch eine gleichbleibende Qualität
                         auf höchstem Niveau auszeichnen.</p>
 
-                        <p>Unser Ziel ist es eine große Vielfalt an medizinischen Cannabisprodukten anzubieten,
-                            um eine bessere Verfügbarkeit für die zu behandelnden Krankheitssymptome zu
-                            gewährleisten.</p>
+                    <p>Unser Ziel ist es eine große Vielfalt an medizinischen Cannabisprodukten anzubieten,
+                        um eine bessere Verfügbarkeit für die zu behandelnden Krankheitssymptome zu
+                        gewährleisten.</p>
 
-                        <p>Unser Sortiment wird ausschließlich über unseren eigenen Onlineshop zur
-                            Verfügung stehen.
-                        </p>
+                    <p>Unser Sortiment wird ausschließlich über unseren eigenen Onlineshop zur
+                        Verfügung stehen.
+                    </p>
 
-                        <p>Die Regelungen des Betäubungsmittelgesetzes (BtMG) sehen ein Verbot der
-                            Werbung für Cannabis vor, da Cannabis der Anlage III des BtMG zugeordnet ist.
-                            Wir dürfen als Anbieter keinerlei Hinweise zu den Produkten geben oder gar werblich
-                            tätig werden. Verstöße gegen dieses Verbot stellen eine Straftat dar.</p>
+                    <p>Die Regelungen des Betäubungsmittelgesetzes (BtMG) sehen ein Verbot der
+                        Werbung für Cannabis vor, da Cannabis der Anlage III des BtMG zugeordnet ist.
+                        Wir dürfen als Anbieter keinerlei Hinweise zu den Produkten geben oder gar werblich
+                        tätig werden. Verstöße gegen dieses Verbot stellen eine Straftat dar.</p>
 
 
-                        <p>Zudem ist folgendes in § 10 Heilmittelwerbegesetz (HWG) festgehalten: Für
-                            verschreibungspflichtige Arzneimittel darf nur bei Fachkreisen im engeren
-                            Sinne geworben werden. Das sind Ärzte, Tierärzte, Apotheker und Personen, die
-                            mit diesen Arzneimitteln erlaubterweise Handel betreiben.</p>
+                    <p>Zudem ist folgendes in § 10 Heilmittelwerbegesetz (HWG) festgehalten: Für
+                        verschreibungspflichtige Arzneimittel darf nur bei Fachkreisen im engeren
+                        Sinne geworben werden. Das sind Ärzte, Tierärzte, Apotheker und Personen, die
+                        mit diesen Arzneimitteln erlaubterweise Handel betreiben.</p>
 
-                        <p>Ausführliche Informationen für Ärzte und Apotheker finden Sie in unseren Online-Shop.
+                    <p>Ausführliche Informationen für Ärzte und Apotheker finden Sie in unseren Online-Shop.
                         Sie müssen sich nur bei uns registrieren. Personen aus dem Nicht-Fachkreis, wenden
                         Sie sich bitte an Ihren behandelnden Arzt oder Apotheker, um weitere Informationen
                         über den Wirkstoff und seine therapeutischen Einsatzmöglichkeiten zu erhalten.</p>
@@ -116,11 +118,13 @@
                 </v-col>
 
                 <v-col cols="12" md="6">
-                    <v-img position="bottom left" height="100%" width="100%" sizes="cover" src="{{ asset('storage/AdobeStock_310714620-scaled.jpeg')  }}"></v-img>
+                    <v-img position="bottom left" height="100%" width="100%" sizes="cover"
+                           src="{{ asset('storage/AdobeStock_310714620-scaled.jpeg')  }}"></v-img>
                 </v-col>
 
                 <v-col cols="12">
-                    <h2 class="text-center text-h6 mt-14" style="text-transform: uppercase">Produktpalette - MPRCanna®</h2>
+                    <h2 class="text-center text-h6 mt-14" style="text-transform: uppercase">Produktpalette -
+                        MPRCanna®</h2>
                 </v-col>
 
                 <v-col offset-md="1" cols="10">

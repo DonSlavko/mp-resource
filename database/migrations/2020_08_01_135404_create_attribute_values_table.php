@@ -28,6 +28,6 @@ class CreateAttributeValuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attribute_datas');
+        Schema::dropIfExists('attribute_values');
     }
 }

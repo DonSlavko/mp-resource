@@ -46,7 +46,7 @@
             <h3>FACHGERECHTE AUFKLÄRUNG</h3>
 
             <p>Wenn Sie Fragen zur medikamentösen Therapie/Behandlung oder zur Verordnung von
-               Medizinal-Cannabis haben, steht Ihnen unser Ärzteberatungsteam für jegliche Fragen zur Seite.</p>
+                Medizinal-Cannabis haben, steht Ihnen unser Ärzteberatungsteam für jegliche Fragen zur Seite.</p>
         </v-col>
 
         <v-col cols="12" md="4" class="text-center" style="background-color: rgba(246,246,246,1);">

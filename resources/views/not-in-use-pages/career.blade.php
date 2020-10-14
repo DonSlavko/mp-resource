@@ -47,7 +47,9 @@
 
                     <p>Aktuelle Stellenangebote für Praktikanten:</p>
 
-                    <ul class="mb-4"><li>Studenten aus dem BWL- und Pharma-Bereich</li></ul>
+                    <ul class="mb-4">
+                        <li>Studenten aus dem BWL- und Pharma-Bereich</li>
+                    </ul>
 
                     <p>Oder schick einfach eine Initiativbewerbung an uns unter:</p>
 
@@ -71,7 +73,7 @@
                     <h3>Home-Office</h3>
 
                     <p>Du kannst bis zu zwei mal die Woche vom
-                    Home-Office arbeiten.</p>
+                        Home-Office arbeiten.</p>
                 </v-col>
 
                 <v-col cols="12" md="4" class="text-center">

@@ -75,7 +75,8 @@
                 </v-col>
 
                 <v-col cols="12" md="8" class="mt-8">
-                    <h2 class="text-h6 mb-5" style="text-transform: uppercase">Wollen sie in Medical Pharma Resource GmbH investieren?</h2>
+                    <h2 class="text-h6 mb-5" style="text-transform: uppercase">Wollen sie in Medical Pharma Resource
+                        GmbH investieren?</h2>
                     <hr style="background: #efefef; color: rgba(68,68,68,1); height: 1px; border: none;">
                 </v-col>
 
@@ -130,12 +131,14 @@
 
                     <p class="text--secondary">Ihr Anliegen</p>
 
-                    <v-checkbox dense name="opportunities" label="Ich möchte mehr über Investitionsmöglichkeiten erfahren"></v-checkbox>
+                    <v-checkbox dense name="opportunities"
+                                label="Ich möchte mehr über Investitionsmöglichkeiten erfahren"></v-checkbox>
                     <v-checkbox dense name="appointment" label="Ich möchte einen Termin ausmachen"></v-checkbox>
-                    <v-checkbox dense name="investment" label="Ich möchte in die Medical Pharma Resource GmbH investieren"></v-checkbox>
+                    <v-checkbox dense name="investment"
+                                label="Ich möchte in die Medical Pharma Resource GmbH investieren"></v-checkbox>
 
                     <v-text-field class="pt-4"
-                            label="Ihre Nachricht*" :rules="validate.name" name="your_message"
+                                  label="Ihre Nachricht*" :rules="validate.name" name="your_message"
                     ></v-text-field>
 
                     <v-checkbox name="opportunities" label="Ich habe die Datenschutzinformationen zur

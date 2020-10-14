@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Newsletter;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,8 @@ class UserController extends Controller
     }
 
     public function product(Product $product) {
-        return view('user.product')->with('id', $product->id);
+        $product = Product::where('id', $product->id)->first();
+        return view('user.product', get_defined_vars());
     }
 
     public function preorder() {
@@ -26,5 +28,22 @@ class UserController extends Controller
 
     public function cart() {
         return view('user.cart');
+    }
+
+    public function add_to_newsletter(Request $request) {
+        $request->validate([
+            'email' => 'required|email|unique:users,email'
+        ]);
+        $newsletter = Newsletter::create([
+            'email' => $request->email
+        ]);
+        // todo - change to default laravel mailer
+        /*sendMail([
+            'view' => 'email.initial_newsletter',
+            'to' => $newsletter->email,
+            'subject' => 'Your are Added to Newsletter Subscription',
+            'data' => []
+        ]);*/
+        return redirect()->back();
     }
 }

@@ -11,4 +11,8 @@ class VariationValue extends Model
     public function variation() {
         return $this->belongsTo(Variation::class);
     }
+
+    public function products() {
+        return $this->belongsToMany(Product::class, 'variation_value_product');
+    }
 }

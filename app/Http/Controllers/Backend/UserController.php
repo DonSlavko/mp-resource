@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserActivate;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -14,14 +17,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $users = User::all()->load('media')->map(function ($user) {
             $uploads = $user->getMedia('upload_files');
 
             if (!$uploads->isEmpty()) {
 
-                $user->files = $uploads->map(function($file) {
+                $user->files = $uploads->map(function ($file) {
                     return [
                         'name' => $file->file_name,
                         'path' => $file->getFullUrl()
@@ -41,8 +43,7 @@ class UserController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -52,49 +53,56 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    public function activate(User $user) {
 
-    public function activate(User $user)
-    {
         $user->active = true;
 
         $user->save();
 
+        Mail::to($user->email)->send(new UserActivate());
+
         return response(['data' => $user, 'message' => 'Account enabled']);
     }
 
-    public function deactivate(User $user)
-    {
+    public function deactivate(User $user) {
         $user->active = false;
 
         $user->save();
 
         return response(['data' => $user, 'message' => 'Account disabled']);
+    }
+
+    public function declinedUsers() {
+        $users = User::where('active', 0)->get();
+
+        return response(['data' => $users]);
+
+    }
+
+    public function delete(User $user) {
+        $user->delete();
+        return response(['message' => 'Account deleted']);
+    }
+
+    public function deleteAllUsers() {
+        User::where('active', 0)->delete();
+        return response(['message' => 'Accounts deleted']);
+    }
+
+    public function userOrders() {
+        $orders = Auth::user()->userOrders->all();
+
+        return response(['data' => $orders]);
+    }
+
+    public function userPaymentStatus() {
+        $paymentStatus = Auth::user()->paymentStatus->all();
+
+        return response(['data' => $paymentStatus]);
     }
 }

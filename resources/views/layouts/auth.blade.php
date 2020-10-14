@@ -20,15 +20,15 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <main class="py-4">
-            <v-app v-cloak style="background-image: linear-gradient(180deg, rgba(255,255,255,0) 0%, #dfeacc 100%);">
-                <v-main>
-                    @yield('content')
-                </v-main>
-            </v-app>
-        </main>
-    </div>
+<div id="app">
+    <main class="py-4">
+        <v-app v-cloak style="background-image: linear-gradient(180deg, rgba(255,255,255,0) 0%, #dfeacc 100%);">
+            <v-main>
+                @yield('content')
+            </v-main>
+        </v-app>
+    </main>
+</div>
 
 @stack('scripts')
 </body>

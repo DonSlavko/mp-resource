@@ -13,8 +13,7 @@ class CallServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $attribute = CallService::all()->toArray();
 
         return response(['data' => $attribute]);
@@ -23,11 +22,10 @@ class CallServiceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         try {
             $data = $request->all();
 

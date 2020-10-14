@@ -1,5 +1,5 @@
 @extends('layouts.user')
 
 @section('content')
-    <order></order>
+    <preorder></preorder>
 @endsection

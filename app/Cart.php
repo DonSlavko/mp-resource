@@ -20,7 +20,7 @@ class Cart extends Model
         return $this->belongsTo(VariationValue::class);
     }
 
-    public function order() {
-        return $this->belongsTo(Order::class);
+    public function userorder() {
+        return $this->belongsTo(UserOrder::class, 'order_id');
     }
 }

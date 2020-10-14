@@ -21,15 +21,27 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(Category::class);
     }
 
-    public function variation() {
-        return $this->belongsTo(Variation::class);
+    public function brand() {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function product_images() {
+        return $this->hasMany(ProductImages::class, 'product_id');
     }
 
     public function attributes() {
         return $this->belongsToMany(Attribute::class);
     }
 
+    public function variation() {
+        return $this->belongsToMany(Variation::class, 'product_variation');
+    }
+
     public function attributeValues() {
         return $this->belongsToMany(AttributeValue::class, 'attribute_value_product');
+    }
+
+    public function variationValues() {
+        return $this->belongsToMany(VariationValue::class, 'variation_value_product')->withPivot('quantity', 'price');
     }
 }

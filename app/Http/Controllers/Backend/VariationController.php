@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\VariationResource;
 use App\Variation;
 use Illuminate\Http\Request;
 
@@ -13,21 +14,23 @@ class VariationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $variation = Variation::all()->load('variationValues')->toArray();
+    public function index(Request $request) {
+        $variations = Variation::all();
 
-        return response(['data' => $variation]);
+        if ($request->has('with_values')) {
+            $variations->load('variationValues');
+        }
+
+        return response(VariationResource::collection($variations));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         try {
             $data = $request->all();
 
@@ -42,11 +45,10 @@ class VariationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Variation $variation)
-    {
+    public function show(Variation $variation) {
         $variation = $variation->load('variationValues')->toArray();
 
         return response(['data' => $variation]);
@@ -55,12 +57,11 @@ class VariationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Variation $variation)
-    {
+    public function update(Request $request, Variation $variation) {
         try {
             $data = [
                 'name' => $request->get('name'),
@@ -78,11 +79,10 @@ class VariationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Variation $variation)
-    {
+    public function destroy(Variation $variation) {
         try {
             $variation->delete();
 

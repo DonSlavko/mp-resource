@@ -2,30 +2,24 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Attribute;
 use App\AttributeValue;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class AttributeValueController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+
+    public function index() {
+        $attribute_value = AttributeValue::all()->load('attribute')->toArray();
+        $attribute = Attribute::all();
+        return response([
+            'data' => $attribute_value,
+            'data2' => $attribute,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         try {
             $data = $request->all();
 
@@ -37,30 +31,13 @@ class AttributeValueController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, AttributeValue $attributeValue)
-    {
+    public function update(Request $request, AttributeValue $attributeValue) {
         try {
             $data = [
                 'name' => $request->get('name'),
                 'description' => $request->get('description'),
+                'attribute_id' => $request->get('attribute_id')
             ];
 
             $attributeValue->update($data);
@@ -71,14 +48,7 @@ class AttributeValueController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(AttributeValue $attributeValue)
-    {
+    public function destroy(AttributeValue $attributeValue) {
         try {
             $attributeValue->delete();
 

@@ -4,31 +4,25 @@ namespace App\Http\Controllers\Backend;
 
 use App\Attribute;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\AttributeResource;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Exception;
 
 class AttributeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $attribute = Attribute::all()->load('attributeValues')->toArray();
 
-        return response(['data' => $attribute]);
+    public function index(Request $request) {
+        $attribute = Attribute::all();
+
+        if ($request->has('with_values')) {
+            $attribute->load('attributeValues');
+        }
+
+        return response(AttributeResource::collection($attribute));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+
+    public function store(Request $request) {
         try {
             $data = $request->all();
 
@@ -40,28 +34,15 @@ class AttributeController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Attribute $attribute)
-    {
+
+    public function show(Attribute $attribute) {
         $attribute = $attribute->load('attributeValues')->toArray();
 
         return response(['data' => $attribute]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Attribute $attribute)
-    {
+
+    public function update(Request $request, Attribute $attribute) {
         try {
             $data = [
                 'name' => $request->get('name'),
@@ -76,14 +57,8 @@ class AttributeController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Attribute $attribute)
-    {
+
+    public function destroy(Attribute $attribute) {
         try {
             $attribute->delete();
 
