@@ -171,7 +171,7 @@ export default {
   methods: {
     initialize() {
       axios.get('/back/variations').then(response => {
-        this.table.data = response.data.data;
+        this.table.data = response.data;
       }).catch(error => {
         console.log(error.message);
       });

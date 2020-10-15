@@ -154,7 +154,7 @@ export default {
       axios
           .get("/back/attributes")
           .then((response) => {
-            this.table.data = response.data.data;
+            this.table.data = response.data;
           })
           .catch((error) => {
             console.log(error.message);
