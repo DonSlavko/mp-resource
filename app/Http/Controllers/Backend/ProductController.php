@@ -18,8 +18,9 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        // todo change this to resource
         $products = Product::all()
-            ->load(['variation', 'variatonValues', 'attributes', 'attributeValues', 'brand', 'category'])
+            ->load(['variation', 'variationValues', 'attributes', 'attributeValues', 'brand', 'category'])
             ->map(function ($prod) {
                 $prod->attribute = [
                     'ids' => $prod->attributes->pluck('id'),
@@ -30,10 +31,10 @@ class ProductController extends Controller
             })->map(function ($prod) {
                 $prod->product_variations = [
                     'ids' => $prod->variation->pluck('id'),
-                    'values' => $prod->variatonValues->pluck('id'),
+                    'values' => $prod->variationValues->pluck('id'),
                     'stocks' => $prod->variation()->pluck('stock_quantity'),
                     'prices' => $prod->variation()->pluck('price'),
-                    'variation_name' => $prod->variatonValues->pluck('name'),
+                    'variation_name' => $prod->variationValues->pluck('name'),
                 ];
                 return $prod;
             })->toArray();
@@ -177,10 +178,10 @@ class ProductController extends Controller
             }
 
             $product->variation()->detach($product->variation->pluck('id'));
-            $product->variatonValues()->detach($product->variatonValues->pluck('id'));
+            $product->variationValues()->detach($product->variationValues->pluck('id'));
 
             $product->variation()->attach($stock_qty);
-            $product->variatonValues()->attach($variation['values']);
+            $product->variationValues()->attach($variation['values']);
             $product->variation()->attach($prices);
 
             return response('Product updated');
@@ -195,7 +196,7 @@ class ProductController extends Controller
         $product->attributeValues()->detach($product->attributeValues->pluck('id'));
 
         $product->variation()->detach($product->variation->pluck('id'));
-        $product->variatonValues()->detach($product->variatonValues->pluck('id'));
+        $product->variationValues()->detach($product->variationValues->pluck('id'));
 
         ProductImages::where('product_id', $id)->delete();
         $product->delete();

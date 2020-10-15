@@ -27,10 +27,11 @@ class ProductResource extends JsonResource
                     'path' => asset('images/multiple-images/' . $image->path),
                 ];
             }),
+
             'variations' => $this->variation,
             'variations_price' => $this->variation()->pluck('price'),
-            'variationValues' => $this->variatonValues,
-            'variation_stock' => $this->variation()->sum('stock_quantity'),
+            'variationValues' => $this->variationValues,
+            'variation_stock' => $this->variationValues()->sum('quantity'),
             'category' => new CategoryResource($this->whenLoaded('category')),
             // 'variation' => new VariationResource($this->whenLoaded('variation')),
             // 'attributes' => AttributeResource::collection($this->whenLoaded('attributes')),

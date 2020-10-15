@@ -258,6 +258,19 @@
                     </v-dialog>
                 </v-toolbar>
             </template>
+
+            <template v-slot:item.type="{ item }">
+                <template v-for="type in item.variation_values">{{ type.name }} <br></template>
+            </template>
+
+            <template v-slot:item.price="{ item }">
+                <template v-for="type in item.variation_values">{{ type.pivot.price }} €<br></template>
+            </template>
+
+            <template v-slot:item.quantity="{ item }">
+                <template v-for="type in item.variation_values">{{ type.pivot.quantity }} <br></template>
+            </template>
+
             <template v-slot:item.date="{ item }">
                 {{ getDate(item.created_at) }}
             </template>
@@ -290,20 +303,25 @@ export default {
                     },
                     {
                         text: "Variation Values",
-                        value: "product_variations.variation_name",
+                        value: "type",
+                        sortable: false,
                     },
                     {
                         text: "Price Variation Values",
-                        value: "product_variations.prices",
+                        value: "price",
+                        align: "right",
+                        sortable: false,
                     },
                     {
-                        text: "Variation Values Stocks",
-                        //value: "stock"
-                        value: "product_variations.stocks",
+                        text: "Variation Values Quantity",
+                        value: "quantity",
+                        align: "right",
+                        sortable: false,
                     },
                     {
                         text: "SKU",
                         value: "sku",
+                        sortable: false,
                     },
                     {
                         text: "Category",
@@ -313,10 +331,12 @@ export default {
                     {
                         text: "Date",
                         value: "date",
+                        sortable: false,
                     },
                     {
                         text: "Options",
                         value: "actions",
+                        sortable: false,
                     },
                 ],
                 data: [],

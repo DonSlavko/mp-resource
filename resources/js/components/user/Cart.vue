@@ -136,7 +136,7 @@ export default {
       });
     },
     checking(value) {
-      if (value.checkbox_value == true) {
+      if (value.checkbox_value === true) {
         this.true_Value = true;
       } else {
         this.true_Value = false;
