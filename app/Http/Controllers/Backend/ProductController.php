@@ -71,8 +71,8 @@ class ProductController extends Controller
             'sku' => $request->get('sku'),
             'expires' => $request->get('expires'),
             'charge' => $request->get('charge'),
-            'brochure' => $name,
-            'analysis' => $analysis_name,
+            'brochure' => $name ?? null,
+            'analysis' => $analysis_name ?? null,
         ]);
 
         foreach ($request->file('images') as $image) {

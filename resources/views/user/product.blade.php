@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container p-0">
+    {{--<div class="container p-0">
         <div class="row">
             <div class="col-md-5 pt-4 mt-5">
 
@@ -23,10 +23,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-7">--}}
                 <product item_id="{{ $product->id }}"></product>
-            </div>
+            {{--</div>
         </div>
-    </div>
+    </div>--}}
 
 @endsection
