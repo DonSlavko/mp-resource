@@ -18,8 +18,8 @@ class UserController extends Controller
     }
 
     public function product(Product $product) {
-        $product = Product::where('id', $product->id)->first();
-        return view('user.product', get_defined_vars());
+        $product_id = $product->id;
+        return view('user.product')->with(['product_id' => $product_id]);
     }
 
     public function preorder() {

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddChargeExpiresToProductsTable extends Migration
+class AddTypeToOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddChargeExpiresToProductsTable extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->integer('charge')->after('sku');
-            $table->date('expires')->after('sku');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->boolean('preorder')->default(0);
         });
     }
 
@@ -26,9 +25,8 @@ class AddChargeExpiresToProductsTable extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('charge');
-            $table->dropColumn('expires');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('preorder');
         });
     }
 }

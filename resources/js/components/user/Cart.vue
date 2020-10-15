@@ -1,212 +1,305 @@
 <template>
-  <div>
-    <div>
-      <v-container>
-        <h2 class="mb-3">You Have {{ items.length }} Items In Your Cart</h2>
-        <v-data-table
-            :headers="headers"
-            :items="items"
-            :items-per-page="15"
-            class="elevation-1"
-        >
-          <template v-slot:item.price="{ item }"
-          >{{ item.price }} €
-          </template
-          >
-          <template v-slot:item.total="{ item }"
-          >{{ item.quantity * item.price }} €
-          </template
-          >
-          <template v-slot:item.actions="{ item }">
-            <v-icon small @click="removeItem(item)"> mdi-delete</v-icon>
-          </template>
-          <template v-slot:no-data> Cart is empty</template>
-          <template v-slot:footer>
-            <v-row align="center" justify="center" class="text-center">
-              <!-- <v-col cols="12" md="6" order="2" order-md="1">
-                <v-btn @click="makeOrder()" :disabled="!hasItems"
-                  >Vorbestellen</v-btn
-                >
-              </v-col> -->
-              <!-- <v-col cols="12" md="6" order="1" order-md="2">
-                <p class="mb-0">Total price: {{ totalPrice }} €</p>
-              </v-col> -->
-            </v-row>
-          </template>
-        </v-data-table>
-      </v-container>
-    </div>
-    <div class="container row">
-      <div class="col-md-8"></div>
-      <div class="col-md-4">
-        <h1>Shopping cart total</h1>
-        <hr/>
-        <table class="table table-borderless" style="border-spacing: 10px">
-          <tbody>
-          <tr>
-            <th>{{ this.headers[4].text }}</th>
-            <td>{{ this.totalPrice }}€</td>
-          </tr>
-          </tbody>
-        </table>
-        <div>
-          <p class="row ml-4">
-            <v-checkbox
-                v-model="checkbox_value"
-                class="mt-0"
-                @change="checking(this.checkbox_value)"
-            ></v-checkbox>
-            I accept the <strong> <a href="#"> Terms and Conditions</a></strong></p>
-          <div>
-            <div class="ml-5" v-if="this.true_Value">
-              <a
-                  :disabled="!hasItems"
-                  class="btn btn-primary text-white preorder mb-2"
-                  href="/payment"
-              >Pre Order</a>
-              <!-- <a class="btn btn-danger" href="{{route('user.payment')}}">Pay-Out</a> -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <br/>
-  </div>
+    <v-container>
+        <v-card>
+            <v-tabs color="light-green darken-1" left>
+                <v-tab>Orders
+                    <v-chip small>{{ orders.length }}</v-chip>
+                </v-tab>
+                <v-tab>Preorders
+                    <v-chip small>{{ preorders.length }}</v-chip>
+                </v-tab>
+
+                <v-tab-item>
+                    <h2 class="mb-3 ml-3">You have {{ orders.length }} waiting for ordering</h2>
+                    <v-data-table
+                        :headers="headers"
+                        :items="orders"
+                        :items-per-page="15"
+                        class="elevation-1"
+                    >
+                        <template v-slot:item.price="{ item }"
+                        >{{ item.price }} €
+                        </template
+                        >
+                        <template v-slot:item.total="{ item }"
+                        >{{ item.quantity * item.price }} €
+                        </template
+                        >
+                        <template v-slot:item.actions="{ item }">
+                            <v-icon small @click="removeItem(item)"> mdi-delete</v-icon>
+                        </template>
+                        <template v-slot:no-data> Cart is empty</template>
+                    </v-data-table>
+                    <v-row>
+                        <v-col cols="12" offset-md="8" md="4">
+                            <h2>Shopping cart total</h2>
+
+                            <v-simple-table>
+                                <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        {{ headers[4].text }}
+                                    </th>
+                                    <th class="text-left">
+                                        {{ totalPrice() }} €
+                                    </th>
+                                </tr>
+                                </thead>
+                            </v-simple-table>
+                        </v-col>
+
+                        <v-col offset-md="8" md="4">
+                            <v-checkbox
+                                v-model="checkbox_order">
+                                <template v-slot:label>
+                                    <div class="font-weight-light text-subtitle-1">
+                                        I accept the
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on }">
+                                                <strong><a
+                                                    target="_blank"
+                                                    href="/agb"
+                                                    @click.stop
+                                                    v-on="on">
+                                                    Terms and Conditions
+                                                </a></strong>
+                                            </template>
+                                            Opens in new window
+                                        </v-tooltip>
+                                    </div>
+                                </template>
+                            </v-checkbox>
+
+                            <v-btn @click="makeOrder()" :disabled="canPlaceOrder">Place order</v-btn>
+
+                        </v-col>
+                    </v-row>
+                </v-tab-item>
+
+                <v-tab-item>
+                    <h2 class="mb-3 ml-3">You have placed {{ preorders.length }} items in preorder</h2>
+                    <v-data-table
+                        :headers="headers"
+                        :items="preorders"
+                        :items-per-page="15"
+                        class="elevation-1"
+                    >
+                        <template v-slot:item.price="{ item }"
+                        >{{ item.price }} €
+                        </template
+                        >
+                        <template v-slot:item.total="{ item }"
+                        >{{ item.quantity * item.price }} €
+                        </template
+                        >
+                        <template v-slot:item.actions="{ item }">
+                            <v-icon small @click="removeItem(item)"> mdi-delete</v-icon>
+                        </template>
+                        <template v-slot:no-data>Preorder is empty</template>
+                    </v-data-table>
+                    <v-row>
+                        <v-col cols="12" offset-md="8" md="4">
+                            <h2>Shopping cart total</h2>
+
+                            <v-simple-table>
+                                <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        {{ headers[4].text }}
+                                    </th>
+                                    <th class="text-left">
+                                        {{ totalPrice(true) }} €
+                                    </th>
+                                </tr>
+                                </thead>
+                            </v-simple-table>
+                        </v-col>
+
+                        <v-col offset-md="8" md="4">
+                            <v-checkbox
+                                v-model="checkbox_preorder">
+                                <template v-slot:label>
+                                    <div class="font-weight-light text-subtitle-1">
+                                        I accept the
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on }">
+                                                <strong><a
+                                                    target="_blank"
+                                                    href="/agb"
+                                                    @click.stop
+                                                    v-on="on"
+                                                >
+                                                    Terms and Conditions
+                                                </a></strong>
+                                            </template>
+                                            Opens in new window
+                                        </v-tooltip>
+                                    </div>
+                                </template>
+                            </v-checkbox>
+
+                            <v-btn @click="makeOrder(true)" :disabled="canPlacePreorder">Place pre-order</v-btn>
+                        </v-col>
+                    </v-row>
+                </v-tab-item>
+            </v-tabs>
+        </v-card>
+    </v-container>
 </template>
 
 <script>
 export default {
-  name: "Cart",
+    name: "Cart",
 
-  data() {
-    return {
-      headers: [
-        {
-          text: "Product Name",
-          value: "product_name",
-          sortable: false,
-        },
-        {
-          text: "variation value name",
-          value: "variation_value_name",
-          sortable: false,
-        },
-        {
-          text: "Quantity",
-          value: "quantity",
-          sortable: false,
-        },
-        {
-          text: "Price",
-          value: "price",
-          sortable: false,
-        },
-        {
-          text: "Total Price",
-          value: "total",
-          sortable: false,
-        },
-        {
-          text: "Options",
-          value: "actions",
-          sortable: false,
-        },
-      ],
-      items: [],
-      product_detail: [],
-      checkbox_value: "",
-      true_Value: false,
-    };
-  },
-
-  computed: {
-    totalPrice() {
-      let total_total = 0;
-
-      this.items.forEach((item) => {
-        total_total += item.quantity * item.price;
-      });
-
-      return total_total;
+    data() {
+        return {
+            headers: [
+                {
+                    text: "Product Name",
+                    value: "product_name",
+                    sortable: false,
+                },
+                {
+                    text: "Variation Type",
+                    value: "variation_value_name",
+                    sortable: false,
+                },
+                {
+                    text: "Quantity",
+                    value: "quantity",
+                    sortable: false,
+                },
+                {
+                    text: "Price",
+                    value: "price",
+                    sortable: false,
+                },
+                {
+                    text: "Total Price",
+                    value: "total",
+                    sortable: false,
+                },
+                {
+                    text: "Options",
+                    value: "actions",
+                    sortable: false,
+                },
+            ],
+            orders: [],
+            preorders: [],
+            product_detail: [],
+            checkbox_order: false,
+            checkbox_preorder: false,
+        };
     },
 
-    cartIds() {
-      return this.items.map((item) => {
-        return item.id;
-      });
-    },
-    checking(value) {
-      if (value.checkbox_value === true) {
-        this.true_Value = true;
-      } else {
-        this.true_Value = false;
-      }
-    },
-    hasItems() {
-      return this.items[0].quantity > 0;
-    },
-  },
-
-  created() {
-    this.initialize();
-  },
-  mounted() {
-    this.checking();
-    this.initialize();
-  },
-
-  methods: {
-    initialize() {
-      axios
-          .get("/back/in-cart")
-          .then((response) => {
-            this.items = response.data.data;
-            this.product_detail = response.data.data.map((item) => {
-              return (item = {
-                quantity: item.quantity,
-              });
+    computed: {
+        orderIds() {
+            return this.orders.map((item) => {
+                return item.id;
             });
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
+        },
+
+        preorderIds() {
+            return this.preorders.map((item) => {
+                return item.id;
+            });
+        },
+
+        canPlaceOrder() {
+            return !(this.orderIds.length > 0 && this.checkbox_order);
+        },
+
+        canPlacePreorder() {
+            return !(this.preorderIds.length > 0 && this.checkbox_preorder);
+        }
     },
 
-    removeItem(item) {
-      axios
-          .delete("/back/remove-from-cart/" + item.id)
-          .then((response) => {
-            this.initialize();
-            this.count = response.data;
-            document.getElementById("cart-count").innerHTML = this.count;
-            this.initialize();
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
+    created() {
+        this.initialize();
     },
 
-    formData() {
-      return {
-        carts_id: this.cartIds,
-        total_price: this.totalPrice,
-        // product_id: this.product_detail,
-      };
-    },
+    methods: {
+        initialize() {
+            axios
+                .get("/back/in-cart")
+                .then((response) => {
+                    this.orders = response.data.orders;
+                    this.preorders = response.data.preorders;
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        },
 
-    makeOrder() {
-      axios
-          .post("/back/make-order", this.formData())
-          .then((response) => {
-            console.log(response.data);
-            this.initialize();
-            this.$toasted.show(response.data);
-            window.location.href = "/vorbestellungen/my-pre-orders";
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
+        removeItem(item) {
+            axios
+                .delete("/back/remove-from-cart/" + item.id)
+                .then((response) => {
+                    this.initialize();
+                    this.count = response.data;
+                    document.getElementById("cart-count").innerHTML = this.count;
+                    this.initialize();
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        },
+
+        totalPrice(preorder = false) {
+            let total_total = 0;
+
+            if (preorder) {
+                this.preorders.forEach(item => {
+                    total_total += item.quantity * item.price;
+                })
+            } else {
+                this.orders.forEach((item) => {
+                    total_total += item.quantity * item.price;
+                });
+            }
+
+            return total_total;
+        },
+
+        formData(preorder = false) {
+            if (preorder) {
+                return {
+                    carts_id: this.preorderIds,
+                    total_price: this.totalPrice(true),
+                    preorder: true
+                };
+            } else {
+                return {
+                    carts_id: this.orderIds,
+                    total_price: this.totalPrice(),
+                };
+            }
+        },
+
+        makeOrder(preorder = false) {
+            if (preorder) {
+                axios.post("/back/make-order", this.formData(preorder)).then((response) => {
+                    this.initialize();
+                    this.$toasted.show(response.data);
+                    window.location.href = "/vorbestellungen/my-pre-orders";
+                }).catch((error) => {
+                    console.log(error.message);
+                });
+            } else {
+                axios.post("/payment", this.formData()).then((response) => {
+                    this.initialize();
+                    this.$toasted.show(response.data);
+                }).catch((error) => {
+                    console.log(error.message);
+                });
+            }
+        },
     },
-  },
 };
 </script>
+<style>
+label {
+    margin-bottom: 0 !important;
+}
+</style>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserOrderAdmin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Mollie\Laravel\Facades\Mollie;
 use Laravel\Cashier\SubscriptionBuilder\RedirectToCheckoutResponse;
 use Illuminate\Support\Facades\Auth;
@@ -16,17 +18,28 @@ use App\UserOrder;
 
 class PaymentController extends Controller
 {
-    public function preparePayment(Request $request) {
-        $total_price = Auth::user()->carts->pluck('price')->sum();
-        $total_price = number_format($total_price, 2);
-        $order_id = rand();
-        // save order details
+    public function preparePayment(Request $request)
+    {
+        $carts_id = $request->get('carts_id');
 
-        $data = [];
-        $data['order_id'] = $order_id;
-        $data['user_id'] = Auth::id();
-        $data['payment_amount'] = $total_price;
-        $data['customer_name'] = Auth::user()->username;
+        $data = [
+            'user_id' => Auth::user()->id,
+            'total_price' => $request->get('total_price'),
+            'is_paid' => false,
+        ];
+        $order = UserOrder::create($data);
+
+        $cart = Cart::whereIn('id', $carts_id)->update(['order_id' => $order->id]);
+
+        $total_price = number_format($order->total_price, 2);
+
+        $paymentData = [
+            'order_id' => $order->id,
+            'user_id' => Auth::user()->id,
+            'payment_amount' => $total_price,
+            'customer_name' => Auth::user()->username
+        ];
+
         PaymentStatus::create($data);
 
         $payment = Mollie::api()->payments->create([
@@ -39,20 +52,44 @@ class PaymentController extends Controller
             "webhookUrl" => 'https://0ca3518a75d9.ngrok.io/mp-resource/public/api/webhooks',
 
             "metadata" => [
-                "order_id" => $order_id,
+                "order_id" => $order->id,
                 "user_id" => Auth::id()
             ],
         ]);
 
+        $user_name = Auth::user()->username;
+        $user_email = Auth::user()->email;
 
-        // redirect customer to Mollie checkout page
+        Mail::to($user_email)
+            ->send(new \App\Mail\UserOrder([
+                'order' => $order,
+                'name' => $user_name,
+            ], [
+                'address' => 'bestellung@mp-resource.shop',
+                'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
+            ], 'Your Order is created'));
+
+        $adminEmails = User::where('is_admin', 1)->pluck('email')->toArray();
+
+        Mail::to($adminEmails)
+            ->send(new UserOrderAdmin([
+                'order' => $order,
+                'name' => $user_name,
+                'user_email' => $user_email
+            ], [
+                'address' => 'bestellung@mp-resource.shop',
+                'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
+            ], 'New Order is created'));
+
         return redirect($payment->getCheckoutUrl(), 303);
     }
 
-    public function handleWebhookNotification(Request $request) {
+    public function handleWebhookNotification(Request $request)
+    {
         $paymentId = $request->input('id');
         $payment = Mollie::api()->payments->get($paymentId);
         $user = User::find($payment->metadata->user_id);
+        $order = UserOrder::find($payment->metadata->order_id);
 
         if ($payment->isPaid()) {
             $pst = PaymentStatus::where('user_id', $user->id)->orderBy('id', 'desc')->first();
@@ -60,42 +97,12 @@ class PaymentController extends Controller
             $pst->payment_id = $paymentId;
             $pst->save();
 
-            //another code
-            $carts_id = $user->carts->pluck('id');
-            $data = [
-                'user_id' => $user->id,
-                'total_price' => $user->carts->pluck('price')->sum(),
-            ];
-
-            $order = UserOrder::create($data);
-            $cart = Cart::whereIn('id', $carts_id)->update(['order_id' => $order->id]);
-            $user_name = $user->username;
-            $user_email = $user->email;
-
-            // todo - change to default laravel mailer
-            /*sendMail([
-                'view' => 'email.PreOrder_mail_to_admin',
-                'to' => 'admin@gmail.com',
-                'subject' => 'New Order is created',
-                'data' => [
-                    'order' => $order,
-                    'name' => $user_name,
-                    'user_email' => $user_email
-                ]
-            ]);
-            sendMail([
-                'view' => 'email.PreOrder_mail_to_customer',
-                'to' => $user_email,
-                'subject' => 'Your Order is created',
-                'data' => [
-                    'order' => $order,
-                    'name' => $user_name,
-                ]
-            ]);*/
+            $order->update(['is_paid' => true]);
         }
     }
 
-    public function orderSuccess() {
+    public function orderSuccess()
+    {
         return redirect()->route('user.dashboard')->with('message', 'Order created successfully');
         //return response(['Order created successfully']);
     }

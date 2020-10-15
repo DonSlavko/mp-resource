@@ -1,231 +1,296 @@
 <template>
-	<v-container>
-		<v-row>
-			<v-col cols="12" sm="6" md="7">
-				<h2 class="text-h5 mb-3" style="text-transform: uppercase">
-					{{ item.name }}
-				</h2>
+    <v-container>
+        <v-row>
+            <v-col cols="12" md="4" class="py-8">
+                <v-sheet class="mx-auto"
+                         elevation="8"
+                         max-width="400"
+                         max-height="400">
+                    <v-expand-x-transition>
+                        <v-img
+                            :src="item.images[model].path" :key="model"
+                            width="400"
+                            max-height="400"
+                            contain
+                        ></v-img>
+                    </v-expand-x-transition>
+                </v-sheet>
 
-				<hr style="background: #efefef; color: rgba(68, 68, 68, 1); height: 1px; width: 80%; border: none;"/>
+                <v-sheet class="mx-auto"
+                         elevation="8"
+                         max-width="400">
+                    <v-slide-group v-model="model"
+                                   active-class="success" show-arrows>
+                        <v-slide-item
+                            v-for="image in item.images"
+                            :key="item.path"
+                            v-slot:default="{ active, toggle }"
+                        >
+                            <v-card
+                                :color="active ? undefined : 'white'"
+                                class="ma-4"
+                                height="100"
+                                width="100"
+                                @click="toggle"
+                            >
+                                <v-img
+                                    :src="image.path"
+                                    width="100px"
+                                    max-height="100px"
+                                    contain
+                                ></v-img>
+                            </v-card>
+                        </v-slide-item>
+                    </v-slide-group>
+                </v-sheet>
+            </v-col>
 
-				<p v-html="this.$sanitize(item.description)"></p>
+            <v-col cols="12" md="8">
+                <h3 class="mb-3">{{ item.name }}</h3>
 
-				<!-- <h3 class="text-subtitle-1  primary--text"><strong>In Stock:</strong> {{ item.stock_quantity }}</h3> -->
-				<h3 class="text-subtitle-1 primary--text">
-					<strong>SKU:</strong> {{ item.sku }}
-				</h3>
-				<v-row v-if="this.stock_count()">
-					<v-col cols="12">
-						<p>Variation Value Name</p>
-						<v-btn-toggle v-model="selected" rounded>
-							<template v-for="value in item.variationValues">
-								<!-- Price:<strong class=""
-								   >{{ value.pivot.price }}€</strong> -->
-								<v-btn :value="value.variation_id">
-									{{ value.name }}
-								</v-btn>
+                <v-divider></v-divider>
+                <v-divider></v-divider>
 
-							</template>
-						</v-btn-toggle>
-						<div class="row mt-3">
-							<p>Price for variations</p>
-							<div v-for="value in item.variationValues">,
-								<strong>{{ value.pivot.price }}</strong>
-							</div>
-						</div>
+                <p v-html="this.$sanitize(item.description)"></p>
 
-					</v-col>
+                <p><i>(Originalverpackung kann vom Abbild abweichen)</i></p>
 
-					<v-col cols="12" md="3">
-						<v-text-field v-model="quantity" label="Quantity" solo flat>
-							<v-icon @click="addProduct()" slot="append" color="red"
-							>mdi-plus
-							</v-icon
-							>
-							<v-icon @click="subProduct()" slot="prepend" color="green"
-							>mdi-minus
-							</v-icon
-							>
-						</v-text-field>
-					</v-col>
+                <p class="text-subtitle-1">
+                    <strong>SKU:</strong> {{ item.sku }}
+                </p>
 
-					<v-col cols="12" md="3">
-						<v-btn @click="addToCart()">In Den Warenkorb</v-btn>
-						<!-- :disabled="canAddToCart" -->
-					</v-col>
-				</v-row>
-				<v-row v-else>
-					<h3 class="btn btn-danger">Out of Stock</h3>
-				</v-row>
-			</v-col>
-		</v-row>
+                <template v-for="value in item.variationValues">
+                    <p class="text-subtitle-1">
+                        <strong>{{ value.name }}:</strong> {{ value.pivot.price }} €
+                    </p>
+                </template>
 
-		<v-row justify="center">
-			<v-expansion-panels accordion>
-				<v-expansion-panel>
-					<v-expansion-panel-header color="primary text-white">Vorbestellen</v-expansion-panel-header>
-					<v-expansion-panel-content>
-						<v-row>
-							<v-col cols="12" md="4">
-								<v-row>
+                <v-divider></v-divider>
 
-									<v-col cols="12">
+                <h4>By Product:</h4>
 
-										<v-btn-toggle v-model="selected" rounded>
-											<template v-for="value in item.variationValues">
-												<!-- Price:<strong class=""
-													 >{{ value.pivot.price }}€</strong> -->
-												<v-btn :value="value.variation_id">
-													{{ value.name }}
-												</v-btn>
-											</template>
-										</v-btn-toggle>
-									</v-col>
+                <v-row>
+                    <v-col cols="12">
+                        <v-btn-toggle v-model="selected" dense group>
+                            <v-btn :disabled="value.pivot.quantity === 0" style="border: 0.5px solid; border-radius: 5px" v-for="value in item.variationValues"
+                                   :key="value.id" :value="value.id">
+                                {{ value.name }}
+                            </v-btn>
+                        </v-btn-toggle>
+                    </v-col>
 
-									<v-col cols="12" md="6">
-										<v-text-field v-model="quantity" label="Quantity" solo flat>
-											<v-icon @click="addProduct()" slot="append" color="red"
-											>mdi-plus
-											</v-icon
-											>
-											<v-icon @click="subProduct()" slot="prepend" color="green"
-											>mdi-minus
-											</v-icon
-											>
-										</v-text-field>
-									</v-col>
+                    <v-col cols="12" md="4">
+                        <v-btn-toggle >
+                            <v-btn height="40" @click="subProduct()">
+                                <v-icon color="red"
+                                >mdi-minus
+                                </v-icon>
+                            </v-btn>
+                        <v-text-field v-model="quantity" label="Quantity" dense outlined flat>
+                        </v-text-field>
+                            <v-btn height="40" @click="addProduct()">
+                                <v-icon color="green"
+                                >mdi-plus
+                                </v-icon>
+                            </v-btn>
+                        </v-btn-toggle>
+                    </v-col>
 
-									<v-col cols="12" md="6">
-										<v-btn @click="addToCart()">Vorbestellen</v-btn>
-									</v-col>
-								</v-row>
-							</v-col>
+                    <v-col cols="12" md="4">
+                        <v-btn height="40" @click="addToCart()" depressed color="primary" :disabled="!canAddToCart">In Den Warenkorb</v-btn>
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
 
-							<v-col cols="12" md="8">
-								Sie haben nun hier die Möglichkeit, die Arznei unverbindlich zu reservieren.
-								Sie bekommen 5 Werktage vor der tatsächlichen Verfügbarkeit eine Benachrichtigung per
-								E-Mail (vorbestellung@mp-resource.shop). Diese Benachrichtigung wird ebenfalls nur
-								eine Gültigkeit von 5 Werktagen haben. In diesem Zeitraum haben Sie nun die Möglichkeit,
-								Ihre unverbindliche Vorbestellung, in eine verbindliche Bestellung umzuwandeln.
-								Nach Ablauf der Gültigkeit wird Ihre unverbindliche Vorbestellung gelöscht und für
-								andere Kunden wieder freigegeben. Vielen Dank für Ihr Verständnis.
-							</v-col>
-						</v-row>
-					</v-expansion-panel-content>
-				</v-expansion-panel>
+        <v-row justify="center" class="pb-16">
+            <v-expansion-panels accordion>
+                <v-expansion-panel>
+                    <v-expansion-panel-header color="primary text-white">Vorbestellen</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        <v-row>
+                            <v-col cols="12" md="5">
+                                <v-row>
+                                    <v-col cols="12">
+                                        <v-btn-toggle v-model="preorder.selected" dense group>
+                                            <v-btn style="border: 0.5px solid; border-radius: 5px" v-for="value in item.variationValues"
+                                                   :key="value.id" :value="value.id">
+                                                {{ value.name }}
+                                            </v-btn>
+                                        </v-btn-toggle>
+                                    </v-col>
 
-				<v-expansion-panel>
-					<v-expansion-panel-header color="primary text-white">Arzneibroschüre & Chargenanalyse
-					</v-expansion-panel-header>
-					<v-expansion-panel-content class="pt-4 text-subtitle-1 font-weight-bold">
-						Arzneibroschüre
+                                    <v-col cols="12" md="6">
+                                        <v-btn-toggle >
+                                            <v-btn height="40" @click="subProduct(true)">
+                                                <v-icon color="red"
+                                                >mdi-minus
+                                                </v-icon>
+                                            </v-btn>
+                                            <v-text-field v-model="preorder.quantity" label="Quantity" dense outlined flat>
+                                            </v-text-field>
+                                            <v-btn height="40" @click="addProduct(true)">
+                                                <v-icon color="green"
+                                                >mdi-plus
+                                                </v-icon>
+                                            </v-btn>
+                                        </v-btn-toggle>
+                                    </v-col>
 
-						<v-btn
-							:href="item.brochure"
-							target="_blank"
-							class="ma-2"
-							outlined
-							color="primary">Download
-						</v-btn>
+                                    <v-col cols="12" md="6">
+                                        <v-btn height="40" @click="addToCart(true)" depressed color="primary">Vorbestellen</v-btn>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
 
-						Chargenanalyse
+                            <v-col cols="12" md="7">
+                                Sie haben nun hier die Möglichkeit, die Arznei unverbindlich zu reservieren.
+                                Sie bekommen 5 Werktage vor der tatsächlichen Verfügbarkeit eine Benachrichtigung per
+                                E-Mail (vorbestellung@mp-resource.shop). Diese Benachrichtigung wird ebenfalls nur
+                                eine Gültigkeit von 5 Werktagen haben. In diesem Zeitraum haben Sie nun die Möglichkeit,
+                                Ihre unverbindliche Vorbestellung, in eine verbindliche Bestellung umzuwandeln.
+                                Nach Ablauf der Gültigkeit wird Ihre unverbindliche Vorbestellung gelöscht und für
+                                andere Kunden wieder freigegeben. Vielen Dank für Ihr Verständnis.
+                            </v-col>
+                        </v-row>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
 
-						<v-btn
-							:href="item.analysis"
-							target="_blank"
-							class="ma-2"
-							outlined
-							color="primary">Download
-						</v-btn>
+                <v-expansion-panel>
+                    <v-expansion-panel-header color="primary text-white">
+                        Arzneibroschüre & Chargenanalyse
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content class="pt-4 text-subtitle-1 font-weight-bold">
+                        Arzneibroschüre
 
-					</v-expansion-panel-content>
-				</v-expansion-panel>
-			</v-expansion-panels>
-		</v-row>
-	</v-container>
+                        <v-btn :disabled="item.brochure"
+                            :href="item.brochure"
+                            target="_blank"
+                            class="ma-2"
+                            outlined
+                            color="primary">Download
+                        </v-btn>
+
+                        Chargenanalyse
+
+                        <v-btn :disabled="item.brochure"
+                            :href="item.analysis"
+                            target="_blank"
+                            class="ma-2"
+                            outlined
+                            color="primary">Download
+                        </v-btn>
+
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
 export default {
-	name: "Product",
+    name: "Product",
 
-	props: {
-		item_id: null,
-	},
+    props: {
+        item_id: null,
+    },
 
-	data() {
-		return {
-			item: null,
-			selected: "",
-			quantity: 1,
-			count: "",
-		};
-	},
+    data() {
+        return {
+            model: 0,
+            item: null,
+            selected: null,
+            quantity: 1,
+            count: "",
 
-	computed: {
-		canAddToCart() {
-			// return this.selected && this.quantity < this.item.stock_quantity;
-		},
-	},
+            preorder: {
+                selected: null,
+                quantity: 1
+            }
+        };
+    },
 
-	created() {
-		this.initialize();
-		this.countcart();
-		this.stock_count();
-	},
+    computed: {
+        canAddToCart() {
+            return !!this.selected && this.quantity < this.getAvailableQuantity;
+        },
 
-	methods: {
-		addProduct() {
-			this.quantity++;
-		},
-		stock_count() {
-			if (this.item.variation_stock == "0") {
-				return false;
-			} else {
-				return true;
-			}
-			//return this.item.variation_stock;
-		},
+        getAvailableQuantity() {
+            if (!!this.selected) {
+                let value = this.item.variationValues.filter(item => item.id === this.selected);
+                return value[0].pivot.quantity;
+            }
 
-		subProduct() {
-			if (this.quantity > 1) {
-				this.quantity--;
-			}
-		},
+            return 0;
+        }
+    },
 
-		initialize() {
-			axios
-				.get("/back/shop/" + this.item_id)
-				.then((response) => {
-					this.item = response.data;
-				})
-				.catch((error) => {
-					console.log(error.message);
-				});
-		},
-		formData() {
-			return {
-				product_id: this.item_id,
-				variation_id: this.selected,
-				quantity: this.quantity,
-			};
-		},
-		countcart() {
-			axios.get("/back/getcount").then((response) => {
-				console.log("count");
-			});
-		},
+    created() {
+        this.initialize();
+    },
 
-		addToCart() {
-			axios.post("/back/add-to-cart", this.formData()).then((response) => {
-				this.$toasted.show(response.data[1]);
-				this.stock_count();
-				this.count = response.data[0];
-				document.getElementById("cart-count").innerHTML = this.count;
-				this.selected = null;
-				this.quantity = 1;
-			});
-		},
-	},
+    methods: {
+        initialize() {
+            axios
+                .get("/back/shop/" + this.item_id)
+                .then((response) => {
+                    this.item = response.data;
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        },
+
+        addProduct(preorder = false) {
+            if (preorder) {
+                this.preorder.quantity++;
+            } else {
+                this.quantity++;
+            }
+        },
+
+        subProduct(preorder = false) {
+            if (preorder) {
+                if (this.preorder.quantity > 1) {
+                    this.preorder.quantity--;
+                }
+            } else {
+                if (this.quantity > 1) {
+                    this.quantity--;
+                }
+            }
+
+        },
+
+        formData(preorder = false) {
+            if (preorder) {
+                return {
+                    product_id: this.item.id,
+                    variation_value_id: this.preorder.selected,
+                    quantity: this.preorder.quantity,
+                    preorder: true,
+                }
+            } else {
+                return {
+                    product_id: this.item.id,
+                    variation_value_id: this.selected,
+                    quantity: this.quantity,
+                };
+            }
+        },
+
+        addToCart(preorder = false) {
+            axios.post("/back/add-to-cart", this.formData(preorder)).then((response) => {
+                this.$toasted.show(response.data[1]);
+                this.count = response.data[0];
+                document.getElementById("cart-count").innerHTML = this.count;
+                this.selected = null;
+                this.quantity = 1;
+                this.preorder.selected = null;
+                this.preorder.quantity = 1;
+            });
+        },
+    },
 };
 </script>
