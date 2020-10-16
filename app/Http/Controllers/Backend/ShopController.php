@@ -131,7 +131,33 @@ class ShopController extends Controller
     }
 
     public function getOrders() {
-        return response(['data' => Auth::user()->userOrders->load(['carts'])->toArray()]);
+        return response(['data' => Auth::user()->userOrders->load(['carts'])->where('status', 'On hold')->toArray()]);
+    }
+
+    public function moveToOrder(Request $request) {
+        $preorder = UserOrder::whereId($request->get('preorder_id'))->first();
+
+        $preorder->carts->each(function($cart) {
+            Auth::user()->carts()->create([
+                'quantity' => $cart->quantity,
+                'product_name' => $cart->product_name,
+                'variation_value_name' => $cart->variation_value_name,
+                'stock' => $cart->stock,
+                'price' => $cart->price,
+                'preorder' => false
+            ]);
+        });
+
+        $preorder->update([
+            'status' => 'Completed'
+        ]);
+
+        $count = Auth::user()->inCart()->count();
+
+        return response([
+            ["$count"],
+            ['Product added to cart successfully']
+        ]);
     }
 
     public function getcount() {

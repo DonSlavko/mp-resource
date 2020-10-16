@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 Route::post('/exists', 'Auth\RegisterController@checkIfExists');
 
+
+Route::post('webhooks', 'Frontend\PaymentController@handleWebhookNotification')->name('webhooks');
+
+
+
 Route::namespace('Frontend')->group(function () {
     Route::get('/agb', 'LandingController@agb')->name('inc.agb');
     Route::get('/datenschutzerklaerung', 'LandingController@dat')->name('inc.dat');
@@ -59,6 +64,9 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::resource('brands','BrandController');
             Route::resource('orders', 'OrderController');
 
+            Route::post('orders/{order}/approve', 'OrderController@approve');
+            Route::post('orders/{order}/denied', 'OrderController@denied');
+
             route::get('call-service', 'CallServiceController@index');
             route::post('call-service', 'CallServiceController@store');
 
@@ -97,5 +105,7 @@ Route::middleware(['auth','verified'])->group(function () {
 
         Route::get('user/orders', 'UserController@userOrders');
         Route::get('user/payments', 'UserController@userPaymentStatus');
+
+        Route::post('move-to-order', 'ShopController@moveToOrder');
     });
 });

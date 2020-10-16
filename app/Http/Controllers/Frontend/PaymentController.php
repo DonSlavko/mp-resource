@@ -20,18 +20,45 @@ class PaymentController extends Controller
 {
     public function preparePayment(Request $request)
     {
+        if ($request->has('order_id')) {
+
+            $order = UserOrder::whereId($request->get('order_id'))->first();
+
+            $total_price = number_format($order->total_price, 2, '.', '');
+
+            $payment = Mollie::api()->payments->create([
+                "amount" => [
+                    "currency" => "EUR",
+                    "value" => $total_price
+                ],
+
+                "description" => "Product Order Description",
+                "redirectUrl" => route('user.order.success'),
+                "webhookUrl" => route('webhooks'),
+
+                "metadata" => [
+                    "order_id" => $order->id,
+                    "user_id" => Auth::id()
+                ],
+            ]);
+
+            return redirect($payment->getCheckoutUrl(), 303);
+        }
+
         $carts_id = $request->get('carts_id');
 
         $data = [
             'user_id' => Auth::user()->id,
             'total_price' => $request->get('total_price'),
             'is_paid' => false,
+            'status' => 'Processing'
         ];
+
         $order = UserOrder::create($data);
 
         $cart = Cart::whereIn('id', $carts_id)->update(['order_id' => $order->id]);
 
-        $total_price = number_format($order->total_price, 2);
+        $total_price = number_format($order->total_price, 2, '.', '');
 
         $paymentData = [
             'order_id' => $order->id,
@@ -45,11 +72,11 @@ class PaymentController extends Controller
         $payment = Mollie::api()->payments->create([
             "amount" => [
                 "currency" => "EUR",
-                "value" => $total_price // You must send the correct number of decimals, thus we enforce the use of strings
+                "value" => $total_price
             ],
             "description" => "Product Order Description",
             "redirectUrl" => route('user.order.success'),
-            "webhookUrl" => 'https://0ca3518a75d9.ngrok.io/mp-resource/public/api/webhooks',
+            "webhookUrl" => route('webhooks'),
 
             "metadata" => [
                 "order_id" => $order->id,
@@ -92,12 +119,20 @@ class PaymentController extends Controller
         $order = UserOrder::find($payment->metadata->order_id);
 
         if ($payment->isPaid()) {
-            $pst = PaymentStatus::where('user_id', $user->id)->orderBy('id', 'desc')->first();
+            $pst = PaymentStatus::where('user_id', $user->id)->where('order_id', $order->id)->first();
             $pst->status = 'paid';
             $pst->payment_id = $paymentId;
             $pst->save();
 
-            $order->update(['is_paid' => true]);
+            $order->update([
+                'is_paid' => true,
+                'status' => 'Completed'
+            ]);
+        } else {
+            $order->update([
+                'is_paid' => false,
+                'status' => 'On hold'
+            ]);
         }
     }
 

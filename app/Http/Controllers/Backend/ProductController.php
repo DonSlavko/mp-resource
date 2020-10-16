@@ -22,18 +22,42 @@ class ProductController extends Controller
         $products = Product::all()
             ->load(['variation', 'variationValues', 'attributes', 'attributeValues', 'brand', 'category'])
             ->map(function ($prod) {
-                $prod->attribute = [
-                    'ids' => $prod->attributes->pluck('id'),
-                    'values' => $prod->attributeValues->pluck('id')
-                ];
-                $prod->stock = $prod->variation()->sum('stock_quantity');
+
+                $attrIds = $prod->attributes->pluck('id');
+                $valIds = $prod->attributeValues->pluck('id');
+                $attributes = [];
+
+                foreach ($valIds as $key => $value) {
+                    $attributes[$attrIds[$key]] = $value;
+                }
+
+                $prod->attributes_values = $attributes;
+
+                $prod->stock = $prod->variationValues()->sum('quantity');
+
+                $varIds = $prod->variationValues->pluck('id');
+                $quantities = $prod->variationValues()->pluck('quantity');
+                $prices = $prod->variationValues()->pluck('price');
+
+                $variations_values = [];
+
+                foreach ($quantities as $key => $quantity) {
+                    $variations_values['quantity'][$varIds[$key]] = "$quantity";
+                }
+                foreach ($prices as $key => $price) {
+                    $variations_values['price'][$varIds[$key]] = "$price";
+                }
+
+                $prod->variations_values = $variations_values;
+
                 return $prod;
             })->map(function ($prod) {
+                $prod->variation = optional($prod->variation()->first())->id;
                 $prod->product_variations = [
-                    'ids' => $prod->variation->pluck('id'),
+                    'ids' => $prod->variationValues->pluck('id'),
                     'values' => $prod->variationValues->pluck('id'),
-                    'stocks' => $prod->variation()->pluck('stock_quantity'),
-                    'prices' => $prod->variation()->pluck('price'),
+                    'stocks' => $prod->variationValues()->pluck('quantity'),
+                    'prices' => $prod->variationValues()->pluck('price'),
                     'variation_name' => $prod->variationValues->pluck('name'),
                 ];
                 return $prod;
@@ -86,6 +110,7 @@ class ProductController extends Controller
         }
 
         $variations = $request->get('variations');
+        $variation = $request->get('variation');
         $attributes = $request->get('attributes');
 
         foreach ($attributes as $key => $attribute) {
@@ -104,6 +129,7 @@ class ProductController extends Controller
         $product->attributes()->attach($attributeIds);
         $product->attributeValues()->attach($attributeValuesIds);
 
+        $product->variation()->attach($variation);
         $product->variationValues()->attach($variationValuesIds);
 
         return response('Product created');

@@ -287,7 +287,7 @@ export default {
                     console.log(error.message);
                 });
             } else {
-                axios.post("/payment", this.formData()).then((response) => {
+                axios.get("/payment", {params: this.formData()}).then((response) => {
                     this.initialize();
                     this.$toasted.show(response.data);
                 }).catch((error) => {

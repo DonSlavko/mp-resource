@@ -194,6 +194,7 @@
                                                     outlined
                                                     dense
                                                     clearable
+                                                    @change="resetVariationValues()"
                                                 ></v-select>
                                             </v-col>
 
@@ -440,11 +441,6 @@ export default {
         dialog(val) {
             val || this.close();
         },
-
-        "editedItem.variation": function(val) {
-            this.editedItem.variations.price = {};
-            this.editedItem.variations.quantity = {};
-        }
     },
 
     created() {
@@ -595,8 +591,31 @@ export default {
          */
         editItem(item) {
             this.editedIndex = this.table.data.indexOf(item);
-            this.editedItem = Object.assign({}, item);
+
+            this.editedItem = {
+                name: item.name,
+                category_id: item.category_id,
+                description: item.description,
+                brand_id: item.brand_id,
+                attributes: item.attributes_values,
+                variation: item.variation[0].id,
+                variations: item.variations_values,
+                sku: item.sku,
+                expires: item.expires,
+                charge: item.charge,
+                images: [],
+                brochure: null,
+                analysis: null,
+            };
+
             this.dialog = true;
+        },
+
+        resetVariationValues() {
+            if (this.dialog) {
+                this.editedItem.variations.price = {};
+                this.editedItem.variations.quantity = {};
+            }
         },
 
         /**
@@ -643,6 +662,8 @@ export default {
                     }
                 });
             }
+
+            form.append("variation", this.editedItem.variation);
 
             if (this.editedItem.variations.price) {
                 let price = Object.entries(this.editedItem.variations.price);

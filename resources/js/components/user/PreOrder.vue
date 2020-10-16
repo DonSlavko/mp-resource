@@ -21,7 +21,7 @@
                 <span v-else>Order</span>
             </template>
             <template v-slot:item.is_paid="{ item }">
-                <span v-if="!item.is_paid && item.preorder" small>-</span>
+                <span v-if="!item.is_paid && item.preorder">-</span>
                 <v-chip v-else-if="!item.is_paid && !item.preorder" color="red" small>
                     Not Paid
                 </v-chip>
@@ -30,8 +30,14 @@
                 </v-chip>
             </template>
             <template v-slot:item.actions="{ item }">
-                <v-btn small outlined v-if="!item.is_paid && !item.preorder">Process to payment</v-btn>
-                <v-btn small outlined v-if="item.preorder">Process to order</v-btn>
+                <v-btn small outlined
+                       v-if="!item.is_paid && !item.preorder"
+                       @click="processOrder(item)">Process to payment
+                </v-btn>
+                <v-btn small outlined
+                       v-if="item.preorder && item.status === 'Approved'"
+                       @click="processPreorder(item)">Process to order
+                </v-btn>
             </template>
             <template v-slot:expanded-item="{ headers, item }">
                 <td class="px-0" :colspan="headers.length">
@@ -146,6 +152,38 @@ export default {
                 console.log(error.message);
             });
         },
+
+        formData(item) {
+            return {
+                item_id: item.id,
+            }
+        },
+
+        processOrder(item) {
+            axios.get("/payment", {
+                params: {
+                    order_id: item.id,
+                }
+            }).then((response) => {
+                this.initialize();
+                this.$toasted.show(response.data);
+            }).catch((error) => {
+                this.$toasted.show(error.message);
+            });
+        },
+
+        processPreorder(item) {
+            axios.post("/back/move-to-order", {
+                preorder_id: item.id,
+            }).then((response) => {
+                this.$toasted.show(response.data[1]);
+                document.getElementById("cart-count").innerHTML = response.data[0];
+                this.initialize();
+                window.location.href = "/warenkorb";
+            }).catch((error) => {
+                this.$toasted.show(error.message);
+            });
+        }
     }
 }
 </script>

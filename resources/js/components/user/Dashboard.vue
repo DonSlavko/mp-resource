@@ -106,6 +106,9 @@
 									:items="orders.data"
 									class="elevation-1"
 							>
+                                <template v-slot:item.type="{ item }">
+                                    {{ item.preorder ? 'Preorder' : 'Order' }}
+                                </template>
 								<template v-slot:no-data>
 									<p>Keine Rechnungen vorhanden.</p>
 								</template>
@@ -199,6 +202,10 @@ export default {
 						text: 'Status',
 						value: 'status'
 					},
+                    {
+                        text: 'Type',
+                        value: 'type'
+                    },
 					{
 						text: 'Created',
 						value: 'created_at'
