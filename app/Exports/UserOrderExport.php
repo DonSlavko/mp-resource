@@ -5,15 +5,52 @@ namespace App\Exports;
 use App\UserOrder;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class UserOrderExport implements FromCollection, WithHeadings
+class UserOrderExport implements FromCollection, WithMapping, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return UserOrder::all();
+        return UserOrder::where('preorder', 0)->get();
+    }
+
+    public function map($userOrder): array
+    {
+        $multiRow = [];
+        $userOrder->carts->each(function($cart) use ($userOrder, &$multiRow) {
+            $multiRow[] = [
+                $userOrder->id,
+                "",
+                $userOrder->user->first_name . " " . $userOrder->user->last_name,
+                "",
+                $userOrder->user->street,
+                $userOrder->user->postal,
+                $userOrder->user->city,
+                "DE",
+                "",
+                $userOrder->user->first_name . " " . $userOrder->user->last_name,
+                "",
+                $userOrder->user->street,
+                $userOrder->user->postal,
+                $userOrder->user->city,
+                "DE",
+                "BESTNR_AG",
+                "LIEFDAT",
+                $userOrder->created_at->format('d.m.y'), // date format 01.30.18 // +1 day
+                $cart->product->sku,
+                $cart->product_name, // max 50 ch
+                $cart->quantity,
+                "",
+                "",
+                "",
+                "19",
+                ""
+            ];
+        });
+        return $multiRow;
     }
 
     public function headings(): array

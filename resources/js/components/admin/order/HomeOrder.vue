@@ -11,6 +11,13 @@
                                   :items="table.orders"
                                   :items-per-page="5"
                                   class="elevation-1">
+                        <template v-slot:top>
+                            <v-toolbar flat color="white">
+
+                                <v-spacer></v-spacer>
+                                <v-btn href="/back/order-export" download outlined>Export CSV</v-btn>
+                            </v-toolbar>
+                        </template>
                         <template v-slot:item.products="{ item }">
                             {{ item.carts.length }}
                         </template>
