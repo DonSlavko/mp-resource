@@ -61,8 +61,7 @@ class ShopController extends Controller
         $price = $product->variationValues->where('id', $variation_value->id)->first()->pivot->price;
         $total_quantity = $product->variationValues->where('id', $variation_value->id)->first()->pivot->quantity;
 
-
-        if ($total_quantity > $quantity) {
+        if ($total_quantity < $quantity) {
             return response([
                 [], ['Not enough product in stock']
             ]);
