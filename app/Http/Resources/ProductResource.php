@@ -29,7 +29,7 @@ class ProductResource extends JsonResource
             }),
 
             'variations' => $this->variation,
-            'variations_price' => $this->variation()->pluck('price'),
+            'variations_price' => $this->variationValues()->pluck('price'),
             'variationValues' => $this->variationValues,
             'variation_stock' => $this->variationValues()->sum('quantity'),
             'category' => new CategoryResource($this->whenLoaded('category')),
