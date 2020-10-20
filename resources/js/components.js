@@ -43,6 +43,7 @@ import PreOrder from "./components/user/PreOrder";
 import vuetify from "./vuetify";
 import CallService from "./components/modals/CallService";
 import Dashboard from "./components/user/Dashboard";
+import HomeInvoice from "./components/admin/invoice/HomeInvoice";
 
 Vue.component('login', Login);
 Vue.component('register', Register);
@@ -66,6 +67,8 @@ Vue.component('show-variation', ShowVariation);
 Vue.component('home-variation-value', HomeVariationValue);
 
 Vue.component('home-order', HomeOrder);
+
+Vue.component('home-invoice', HomeInvoice);
 
 Vue.component('home-call-service', HomeCallService);
 

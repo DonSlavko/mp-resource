@@ -306,6 +306,9 @@
                         <v-btn href="{{ route('admin.order.index') }}" text class="text--secondary">
                             Orders
                         </v-btn>
+                        <v-btn href="{{ route('admin.invoice.index') }}" text class="text--secondary">
+                            Invoices
+                        </v-btn>
                         <v-btn href="{{ route('admin.newsletterindex') }}" text class="text--secondary">
                             Newsletter
                         </v-btn>

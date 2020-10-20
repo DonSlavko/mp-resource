@@ -130,6 +130,15 @@
                                     mdi-close
                                 </v-icon>
                             </v-btn>
+
+
+                            <v-btn
+                                   :href="'/back/order-download/'+item.id"
+                                   small icon color="green">
+                                <v-icon>
+                                    mdi-download
+                                </v-icon>
+                            </v-btn>
                         </template>
                         <template v-slot:no-data>
                             <v-btn color="primary" @click="initialize">Reset</v-btn>
@@ -165,6 +174,15 @@
                                    small icon color="red">
                                 <v-icon>
                                     mdi-close
+                                </v-icon>
+                            </v-btn>
+
+
+                            <v-btn
+                                :href="'/back/preorder-download/'+item.id"
+                                small icon color="green">
+                                <v-icon>
+                                    mdi-download
                                 </v-icon>
                             </v-btn>
                         </template>

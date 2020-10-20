@@ -15,4 +15,8 @@ class OrderController extends Controller
     public function index() {
         return view('admin.order.index');
     }
+
+    public function invoice() {
+        return view('admin.invoice.index');
+    }
 }

@@ -44,6 +44,7 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::resource('variation-value', 'VariationValueController');
             Route::resource('user', 'UserController');
             Route::resource('order', 'OrderController');
+            Route::get('invoce', 'OrderController@invoice')->name('invoice.index');
             Route::get('newsletterindex','NewsletterController@index')->name('newsletterindex');
             Route::get('newsletter_list','NewsletterController@list')->name('newsletter_list');
             Route::post('SendNewsletterEmail','NewsletterController@SendNewsletterEmail')->name('SendNewsletterEmail');
@@ -64,6 +65,8 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::resource('products', 'ProductController');
             Route::resource('brands','BrandController');
             Route::resource('orders', 'OrderController');
+
+            Route::get('invoice', 'OrderController@invoice');
 
             Route::post('orders/{order}/approve', 'OrderController@approve');
             Route::post('orders/{order}/denied', 'OrderController@denied');
@@ -86,6 +89,10 @@ Route::middleware(['auth','verified'])->group(function () {
 
 
             Route::get('order-export', 'ExportController@export');
+
+            Route::get('order-download/{order}', 'PdfController@downloadOrderPdf');
+            Route::get('preorder-download/{preorder}', 'PdfController@downloadPreorderPdf');
+            Route::get('invoice-download/{invoice}', 'PdfController@downloadInvoicePdf');
         });
     });
 

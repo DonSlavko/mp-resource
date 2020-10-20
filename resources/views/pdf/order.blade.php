@@ -26,8 +26,11 @@
 
 <table width="100%">
     <tr>
-        <td valign="top">{{--<img src="{{asset('images/meteor-logo.png')}}" alt="" width="150"/>--}}</td>
+        <td></td>
+        <td align="right"><img src="{{asset('/Logo-Original.png')}}" alt="" width="150"/></td>
+    </tr>
 
+    <tr>
         <td align="left">
             <p>Medical Pharma Resource GmbH Marktplatz 1  40764  Langenfeld</p>
             <p>
@@ -44,14 +47,14 @@
             <h3></h3>
             <p>
                 <strong>Kundennummer:</strong><br>
-                xxxxxXXXxxxx <br>
+                {{ $order->user->id }} <br>
                 <strong>Auftragsnummer:</strong><br>
-                xxxxXXXXXxxx <br>
+                {{ $order->id }} <br>
                 <strong>Datum:</strong><br>
-                TT.MM.JJJJ
+                {{ $order->created_at->format('m.d.Y') }}<br>
                 <strong>Bezug:</strong><br>
                 <strong>Vobestellungsummer:</strong><br>
-                xxxxXXXXXxxx <br>
+                {{ $order->preorder_id ?? '' }} <br>
 
             </p>
         </td>
@@ -67,7 +70,6 @@
                 Sehr geehrte Damen und Herren,<br>
                 vielen Dank fur ihre verbindliche Vorbestellung und ihr Verstrauen. Wir freuen uns uber
                 ihr Interesse an unseren Produkten. Sie haben folgende Produkte bei uns vorbestellt:
-
             </p>
         </td>
     </tr>
@@ -89,37 +91,45 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Playstation IV - Black</td>
-        <td align="right">1</td>
-        <td align="right">1400.00</td>
-        <td align="right">1400.00</td>
-        <td>Test</td>
-        <td>Test</td>
-    </tr>
+    @foreach($order->carts as $key => $item)
+        <tr>
+            @php
+                $product = $item->product;
+
+                $variation_price = $product->variationValues()->where('variation_value_product.variation_value_id', $item->variation_value->id)->first()->pivot->price;
+
+            @endphp
+            <th scope="row">{{ $key }}</th>
+            <td>{{ $item->quantity }}</td>
+            <td>{{ $variation_price }} €</td>
+            <td>{{ $item->variation_value->name }}</td>
+            <td>{{ $item->product->name }}</td>
+            <td>19%</td>
+            <td>{{ number_format((($item->price)/1.19), 2, '.', '') }} €</td>
+        </tr>
+    @endforeach
     </tbody>
 
     <tfoot>
     <tr>
         <td colspan="3"></td>
-        <td align="right">Zwischensumme Netto</td>
-        <td align="right">1635.00</td>
+        <td colspan="2" align="right">Zwischensumme Netto</td>
+        <td colspan="2" align="right">{{ number_format((($order->total_price)/1.19), 2, '.', '') }} €</td>
     </tr>
     <tr>
         <td colspan="3"></td>
-        <td align="right">Umsatzsteuer 19%</td>
-        <td align="right">294.3</td>
+        <td colspan="2" align="right">Umsatzsteuer 19%</td>
+        <td colspan="2" align="right">{{ number_format(($order->total_price-(($order->total_price)/1.19)), 2, '.', '') }} €</td>
     </tr>
     <tr>
         <td colspan="3"></td>
-        <td align="right">Gesamtbetrag</td>
-        <td align="right" class="gray">$ 1929.3</td>
+        <td colspan="2" align="right">Gesamtbetrag</td>
+        <td colspan="2" align="right" class="gray">{{ $order->total_price }} €</td>
     </tr>
     </tfoot>
 </table>
 
-<table width="100%">
+<table width="100%" style="margin-top: 2rem">
     <tr>
         <td align="left">
             <p>

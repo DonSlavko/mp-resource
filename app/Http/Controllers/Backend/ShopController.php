@@ -71,7 +71,7 @@ class ShopController extends Controller
             'quantity' => $quantity,
             'product_id' => $product_id,
             'product_name' => $product->name,
-            'variation_value' => $variation_value_id,
+            'variation_value_id' => $variation_value_id,
             'variation_value_name' => $variation_value->name,
             'stock' => $quantity,
             'price' => $price,

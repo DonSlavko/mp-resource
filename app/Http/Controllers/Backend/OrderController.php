@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\PaymentStatus;
 use App\UserOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -70,9 +71,11 @@ class OrderController extends Controller
 
             return response(['message' => 'Order successfully denied']);
         }
+    }
 
+    public function invoice() {
+        $invoices = PaymentStatus::all();
 
-
-
+        return response(['data' => $invoices]);
     }
 }
