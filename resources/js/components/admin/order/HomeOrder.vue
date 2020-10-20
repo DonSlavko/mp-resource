@@ -15,7 +15,95 @@
                             <v-toolbar flat color="white">
 
                                 <v-spacer></v-spacer>
-                                <v-btn href="/back/order-export" download outlined>Export CSV</v-btn>
+
+                                <v-dialog v-model="dialog" max-width="500px">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
+                                        >Export CSV
+                                        </v-btn>
+                                    </template>
+                                    <v-card>
+                                        <v-card-title>
+                                            <span class="headline">Export CSV</span>
+                                        </v-card-title>
+
+                                        <v-card-text>
+                                            <v-container>
+                                                <v-row>
+                                                    <v-col cols="12">
+                                                        <v-select
+                                                            v-model="dateSelect"
+                                                            :items="dateSelectors"
+                                                            name="brand_id"
+                                                            label="Select interval"
+                                                            outlined
+                                                            dense
+                                                        ></v-select>
+                                                    </v-col>
+
+                                                    <v-col cols="12" v-if="dateSelect === 4">
+                                                        <v-menu
+                                                            v-model="datePicker1"
+                                                            :close-on-content-click="false"
+                                                            :nudge-right="40"
+                                                            transition="scale-transition"
+                                                            offset-y
+                                                            min-width="290px"
+                                                        >
+                                                            <template v-slot:activator="{ on, attrs }">
+                                                                <v-text-field
+                                                                    v-model="dateStart"
+                                                                    label="Start date"
+                                                                    readonly
+                                                                    v-bind="attrs"
+                                                                    v-on="on"
+                                                                    outlined
+                                                                    dense
+                                                                ></v-text-field>
+                                                            </template>
+                                                            <v-date-picker
+                                                                v-model="dateStart"
+                                                                @input="datePicker1 = false"
+                                                            ></v-date-picker>
+                                                        </v-menu>
+                                                    </v-col>
+                                                    <v-col cols="12" v-if="dateSelect === 4">
+                                                        <v-menu
+                                                            v-model="datePicker2"
+                                                            :close-on-content-click="false"
+                                                            :nudge-right="40"
+                                                            transition="scale-transition"
+                                                            offset-y
+                                                            min-width="290px"
+                                                        >
+                                                            <template v-slot:activator="{ on, attrs }">
+                                                                <v-text-field
+                                                                    v-model="dateEnd"
+                                                                    label="End date"
+                                                                    readonly
+                                                                    v-bind="attrs"
+                                                                    v-on="on"
+                                                                    outlined
+                                                                    dense
+                                                                ></v-text-field>
+                                                            </template>
+                                                            <v-date-picker
+                                                                v-model="dateEnd"
+                                                                @input="datePicker2 = false"
+                                                            ></v-date-picker>
+                                                        </v-menu>
+                                                    </v-col>
+                                                </v-row>
+                                            </v-container>
+                                        </v-card-text>
+
+                                        <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="blue darken-1" text @click="close">Close</v-btn>
+                                            <v-btn color="blue darken-1" text @click="exportCsv()" :disabled="!canExport">Export</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
                             </v-toolbar>
                         </template>
                         <template v-slot:item.products="{ item }">
@@ -120,11 +208,54 @@ export default {
                 preorders: [],
             },
             dialog: false,
+
+            dateSelectors: [
+                {
+                    text: 'Today',
+                    value: 1
+                },
+                {
+                    text: 'Last Week',
+                    value: 2
+                },
+                {
+                    text: 'Last Month',
+                    value: 3
+                },
+                {
+                    text: 'Custom Interval',
+                    value: 4
+                }
+            ],
+
+            dateSelect: null,
+            dateStart: null,
+            dateEnd: null,
+            datePicker1: false,
+            datePicker2: false,
         }
     },
 
     created() {
         this.initialize();
+    },
+
+    computed: {
+        canExport() {
+            if (this.dateSelect === 4 && this.dateStart && this.dateEnd) {
+                let date1 = new Date(this.dateStart);
+                let date2 = new Date(this.dateEnd);
+                if (date1 >= date2) {
+                    return false
+                } else {
+                    return true
+                }
+            } else if(this.dateSelect !== null && this.dateSelect < 4) {
+                return true
+            } else {
+                return false
+            }
+        }
     },
 
     methods: {
@@ -164,6 +295,33 @@ export default {
                     this.$toasted.show(error.message);
                 });
             }
+        },
+
+        close() {
+            this.dialog = false;
+            this.$nextTick(() => {
+                this.dateSelect = null;
+                this.dateInterval = [];
+            });
+        },
+
+        exportCsv() {
+            axios.get('/back/order-export', {
+                params: {
+                    interval: this.dateSelect,
+                    start_date: this.dateStart,
+                    end_date: this.dateEnd,
+                }
+            }).then(response => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                const fileName = `export-${+ new Date()}.csv`
+                link.setAttribute('download', fileName);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            })
         },
     },
 }
