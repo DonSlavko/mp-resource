@@ -30,50 +30,88 @@
                         </template>
                         <template v-slot:no-data> Cart is empty</template>
                     </v-data-table>
-                    <v-row>
-                        <v-col cols="12" offset-md="8" md="4">
-                            <h2>Shopping cart total</h2>
+                    <v-container>
+                        <v-row>
+                            <v-col cols="12" offset-md="4" md="4" order-md="2">
+                                <h2>Shopping cart total</h2>
 
-                            <v-simple-table>
-                                <thead>
-                                <tr>
-                                    <th class="text-left">
-                                        {{ headers[4].text }}
-                                    </th>
-                                    <th class="text-left">
-                                        {{ totalPrice() }} €
-                                    </th>
-                                </tr>
-                                </thead>
-                            </v-simple-table>
-                        </v-col>
+                                <v-simple-table>
+                                    <thead>
+                                    <tr>
+                                        <th class="text-left">
+                                            {{ headers[4].text }}
+                                        </th>
+                                        <th class="text-left">
+                                            {{ totalPrice() }} €
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                </v-simple-table>
+                            </v-col>
 
-                        <v-col offset-md="8" md="4">
-                            <v-checkbox
-                                v-model="checkbox_order">
-                                <template v-slot:label>
-                                    <div class="font-weight-light text-subtitle-1">
-                                        I accept the
-                                        <v-tooltip bottom>
-                                            <template v-slot:activator="{ on }">
-                                                <strong><a
-                                                    target="_blank"
-                                                    href="/agb"
-                                                    @click.stop
-                                                    v-on="on">
-                                                    Terms and Conditions
-                                                </a></strong>
-                                            </template>
-                                            Opens in new window
-                                        </v-tooltip>
-                                    </div>
-                                </template>
-                            </v-checkbox>
+                            <v-col offset-md="8" md="4" order-md="3">
+                                <v-checkbox
+                                    v-model="checkbox_order">
+                                    <template v-slot:label>
+                                        <div class="font-weight-light text-subtitle-1">
+                                            I accept the
+                                            <v-tooltip bottom>
+                                                <template v-slot:activator="{ on }">
+                                                    <strong><a
+                                                        target="_blank"
+                                                        href="/agb"
+                                                        @click.stop
+                                                        v-on="on">
+                                                        Terms and Conditions
+                                                    </a></strong>
+                                                </template>
+                                                Opens in new window
+                                            </v-tooltip>
+                                        </div>
+                                    </template>
+                                </v-checkbox>
 
-                            <v-btn @click="makeOrder()" :disabled="canPlaceOrder">Place order</v-btn>
+                                <v-btn @click="makeOrder()" :disabled="canPlaceOrder">Place order</v-btn>
 
-                        </v-col>
-                    </v-row>
+                            </v-col>
+
+                            <v-col cols="12" md="4" order-md="1">
+                                <v-file-input
+                                    :rules="rules.file"
+                                    v-model="order.file1"
+                                    accept="image/png, image/jpeg, application/pdf"
+                                    label="Apothekenzulassung:"
+                                    prepend-icon="mdi-paperclip"
+                                    outlined
+                                    :show-size="1000"
+                                    dense
+                                    clearable
+                                ></v-file-input>
+                                <v-file-input
+                                    :rules="rules.file"
+                                    v-model="order.file2"
+                                    accept="image/png, image/jpeg, application/pdf"
+                                    label=" BtM-Nummernzuweisung:"
+                                    prepend-icon="mdi-paperclip"
+                                    outlined
+                                    :show-size="1000"
+                                    dense
+                                    clearable
+                                ></v-file-input>
+                                <v-file-input
+                                    :rules="rules.file"
+                                    v-model="order.file3"
+                                    accept="image/png, image/jpeg, application/pdf"
+                                    label=" Approbation:"
+                                    prepend-icon="mdi-paperclip"
+                                    outlined
+                                    :show-size="1000"
+                                    dense
+                                    clearable
+                                ></v-file-input>
+                            </v-col>
+                        </v-row>
+                    </v-container>
                 </v-tab-item>
 
                 <v-tab-item>
@@ -97,50 +135,88 @@
                         </template>
                         <template v-slot:no-data>Preorder is empty</template>
                     </v-data-table>
-                    <v-row>
-                        <v-col cols="12" offset-md="8" md="4">
-                            <h2>Shopping cart total</h2>
+                    <v-container>
+                        <v-row>
+                            <v-col cols="12" offset-md="4" md="4" order-md="2">
+                                <h2>Shopping cart total</h2>
 
-                            <v-simple-table>
-                                <thead>
-                                <tr>
-                                    <th class="text-left">
-                                        {{ headers[4].text }}
-                                    </th>
-                                    <th class="text-left">
-                                        {{ totalPrice(true) }} €
-                                    </th>
-                                </tr>
-                                </thead>
-                            </v-simple-table>
-                        </v-col>
+                                <v-simple-table>
+                                    <thead>
+                                    <tr>
+                                        <th class="text-left">
+                                            {{ headers[4].text }}
+                                        </th>
+                                        <th class="text-left">
+                                            {{ totalPrice(true) }} €
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                </v-simple-table>
+                            </v-col>
 
-                        <v-col offset-md="8" md="4">
-                            <v-checkbox
-                                v-model="checkbox_preorder">
-                                <template v-slot:label>
-                                    <div class="font-weight-light text-subtitle-1">
-                                        I accept the
-                                        <v-tooltip bottom>
-                                            <template v-slot:activator="{ on }">
-                                                <strong><a
-                                                    target="_blank"
-                                                    href="/agb"
-                                                    @click.stop
-                                                    v-on="on"
-                                                >
-                                                    Terms and Conditions
-                                                </a></strong>
-                                            </template>
-                                            Opens in new window
-                                        </v-tooltip>
-                                    </div>
-                                </template>
-                            </v-checkbox>
+                            <v-col cols="12" offset-md="8" md="4" order-md="3">
+                                <v-checkbox
+                                    v-model="checkbox_preorder">
+                                    <template v-slot:label>
+                                        <div class="font-weight-light text-subtitle-1">
+                                            I accept the
+                                            <v-tooltip bottom>
+                                                <template v-slot:activator="{ on }">
+                                                    <strong><a
+                                                        target="_blank"
+                                                        href="/agb"
+                                                        @click.stop
+                                                        v-on="on"
+                                                    >
+                                                        Terms and Conditions
+                                                    </a></strong>
+                                                </template>
+                                                Opens in new window
+                                            </v-tooltip>
+                                        </div>
+                                    </template>
+                                </v-checkbox>
 
-                            <v-btn @click="makeOrder(true)" :disabled="canPlacePreorder">Place pre-order</v-btn>
-                        </v-col>
-                    </v-row>
+                                <v-btn @click="makeOrder(true)" :disabled="canPlacePreorder">Place pre-order</v-btn>
+                            </v-col>
+
+                            <v-col cols="12" md="4" order-md="1">
+                                <v-file-input
+                                    :rules="rules.file"
+                                    v-model="preorder.file1"
+                                    accept="image/png, image/jpeg, application/pdf"
+                                    label="Apothekenzulassung:"
+                                    prepend-icon="mdi-paperclip"
+                                    outlined
+                                    :show-size="1000"
+                                    dense
+                                    clearable
+                                ></v-file-input>
+                                <v-file-input
+                                    :rules="rules.file"
+                                    v-model="preorder.file2"
+                                    accept="image/png, image/jpeg, application/pdf"
+                                    label=" BtM-Nummernzuweisung:"
+                                    prepend-icon="mdi-paperclip"
+                                    outlined
+                                    :show-size="1000"
+                                    dense
+                                    clearable
+                                ></v-file-input>
+                                <v-file-input
+                                    :rules="rules.file"
+                                    v-model="preorder.file3"
+                                    accept="image/png, image/jpeg, application/pdf"
+                                    label=" Approbation:"
+                                    prepend-icon="mdi-paperclip"
+                                    outlined
+                                    :show-size="1000"
+                                    dense
+                                    clearable
+                                ></v-file-input>
+                            </v-col>
+                        </v-row>
+                    </v-container>
                 </v-tab-item>
             </v-tabs>
         </v-card>
@@ -185,6 +261,23 @@ export default {
                     sortable: false,
                 },
             ],
+            rules: {
+                file: [
+                    value => !!value || 'No file selected',
+                    value => value.size < 6000000,
+                ],
+            },
+
+            order: {
+                file1: null,
+                file2: null,
+                file3: null,
+            },
+            preorder: {
+                file1: null,
+                file2: null,
+                file3: null,
+            },
             orders: [],
             preorders: [],
             product_detail: [],
@@ -207,11 +300,19 @@ export default {
         },
 
         canPlaceOrder() {
-            return !(this.orderIds.length > 0 && this.checkbox_order);
+            return !(this.orderIds.length > 0
+                && this.checkbox_order
+                && this.order.file1
+                && this.order.file2
+                && this.order.file3);
         },
 
         canPlacePreorder() {
-            return !(this.preorderIds.length > 0 && this.checkbox_preorder);
+            return !(this.preorderIds.length > 0
+                && this.checkbox_preorder
+                && this.preorder.file1
+                && this.preorder.file2
+                && this.preorder.file3);
         }
     },
 
@@ -263,23 +364,36 @@ export default {
         },
 
         formData(preorder = false) {
+
+            let form = new FormData();
+
             if (preorder) {
-                return {
-                    carts_id: this.preorderIds,
-                    total_price: this.totalPrice(true),
-                    preorder: true
-                };
+                form.append("carts_id", this.preorderIds);
+                form.append("total_price", this.totalPrice(true));
+                form.append("preorder", "1");
+
+                form.append("file1", this.preorder.file1, this.preorder.file1.name);
+                form.append("file2", this.preorder.file2, this.preorder.file2.name);
+                form.append("file3", this.preorder.file3, this.preorder.file3.name);
             } else {
-                return {
-                    carts_id: this.orderIds,
-                    total_price: this.totalPrice(),
-                };
+                form.append("carts_id", this.orderIds);
+                form.append("total_price", this.totalPrice());
+
+                form.append("file1", this.order.file1, this.order.file1.name);
+                form.append("file2", this.order.file2, this.order.file2.name);
+                form.append("file3", this.order.file3, this.order.file3.name);
             }
+
+            return form;
         },
 
         makeOrder(preorder = false) {
             if (preorder) {
-                axios.post("/back/make-order", this.formData(preorder)).then((response) => {
+                axios.post("/back/make-order", this.formData(preorder), {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then((response) => {
                     this.initialize();
                     this.$toasted.show(response.data);
                     window.location.href = "/vorbestellungen/my-pre-orders";
@@ -287,7 +401,11 @@ export default {
                     console.log(error.message);
                 });
             } else {
-                axios.get("/payment", {params: this.formData()}).then((response) => {
+                axios.post("/back/make-order", this.formData(), {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then((response) => {
                     this.initialize();
                     this.$toasted.show(response.data);
                 }).catch((error) => {

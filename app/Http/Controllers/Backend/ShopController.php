@@ -96,10 +96,58 @@ class ShopController extends Controller
 
         $carts_id = $request->get('carts_id');
 
+        if (!is_array($carts_id)) {
+            $carts_id = [$carts_id];
+        }
+
+        $preorder = !!$request->get('preorder', false);
+
+
+        $file1 = $request->file('file1');
+        $file2 = $request->file('file2');
+        $file3 = $request->file('file3');
+        if ($file1) {
+            $name1 = time() . '_' . $file1->getClientOriginalName();
+            $path1 = 'order/files/' . $name1;
+            $file1->move('order/files/', $name1);
+        }
+        if ($file2) {
+            $name2 = time() . '_' . $file2->getClientOriginalName();
+            $path2 = 'order/files/' . $name2;
+            $file2->move('order/files/', $name2);
+        }
+        if ($file3) {
+            $name3 = time() . '_' . $file3->getClientOriginalName();
+            $path3 = 'order/files/' . $name3;
+            $file3->move('order/files/', $name3);
+        }
+
         $data = [
             'user_id' => Auth::user()->id,
             'total_price' => $request->get('total_price'),
-            'preorder' => $request->get('preorder')
+            'preorder' => $preorder,
+            'status' => 'On hold',
+            'file1' => $path1 ?? null,
+            'file2' => $path2 ?? null,
+            'file3' => $path3 ?? null,
+        ];
+
+        $files = [
+            [
+                'name' => $name1,
+                'file' => $path1,
+                'options' => [],
+            ],
+            [
+                'name' => $name2,
+                'file' => $path2,
+                'options' => [],
+            ],
+            [
+                'name' => $name3,
+                'file' => $path3,
+                'options' => [],
+            ],
         ];
 
         $order = UserOrder::create($data);
@@ -109,24 +157,53 @@ class ShopController extends Controller
         $user_name = Auth::user()->username;
         $user_email = Auth::user()->email;
 
-        Mail::to($user_email)->send(new \App\Mail\UserOrder([
-            'order' => $order,
-            'name' => $user_name,
-        ], [
-            'address' => 'vorbestellung@mp-resource.shop',
-            'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
-        ], 'Your Pre-order is created'));
+        $order = $order->load('carts');
 
-        $adminEmails = User::where('is_admin', 1)->pluck('email')->toArray();
+        if ($preorder) {
+            $data = [
+                'order' => $order,
+                'name' => $user_name,
+            ];
 
-        Mail::to($adminEmails)->send(new UserOrderAdmin([
-            'order' => $order,
-            'name' => $user_name,
-            'user_email' => $user_email
-        ], [
-            'address' => 'vorbestellung@mp-resource.shop',
-            'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
-        ], 'New Pre-order is created'));
+            $from = [[
+                'address' => 'vorbestellung@mp-resource.shop',
+                'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
+            ]];
+
+            Mail::to($user_email)->send(new \App\Mail\UserOrder($data, $from, 'Your Pre-order is created'));
+
+            $adminEmails = User::where('is_admin', 1)->pluck('email')->toArray();
+
+            $from = [[
+                'address' => 'vorbestellung@mp-resource.shop',
+                'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
+            ]];
+
+            Mail::to($adminEmails)->send(new UserOrderAdmin($order, $from, $files, 'New Pre-order is created'));
+        } else {
+            $data = [
+                'order' => $order,
+                'name' => $user_name,
+            ];
+
+            $from = [[
+                'address' => 'bestellung@mp-resource.shop',
+                'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
+            ]];
+
+            Mail::to($user_email)
+                ->send(new \App\Mail\UserOrder($data, $from, 'Your Order is created'));
+
+            $adminEmails = User::where('is_admin', 1)->pluck('email')->toArray();
+
+            $from = [[
+                'address' => 'bestellung@mp-resource.shop',
+                'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
+            ]];
+
+            Mail::to($adminEmails)
+                ->send(new UserOrderAdmin($order, $from, $files, 'New Order is created'));
+        }
 
         return response(['Order created successfully']);
     }

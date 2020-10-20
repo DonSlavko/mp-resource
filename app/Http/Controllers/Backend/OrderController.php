@@ -21,15 +21,27 @@ class OrderController extends Controller
             'status' => 'Approved',
         ]);
 
-        Mail::to($order->user->email)->send(new \App\Mail\UserOrder([
-            'order' => $order,
-            'name' => $order->user->username,
-        ], [
-            'address' => 'auftragsbestaetigung@mp-resource.shop',
-            'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
-        ], 'Your Preorder is approved'));
+        if ($order->preorder === 1) {
+            Mail::to($order->user->email)->send(new \App\Mail\UserOrder([
+                'order' => $order,
+                'name' => $order->user->username,
+            ], [
+                'address' => 'auftragsbestaetigung@mp-resource.shop',
+                'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
+            ], 'Your Preorder is approved'));
 
-        return response(['message' => 'Preorder successfully approved']);
+            return response(['message' => 'Preorder successfully approved']);
+        } else {
+            Mail::to($order->user->email)->send(new \App\Mail\UserOrder([
+                'order' => $order,
+                'name' => $order->user->username,
+            ], [
+                'address' => 'auftragsbestaetigung@mp-resource.shop',
+                'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
+            ], 'Your Order is approved'));
+
+            return response(['message' => 'Order successfully approved']);
+        }
     }
 
     public function denied(UserOrder $order) {
@@ -37,14 +49,30 @@ class OrderController extends Controller
             'status' => 'Denied',
         ]);
 
-        Mail::to($order->user->email)->send(new \App\Mail\UserOrder([
-            'order' => $order,
-            'name' => $order->user->username,
-        ], [
-            'address' => 'auftragsbestaetigung@mp-resource.shop',
-            'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
-        ], 'Your Preorder is denied'));
+        if ($order->preorder === 1) {
+            Mail::to($order->user->email)->send(new \App\Mail\UserOrder([
+                'order' => $order,
+                'name' => $order->user->username,
+            ], [
+                'address' => 'auftragsbestaetigung@mp-resource.shop',
+                'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
+            ], 'Your Preorder is denied'));
 
-        return response(['message' => 'Preorder successfully denied']);
+            return response(['message' => 'Preorder successfully denied']);
+        } else {
+            Mail::to($order->user->email)->send(new \App\Mail\UserOrder([
+                'order' => $order,
+                'name' => $order->user->username,
+            ], [
+                'address' => 'auftragsbestaetigung@mp-resource.shop',
+                'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
+            ], 'Your Order is denied'));
+
+            return response(['message' => 'Order successfully denied']);
+        }
+
+
+
+
     }
 }

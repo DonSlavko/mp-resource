@@ -31,7 +31,7 @@
             </template>
             <template v-slot:item.actions="{ item }">
                 <v-btn small outlined
-                       v-if="!item.is_paid && !item.preorder"
+                       v-if="(!item.is_paid && !item.preorder) && (item.status === 'Approved' || item.status === 'Failed')"
                        @click="processOrder(item)">Process to payment
                 </v-btn>
                 <v-btn small outlined

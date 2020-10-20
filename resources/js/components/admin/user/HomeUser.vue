@@ -13,7 +13,7 @@
 					              class="elevation-1">
 
 						<template v-slot:item.btmnr="{ item }">
-							<v-btn v-if="item.files" small dense @click="showFiles(item)">Show Files</v-btn>
+							<v-btn v-if="item.files.length" small dense @click="showFiles(item)">Show Files</v-btn>
 							<v-btn v-else small dense disabled>No Files</v-btn>
 
 							<v-list-item-group color="primary" v-if="item.show_files">

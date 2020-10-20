@@ -87,27 +87,6 @@ class PaymentController extends Controller
         $user_name = Auth::user()->username;
         $user_email = Auth::user()->email;
 
-        Mail::to($user_email)
-            ->send(new \App\Mail\UserOrder([
-                'order' => $order,
-                'name' => $user_name,
-            ], [
-                'address' => 'bestellung@mp-resource.shop',
-                'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
-            ], 'Your Order is created'));
-
-        $adminEmails = User::where('is_admin', 1)->pluck('email')->toArray();
-
-        Mail::to($adminEmails)
-            ->send(new UserOrderAdmin([
-                'order' => $order,
-                'name' => $user_name,
-                'user_email' => $user_email
-            ], [
-                'address' => 'bestellung@mp-resource.shop',
-                'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
-            ], 'New Order is created'));
-
         return redirect($payment->getCheckoutUrl(), 303);
     }
 
@@ -131,7 +110,7 @@ class PaymentController extends Controller
         } else {
             $order->update([
                 'is_paid' => false,
-                'status' => 'On hold'
+                'status' => 'Failed'
             ]);
         }
     }

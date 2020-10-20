@@ -115,6 +115,22 @@
                         <template v-slot:item.date="{ item }">
                             {{ getDate(item.created_at) }}
                         </template>
+                        <template v-slot:item.options="{ item }">
+                            <v-btn v-if="item.status === 'On hold'"
+                                   @click="approve(item)"
+                                   small icon color="primary">
+                                <v-icon>
+                                    mdi-check
+                                </v-icon>
+                            </v-btn>
+                            <v-btn v-if="item.status === 'On hold'"
+                                   @click="denied(item)"
+                                   small icon color="red">
+                                <v-icon>
+                                    mdi-close
+                                </v-icon>
+                            </v-btn>
+                        </template>
                         <template v-slot:no-data>
                             <v-btn color="primary" @click="initialize">Reset</v-btn>
                         </template>
@@ -276,7 +292,7 @@ export default {
         },
 
         approve(item) {
-            if (confirm("Are you sure you want to approve this preorder? This action can't be undone!")) {
+            if (confirm("Are you sure you want to approve? This action can't be undone!")) {
                 axios.post('/back/orders/' + item.id + '/approve').then(response => {
                     this.$toasted.show(response.data.message);
                     this.initialize();
@@ -287,7 +303,7 @@ export default {
         },
 
         denied(item) {
-            if (confirm("Are you sure you want to denies this preorder? This action can't be undone!")) {
+            if (confirm("Are you sure you want to denies? This action can't be undone!")) {
                 axios.post('/back/orders/' + item.id + '/denied').then(response => {
                     this.$toasted.show(response.data.message);
                     this.initialize();

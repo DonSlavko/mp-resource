@@ -26,7 +26,7 @@ class UserRegisterAdmin extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user) {
+    public function __construct(User $user, $files) {
         $this->data = [
             'titles' => $user->title,
             'honorific' => $user->honorific,
@@ -36,16 +36,7 @@ class UserRegisterAdmin extends Mailable
             'email' => $user->email,
         ];
 
-        $uploads = $user->getMedia('upload_files');
-
-        if (!$uploads->isEmpty()) {
-
-            $this->attachments = $uploads->map(function ($file) {
-                return [
-                    'file' => $file->getFullUrl()
-                ];
-            });
-        }
+        $this->attachments = $files;
     }
 
     /**

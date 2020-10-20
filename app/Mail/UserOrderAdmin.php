@@ -18,11 +18,18 @@ class UserOrderAdmin extends Mailable
      *
      * @return void
      */
-    public function __construct($data, $from, $subject)
+    public function __construct($order, $from, $files, $subject)
     {
-        $this->data = $data;
+        $this->data = [
+            'order' => $order,
+            'name' => $order->user->username,
+            'user_email' => $order->user->email
+        ];
         $this->from = $from;
         $this->subject = $subject;
+
+
+        $this->attachments = $files;
     }
 
     /**
