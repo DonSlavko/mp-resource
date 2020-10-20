@@ -51,6 +51,7 @@ Route::middleware(['auth','verified'])->group(function () {
 
             Route::get('call-service', 'CallServiceController@index')->name('call-service');
 
+
         });
 
         Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
@@ -82,6 +83,9 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::post('users/{user}/activate', 'UserController@activate');
             Route::post('users/{user}/deactivate', 'UserController@deactivate');
             Route::post('multiselect','FilterController@multiselect')->name('multiselect');
+
+
+            Route::get('order-export', 'ExportController@export');
         });
     });
 

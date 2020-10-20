@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeTotalPriceInUserOrdersTable extends Migration
+class AddFilesToUserOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,9 @@ class ChangeTotalPriceInUserOrdersTable extends Migration
     public function up()
     {
         Schema::table('user_orders', function (Blueprint $table) {
-            $table->decimal('total_price', 10, 2)->change();
+            $table->string('file3')->nullable()->after('preorder');
+            $table->string('file2')->nullable()->after('preorder');
+            $table->string('file1')->nullable()->after('preorder');
         });
     }
 
@@ -26,8 +28,7 @@ class ChangeTotalPriceInUserOrdersTable extends Migration
     public function down()
     {
         Schema::table('user_orders', function (Blueprint $table) {
-            $table->integer('total_price')->change();
-
+            $table->dropColumn(['file1', 'file2', 'file3']);
         });
     }
 }

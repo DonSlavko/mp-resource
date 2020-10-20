@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPreorderToCartsTable extends Migration
+class AddColumnsToCartsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class AddPreorderToCartsTable extends Migration
     public function up()
     {
         Schema::table('carts', function (Blueprint $table) {
-            $table->boolean('preorder')->default(0);
+            $table->unsignedBigInteger('product_id')->after('user_id')->nullable();
+            $table->unsignedBigInteger('variation_value_id')->after('user_id')->nullable();
         });
     }
 
@@ -26,7 +27,8 @@ class AddPreorderToCartsTable extends Migration
     public function down()
     {
         Schema::table('carts', function (Blueprint $table) {
-            $table->dropColumn('preorder');
+            $table->dropColumn('product_id');
+            $table->dropColumn('variation_value_id');
         });
     }
 }

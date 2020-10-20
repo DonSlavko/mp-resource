@@ -19,16 +19,27 @@ class UserController extends Controller
      */
     public function index() {
         $users = User::all()->load('media')->map(function ($user) {
-            $uploads = $user->getMedia('upload_files');
+            $user->files = [];
 
-            if (!$uploads->isEmpty()) {
+            if ($user->file1) {
+                $user->files[] = [
+                    'name' => $user->file1,
+                    'path' => 'user/' . $user->username . '/files/' . $user->name1
+                ];
+            }
 
-                $user->files = $uploads->map(function ($file) {
-                    return [
-                        'name' => $file->file_name,
-                        'path' => $file->getFullUrl()
-                    ];
-                });
+            if ($user->file2) {
+                $user->files[] = [
+                    'name' => $user->file2,
+                    'path' => 'user/' . $user->username . '/files/' . $user->name2
+                ];
+            }
+
+            if ($user->file3) {
+                $user->files[] = [
+                    'name' => $user->file3,
+                    'path' => 'user/' . $user->username . '/files/' . $user->name3
+                ];
             }
 
             return $user;
