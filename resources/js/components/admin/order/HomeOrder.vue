@@ -100,7 +100,9 @@
                                         <v-card-actions>
                                             <v-spacer></v-spacer>
                                             <v-btn color="blue darken-1" text @click="close">Close</v-btn>
-                                            <v-btn color="blue darken-1" text @click="exportCsv()" :disabled="!canExport">Export</v-btn>
+                                            <v-btn color="blue darken-1" text @click="exportCsv()"
+                                                   :disabled="!canExport">Export
+                                            </v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
@@ -115,6 +117,32 @@
                         <template v-slot:item.date="{ item }">
                             {{ getDate(item.created_at) }}
                         </template>
+
+                        <template v-slot:item.files="{ item }">
+                            <v-btn v-if="item.file1 && item.file2 && item.file3" small dense @click="showFiles(item)">
+                                Show Files
+                            </v-btn>
+                            <v-btn v-else small dense disabled>No Files</v-btn>
+
+                            <v-list-item-group color="primary" v-if="item.show_files">
+                                <v-list-item dense v-if="item.file1">
+                                    <v-list-item-content>
+                                        <a :href="item.file1" download>Apothekenzulassung</a>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-list-item dense v-if="item.file2">
+                                    <v-list-item-content>
+                                        <a :href="item.file2" download>BtM-Nummernzuweisung</a>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-list-item dense v-if="item.file3">
+                                    <v-list-item-content>
+                                        <a :href="item.file3" download>Approbation</a>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            </v-list-item-group>
+                        </template>
+
                         <template v-slot:item.options="{ item }">
                             <v-btn v-if="item.status === 'On hold'"
                                    @click="approve(item)"
@@ -133,8 +161,8 @@
 
 
                             <v-btn
-                                   :href="'/back/order-download/'+item.id"
-                                   small icon color="green">
+                                :href="'/back/order-download/'+item.id"
+                                small icon color="green">
                                 <v-icon>
                                     mdi-download
                                 </v-icon>
@@ -160,6 +188,31 @@
                         </template>
                         <template v-slot:item.date="{ item }">
                             {{ getDate(item.created_at) }}
+                        </template>
+
+                        <template v-slot:item.files="{ item }">
+                            <v-btn v-if="item.file1 && item.file2 && item.file3" small dense @click="showFiles(item)">
+                                Show Files
+                            </v-btn>
+                            <v-btn v-else small dense disabled>No Files</v-btn>
+
+                            <v-list-item-group color="primary" v-if="item.show_files">
+                                <v-list-item dense v-if="item.file1">
+                                    <v-list-item-content>
+                                        <a :href="item.file1" download>Apothekenzulassung</a>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-list-item dense v-if="item.file2">
+                                    <v-list-item-content>
+                                        <a :href="item.file2" download>BtM-Nummernzuweisung</a>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-list-item dense v-if="item.file3">
+                                    <v-list-item-content>
+                                        <a :href="item.file3" download>Approbation</a>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            </v-list-item-group>
                         </template>
                         <template v-slot:item.options="{ item }">
                             <v-btn v-if="item.status === 'On hold'"
@@ -233,6 +286,11 @@ export default {
                         sortable: false,
                     },
                     {
+                        text: 'Files',
+                        value: 'files',
+                        sortable: false,
+                    },
+                    {
                         text: 'Options',
                         value: 'options',
                         sortable: false
@@ -284,7 +342,7 @@ export default {
                 } else {
                     return true
                 }
-            } else if(this.dateSelect !== null && this.dateSelect < 4) {
+            } else if (this.dateSelect !== null && this.dateSelect < 4) {
                 return true
             } else {
                 return false
@@ -295,8 +353,14 @@ export default {
     methods: {
         initialize() {
             axios.get('/back/orders').then(response => {
-                this.table.orders = response.data.orders
-                this.table.preorders = response.data.preorders
+                this.table.orders = response.data.orders.map(item => {
+                    item.show_files = false;
+                    return item;
+                })
+                this.table.preorders = response.data.preorders.map(item => {
+                    item.show_files = false;
+                    return item;
+                })
 
             }).catch(error => {
                 console.log(error.message);
@@ -307,6 +371,10 @@ export default {
             return new Date(date).toLocaleString('en-gb', {
                 year: 'numeric', month: '2-digit', day: '2-digit'
             }).replace(/(\d+)\/(\d+)\/(\d+)/, '$3/$1/$2');
+        },
+
+        showFiles(item) {
+            item.show_files = !item.show_files;
         },
 
         approve(item) {
@@ -350,7 +418,7 @@ export default {
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = url;
-                const fileName = `export-${+ new Date()}.csv`
+                const fileName = `export-${+new Date()}.csv`
                 link.setAttribute('download', fileName);
                 document.body.appendChild(link);
                 link.click();
