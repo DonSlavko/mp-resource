@@ -107,24 +107,24 @@ class RegisterController extends Controller
             'subscribed' => $data['subscribe'] ? 1 : 0,
         ]);
 
-        $file1 = $data->file('file1');
-        $file2 = $data->file('file2');
-        $file3 = $data->file('file3');
+        $file1 = $data['file1'];
+        $file2 = $data['file2'];
+        $file3 = $data['file3'];
 
         if ($file1) {
             $name1 = time() . '_' . $file1->getClientOriginalName();
-            $path1 = 'user/' . $user->username . '/files/' . $name1;
-            $file1->move('user/' . $user->username . '/files/', $name1);
+            $path1 = 'user/' . $user->username . '-' . $user->id . '/files/' . $name1;
+            $file1->move('user/' . $user->username . '-' . $user->id . '/files/', $name1);
         }
         if ($file2) {
             $name2 = time() . '_' . $file2->getClientOriginalName();
-            $path2 = 'user/' . $user->username . '/files/' . $name2;
-            $file2->move('user/' . $user->username . '/files/', $name2);
+            $path2 = 'user/' . $user->username . '-' . $user->id . '/files/' . $name2;
+            $file2->move('user/' . $user->username . '-' . $user->id . '/files/', $name2);
         }
         if ($file3) {
             $name3 = time() . '_' . $file3->getClientOriginalName();
-            $path3 = 'user/' . $user->username . '/files/' . $name3;
-            $file3->move('user/' . $user->username . '/files/', $name3);
+            $path3 = 'user/' . $user->username . '-' . $user->id . '/files/' . $name3;
+            $file3->move('user/' . $user->username . '-' . $user->id . '/files/', $name3);
         }
 
         $user->update([
@@ -165,7 +165,6 @@ class RegisterController extends Controller
         $adminEmails = User::where('is_admin', 1)->pluck('email')->toArray();
 
         Mail::to($adminEmails)->send(new UserRegisterAdmin($user, $files));
-
 
         return $user;
     }

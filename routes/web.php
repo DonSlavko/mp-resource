@@ -98,14 +98,6 @@ Route::middleware(['auth','verified'])->group(function () {
 
     Route::namespace('Backend')->prefix('back')->name('back.')->group(function () {
         Route::get('shop', 'ShopController@index');
-        Route::get('brandfilter','FilterController@brandfilter');
-        Route::get('categories_filter','FilterController@categories_filter');
-        Route::get('variation_list','FilterController@variation_list');
-        Route::get('filterproduct/{id}','FilterController@filterproduct');
-        Route::get('category_filter/{id}','FilterController@category_filter');
-        Route::get('variation_filter/{id}','FilterController@variation_filter');
-        Route::get('sorting/{value}','FilterController@sorting');
-        Route::get('views_sorting/{value}','FilterController@views_sorting');
         Route::get('getcount','ShopController@getcount');
         Route::get('shop/{product}', 'ShopController@show');
         Route::get('in-cart', 'ShopController@inCart');
@@ -118,5 +110,7 @@ Route::middleware(['auth','verified'])->group(function () {
         Route::get('user/payments', 'UserController@userPaymentStatus');
 
         Route::post('move-to-order', 'ShopController@moveToOrder');
+
+        Route::get('attributes_values', 'ShopController@attributes');
     });
 });

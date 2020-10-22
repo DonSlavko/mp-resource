@@ -44,4 +44,12 @@ class Product extends Model implements HasMedia
     public function variationValues() {
         return $this->belongsToMany(VariationValue::class, 'variation_value_product')->withPivot('quantity', 'price');
     }
+
+    public function scopeFilterAttributesValues($query, $ids) {
+        if ($ids) {
+            $query->whereHas('attributeValues', function($query) use ($ids) {
+                $query->whereIn('attribute_value_product.attribute_value_id', $ids);
+            });
+        }
+    }
 }

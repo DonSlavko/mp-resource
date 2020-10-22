@@ -73,7 +73,7 @@
 						padding-top: 10px;
 						color: #FFFFFF;
                         font-family: sans-serif; justify-content: center;" class="paragraph">
-                        {{$data['description']}}
+                        {!! $data['description'] !!}
 					</td>
 				</tr>
 
@@ -83,7 +83,7 @@
 						color: #FFFFFF;
 						font-family: sans-serif;" class="paragraph">
 						Thanks,<br/>
-						Medical Pharma Resource 
+						Medical Pharma Resource
 					</td>
 				</tr>
 				<tr>

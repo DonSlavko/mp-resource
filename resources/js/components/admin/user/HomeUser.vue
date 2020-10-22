@@ -187,7 +187,7 @@ export default {
 		},
 
 		declinedUsers() {
-			axios.get('/back/declinedUsers/').then(response => {
+			axios.get('/back/declinedUsers').then(response => {
 				console.log(response.data.data.length);
 				if (response.data.data.length > 0) {
 					this.deleteAllBtn = true;
@@ -207,6 +207,7 @@ export default {
 				this.$toasted.show(response.data.message);
 				item.active = true;
 				this.declinedUsers();
+                this.initialize();
 			});
 		},
 
@@ -215,15 +216,16 @@ export default {
 				this.$toasted.show(response.data.message);
 				item.active = false;
 				this.declinedUsers();
+				this.initialize();
 			});
 		},
 
 		deleteUser(item) {
 			if (confirm('Are you sure?')) {
 				axios.post('/back/users/' + item.id + '/delete').then(response => {
-					this.declinedUsers();
+                    this.$toasted.show(response.data.message);
+                    this.declinedUsers();
 					this.initialize();
-					this.$toasted.show(response.data.message);
 				});
 			}
 		},

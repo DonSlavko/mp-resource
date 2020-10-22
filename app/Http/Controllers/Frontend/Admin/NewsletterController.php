@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Frontend\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AdminNewsletter;
 use App\Newsletter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class NewsletterController extends Controller
 {
@@ -19,17 +22,15 @@ class NewsletterController extends Controller
 
     public function SendNewsletterEmail(Request $request) {
         // todo - change to default laravel mailer
-        //dd($request->all());
-        foreach ($request->EmailList as $list) {
-            /*sendMail([
-                'view' => 'email.NewsletterEmailFromAdmin',
-                'to' => $list,
-                'subject' => $request->Subject,
-                'data' => [
-                    'description' => $request->Description,
-                ]
-            ]);*/
-        }
-        return response(['data' => "The Newsletter Is Send To Customer"]);
+
+        $subject = $request->get('subject');
+        $users = $request->get('email_list');
+        $data = [
+            'description' => $request->get('description')
+        ];
+
+        Mail::bcc($users)->send(new AdminNewsletter($subject, $data));
+
+        return response(["The Newsletter Is Send To Customers"]);
     }
 }

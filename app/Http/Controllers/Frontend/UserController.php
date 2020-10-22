@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\InitialNewsletter;
 use App\Newsletter;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -32,18 +34,23 @@ class UserController extends Controller
 
     public function add_to_newsletter(Request $request) {
         $request->validate([
-            'email' => 'required|email|unique:users,email'
+            'email' => 'required|email'
         ]);
+
+        $email = $request->get('email');
+
+        if ($userExists = Newsletter::where('email', $email)->first()) {
+            $userExists->delete();
+
+            return redirect()->back();
+        }
+
         $newsletter = Newsletter::create([
             'email' => $request->email
         ]);
-        // todo - change to default laravel mailer
-        /*sendMail([
-            'view' => 'email.initial_newsletter',
-            'to' => $newsletter->email,
-            'subject' => 'Your are Added to Newsletter Subscription',
-            'data' => []
-        ]);*/
+
+        Mail::to($newsletter->email)->send(new InitialNewsletter('Your are Added to Newsletter Subscription'));
+
         return redirect()->back();
     }
 }

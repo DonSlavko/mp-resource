@@ -19,28 +19,30 @@ class UserController extends Controller
      */
     public function index() {
         $users = User::all()->load('media')->map(function ($user) {
-            $user->files = [];
+            $user_files = [];
 
             if ($user->file1) {
-                $user->files[] = [
+                $user_files[] = [
                     'name' => $user->file1,
-                    'path' => 'user/' . $user->username . '/files/' . $user->name1
+                    'path' => 'user/' . $user->username . '-' . $user->id . '/files/' . $user->name1
                 ];
             }
 
             if ($user->file2) {
-                $user->files[] = [
+                $user_files[] = [
                     'name' => $user->file2,
-                    'path' => 'user/' . $user->username . '/files/' . $user->name2
+                    'path' => 'user/' . $user->username . '-' . $user->id . '/files/' . $user->name2
                 ];
             }
 
             if ($user->file3) {
-                $user->files[] = [
+                $user_files[] = [
                     'name' => $user->file3,
-                    'path' => 'user/' . $user->username . '/files/' . $user->name3
+                    'path' => 'user/' . $user->username . '-' . $user->id . '/files/' . $user->name3
                 ];
             }
+
+            $user->files = $user_files;
 
             return $user;
         })->toArray();

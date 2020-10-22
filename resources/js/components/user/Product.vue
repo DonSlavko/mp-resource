@@ -163,7 +163,7 @@
                     <v-expansion-panel-content class="pt-4 text-subtitle-1 font-weight-bold">
                         Arzneibroschüre
 
-                        <v-btn :disabled="item.brochure"
+                        <v-btn :disabled="!item.brochure"
                             :href="item.brochure"
                             target="_blank"
                             class="ma-2"
@@ -173,7 +173,7 @@
 
                         Chargenanalyse
 
-                        <v-btn :disabled="item.brochure"
+                        <v-btn :disabled="!item.brochure"
                             :href="item.analysis"
                             target="_blank"
                             class="ma-2"

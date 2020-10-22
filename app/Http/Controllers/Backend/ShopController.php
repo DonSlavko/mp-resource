@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Attribute;
 use App\Cart;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\AttributeResource;
 use App\Http\Resources\ProductResource;
 use App\Mail\UserOrderAdmin;
 use App\UserOrder;
@@ -25,10 +27,25 @@ use Log;
 
 class ShopController extends Controller
 {
-    public function index() {
-        $products = Product::with('product_images')->get();
+    public function index(Request $request) {
+        $per_page = $request->get('per_page', 16);
+        $order = $request->get('order', 'asc');
+        $sort = $request->get('sort', 'id');
+        $attrValIds = $request->get('attributes_values_ids', null);
+
+        $products = Product::with('product_images');
+
+        if ($attrValIds) {
+            foreach ($attrValIds as $ids) {
+                $products = $products->filterAttributesValues($ids);
+            }
+        }
+
+        $products = $products->orderBy($sort, $order)
+            ->paginate($per_page);
+
         $products = ProductResource::collection($products);
-        return response($products);
+        return $products;
     }
 
     public function show(Product $product) {
@@ -241,5 +258,11 @@ class ShopController extends Controller
     public function getcount() {
         $count = Auth::user()->inCart()->count();
         return $count;
+    }
+
+    public function attributes(Request $request) {
+        $attribute = Attribute::all()->load('attributeValues');
+
+        return response(AttributeResource::collection($attribute));
     }
 }

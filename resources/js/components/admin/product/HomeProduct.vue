@@ -48,6 +48,9 @@
                                             <v-col cols="12" sm="12" md="12">
                                                 <v-file-input
                                                     v-model="editedItem.images"
+                                                    :error="errors.images"
+                                                    :error-messages="errors.images"
+                                                    :rules="rules.images"
                                                     name="images[]"
                                                     accept="image/png, image/jpeg"
                                                     label="Select Multiple product images"
@@ -128,7 +131,6 @@
                                                     :rules="rules.charge"
                                                     v-model="editedItem.charge"
                                                     label="Charge"
-                                                    type="number"
                                                 ></v-text-field>
                                             </v-col>
 
@@ -194,7 +196,7 @@
                                                     outlined
                                                     dense
                                                     clearable
-                                                    @change="resetVariationValues()"
+                                                    @change="resetVariationValues(selectedVariation)"
                                                 ></v-select>
                                             </v-col>
 
@@ -219,6 +221,8 @@
                                                             <td><p class="mb-3">{{ type.name }}</p></td>
                                                             <td>
                                                                 <v-text-field
+                                                                    :error="errors.price"
+                                                                    :error-messages="errors.price"
                                                                     :rules="rules.price"
                                                                     v-model="editedItem.variations.price[type.id]"
                                                                     dense
@@ -228,6 +232,8 @@
                                                             </td>
                                                             <td>
                                                                 <v-text-field
+                                                                    :error="errors.quantity"
+                                                                    :error-messages="errors.quantity"
                                                                     :rules="rules.quantity"
                                                                     v-model="editedItem.variations.quantity[type.id]"
                                                                     dense
@@ -403,19 +409,21 @@ export default {
                 ],
                 expires: [(value) => !!value || "Please select date of expiration"],
                 charge: [
-                    (value) => value.length > 0 || "Charge is required",
+                    (value) => !!value || "Charge is required",
                     (value) => value.length <= 255 || "Charge must be less than 255 characters long",
-                    (value) => value > 0 || "Charge must be greater than 0"
                 ],
                 price: [
-                    (value) => value.length > 0 || "Price is required",
+                    (value) => !!value || "Price is required",
                     (value) => value.length <= 255 || "Price must be less than 255 characters long",
                     (value) => value > 0 || "Price must be greater than 0"
                 ],
                 quantity: [
-                    (value) => value.length > 0 || "Quantity is required",
+                    (value) => !!value || "Quantity is required",
                     (value) => value.length <= 255 || "Quantity must be less than 255 characters long",
-                    (value) => value >= 0 || "Quantity must be greater or equal to 0"
+                    (value) => value > 0 || "Quantity must be greater than 0"
+                ],
+                images: [
+                    (value) => !value || value.length > 0 || "At least on image is required",
                 ]
             },
         };
@@ -611,10 +619,15 @@ export default {
             this.dialog = true;
         },
 
-        resetVariationValues() {
+        resetVariationValues(selectedVariation) {
             if (this.dialog) {
                 this.editedItem.variations.price = {};
                 this.editedItem.variations.quantity = {};
+
+                selectedVariation.forEach(item => {
+                    this.editedItem.variations.price[item.id] = 0;
+                    this.editedItem.variations.quantity[item.id] = 0;
+                });
             }
         },
 
