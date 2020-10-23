@@ -225,15 +225,14 @@ class ProductController extends Controller
         }
     }
 
-    public function destroy($id) {
-        $product = Product::find($id);
-        $product->attributes()->detach($product->attributes->pluck('id'));
-        $product->attributeValues()->detach($product->attributeValues->pluck('id'));
+    public function destroy(Product $product) {
+        $product->attributes()->detach();
+        $product->attributeValues()->detach();
 
-        $product->variation()->detach($product->variation->pluck('id'));
-        $product->variationValues()->detach($product->variationValues->pluck('id'));
+        $product->variation()->detach();
+        $product->variationValues()->detach();
 
-        ProductImages::where('product_id', $id)->delete();
+        $product->product_images()->delete();
         $product->delete();
 
         return response('Product deleted');

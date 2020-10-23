@@ -74,15 +74,11 @@ Route::middleware(['auth','verified'])->group(function () {
             route::get('call-service', 'CallServiceController@index');
             route::post('call-service', 'CallServiceController@store');
 
-            Route::post('update-products/{id?}', 'ProductController@update')->name('update.product');
-            Route::delete('products-delete/{id}','ProductController@destroy')->name('products-delete');
             Route::post('users/{user}/activate', 'UserController@activate');
             Route::post('users/{user}/deactivate', 'UserController@deactivate');
             Route::get('deleteUsers', 'UserController@deleteAllUsers');
             Route::post('users/{user}/delete', 'UserController@delete');
             Route::get('declinedUsers', 'UserController@declinedUsers');
-            Route::post('update-products/{id?}', 'ProductController@update')->name('update.product');
-            Route::delete('products-delete/{id}','ProductController@destroy')->name('products-delete');
             Route::post('users/{user}/activate', 'UserController@activate');
             Route::post('users/{user}/deactivate', 'UserController@deactivate');
             Route::post('multiselect','FilterController@multiselect')->name('multiselect');

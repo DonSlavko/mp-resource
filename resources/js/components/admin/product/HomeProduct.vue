@@ -638,7 +638,7 @@ export default {
         deleteItem(item) {
             const index = this.table.data.indexOf(item);
             confirm("Are you sure you want to delete this item?") &&
-            axios.delete("/back/products-delete/" + item.id).then((respones) => {
+            axios.delete("/back/products/" + item.id).then((respones) => {
                 this.initialize();
             });
         },
@@ -738,8 +738,8 @@ export default {
             if (this.$refs.modal.validate()) {
                 if (this.editedIndex > -1) {
                     axios
-                        .post(
-                            "/back/update-products/" + this.editedItem.id,
+                        .patch(
+                            "/back/products/" + this.editedItem.id,
                             this.formData(),
                             {
                                 headers: {
