@@ -1,13 +1,17 @@
 <template>
     <v-container>
-        <h1>Active ingredients</h1>
         <v-row>
-            <v-col cols="12" md="3">
-                <!--<v-select outlined dense label="Brands"></v-select>-->
+            <v-col cols="12">
+                <h3>Marken</h3>
             </v-col>
 
-            <v-col cols="12" md="3">
-                <!--<v-select outlined dense label="Categories"></v-select>-->
+            <v-col cols="12">
+                <v-btn-toggle v-model="filters.brands" group multiple dense color="primary">
+                    <v-btn style="border: 0.5px solid; border-radius: 10px; margin: 6px" v-for="brand in brands"
+                           :key="brand.id" :value="brand.id">
+                        {{ brand.name }}
+                    </v-btn>
+                </v-btn-toggle>
             </v-col>
 
         </v-row>
@@ -33,8 +37,7 @@
                 <v-select
                     v-model="sort"
                     :items="sorting"
-                    name="sorting"
-                    label="Sort By:"
+                    label="Sortieren nach:"
                     outlined
                     dense
                 >
@@ -52,8 +55,7 @@
                 <v-select
                     v-model="per_page"
                     :items="items_per_page"
-                    name="view"
-                    label="View:"
+                    label="Produkte anzeigen:"
                     outlined
                     dense
                 ></v-select>
@@ -107,29 +109,29 @@ export default {
 
             items_per_page: [
                 {
-                    text: "16 Products",
+                    text: "Zeige 16 Produkte",
                     value: 16,
                 },
                 {
-                    text: "32 Products",
+                    text: "Zeige 32 Produkte",
                     value: 32,
                 },
                 {
-                    text: "48 Products",
+                    text: "Zeige 48 Produkte",
                     value: 48,
                 },
             ],
             sorting: [
                 {
-                    text: "Default",
+                    text: "Standartsortierung",
                     value: 'id',
                 },
                 {
-                    text: "Name",
+                    text: "Sortieren nach Name",
                     value: 'name',
                 },
                 {
-                    text: "Date",
+                    text: "Sortieren nach Datum",
                     value: 'created_at',
                 },
             ],
@@ -145,6 +147,7 @@ export default {
     created() {
         this.initialize();
         this.getAttributes();
+        this.getBrands();
     },
 
     watch: {
@@ -166,6 +169,10 @@ export default {
 
         "filters.attributes": function() {
             this.initialize();
+        },
+
+        "filters.brands": function () {
+            this.initialize();
         }
     },
 
@@ -177,6 +184,11 @@ export default {
             params['per_page'] = this.per_page;
             params['sort'] = this.sort;
             params['order'] = this.order;
+
+            if (this.filters.brands.length > 0) {
+                params['brand_ids'] = this.filters.brands
+            }
+
             this.filters.attributes.forEach((item, index) => {
                 params["attributes_values_ids["+index+"]"] = item
             })
@@ -206,6 +218,12 @@ export default {
                 this.attributes.forEach((item, index) => {
                     this.filters.attributes[index] = []
                 })
+            })
+        },
+
+        getBrands() {
+            axios.get('/back/brands_list').then(response => {
+                this.brands = response.data;
             })
         }
     },

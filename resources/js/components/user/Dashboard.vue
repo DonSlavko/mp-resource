@@ -6,7 +6,7 @@
 					color="white"
 					white
 			>
-				<v-toolbar-title>User Profile</v-toolbar-title>
+				<v-toolbar-title>Benutzerprofil</v-toolbar-title>
 			</v-toolbar>
 			<v-tabs vertical>
 				<v-tab class="justify-start">
@@ -166,15 +166,15 @@ export default {
 						value: 'iteration'
 					},
 					{
-						text: 'Customer Name',
+						text: 'Kundenname',
 						value: 'customer_name'
 					},
 					{
-						text: 'Order Id',
+						text: 'Bestell- ID',
 						value: 'order_id'
 					},
 					{
-						text: 'Amount',
+						text: 'Summe',
 						value: 'payment_amount'
 					},
 					{
@@ -182,7 +182,7 @@ export default {
 						value: 'status'
 					},
 					{
-						text: 'Created',
+						text: 'Erstellt am',
 						value: 'created_at'
 					}
 				],
@@ -195,7 +195,7 @@ export default {
 						value: 'iteration'
 					},
 					{
-						text: 'Total Amount',
+						text: 'Summe',
 						value: 'total_price'
 					},
 					{
@@ -207,7 +207,7 @@ export default {
                         value: 'type'
                     },
 					{
-						text: 'Created',
+						text: 'Erstellt am',
 						value: 'created_at'
 					}
 				],

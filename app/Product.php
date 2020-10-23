@@ -52,4 +52,10 @@ class Product extends Model implements HasMedia
             });
         }
     }
+
+    public function scopeBrands($query, $ids) {
+        if ($ids) {
+            $query->whereIn('brand_id', $ids);
+        }
+    }
 }

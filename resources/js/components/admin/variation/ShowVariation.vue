@@ -44,7 +44,7 @@
                     <v-col cols="12">
                       <v-textarea
                           v-model="editedItem.description"
-                          label="Description"></v-textarea>
+                          label="Beschreibung"></v-textarea>
                     </v-col>
 
                     <v-col cols="12">
@@ -84,7 +84,7 @@
         </v-icon>
       </template>
       <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize">Reset</v-btn>
+        <v-btn color="primary" @click="initialize">Zürücksetzen</v-btn>
       </template>
     </v-data-table>
   </v-container>

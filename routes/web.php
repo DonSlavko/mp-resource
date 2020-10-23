@@ -108,5 +108,6 @@ Route::middleware(['auth','verified'])->group(function () {
         Route::post('move-to-order', 'ShopController@moveToOrder');
 
         Route::get('attributes_values', 'ShopController@attributes');
+        Route::get('brands_list', 'ShopController@brands');
     });
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Attribute;
+use App\Brand;
 use App\Cart;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\AttributeResource;
@@ -32,6 +33,7 @@ class ShopController extends Controller
         $order = $request->get('order', 'asc');
         $sort = $request->get('sort', 'id');
         $attrValIds = $request->get('attributes_values_ids', null);
+        $brandIds = $request->get('brand_ids', null);
 
         $products = Product::with('product_images');
 
@@ -41,7 +43,7 @@ class ShopController extends Controller
             }
         }
 
-        $products = $products->orderBy($sort, $order)
+        $products = $products->brands($brandIds)->orderBy($sort, $order)
             ->paginate($per_page);
 
         $products = ProductResource::collection($products);
@@ -264,5 +266,11 @@ class ShopController extends Controller
         $attribute = Attribute::all()->load('attributeValues');
 
         return response(AttributeResource::collection($attribute));
+    }
+
+    public function brands() {
+        $brands = Brand::all();
+
+        return response($brands);
     }
 }

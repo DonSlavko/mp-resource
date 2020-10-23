@@ -67,12 +67,12 @@ export default {
         return {
             headers: [
                 {
-                    text: 'Number of Products',
+                    text: 'Anzahl',
                     value: 'products',
                     sortable: false,
                 },
                 {
-                    text: 'Price',
+                    text: 'Preis',
                     value: 'price',
                     sortable: false,
                 },
@@ -82,22 +82,22 @@ export default {
                     sortable: false
                 },
                 {
-                    text: 'Date',
+                    text: 'Datum',
                     value: 'date',
                     sortable: false,
                 },
                 {
-                    text: 'Type',
+                    text: 'Typ',
                     value: 'preorder',
                     sortable: false,
                 },
                 {
-                    text: 'Paid',
+                    text: 'Bezahlt',
                     value: 'is_paid',
                     sortable: false
                 },
                 {
-                    text: 'Actions',
+                    text: 'Optionen',
                     value: 'actions',
                     sortable: false
                 }

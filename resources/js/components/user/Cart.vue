@@ -2,15 +2,14 @@
     <v-container>
         <v-card>
             <v-tabs color="light-green darken-1" left>
-                <v-tab>Orders
+                <v-tab>Bestellungen
                     <v-chip small>{{ orders.length }}</v-chip>
                 </v-tab>
-                <v-tab>Preorders
+                <v-tab>Vorbestellungen
                     <v-chip small>{{ preorders.length }}</v-chip>
                 </v-tab>
 
                 <v-tab-item>
-                    <h2 class="mb-3 ml-3">You have {{ orders.length }} waiting for ordering</h2>
                     <v-data-table
                         :headers="headers"
                         :items="orders"
@@ -32,14 +31,12 @@
                     </v-data-table>
                     <v-container>
                         <v-row>
-                            <v-col cols="12" offset-md="4" md="4" order-md="2">
-                                <h2>Shopping cart total</h2>
-
+                            <v-col cols="12" offset-md="2" md="6" order-md="2">
                                 <v-simple-table>
                                     <thead>
                                     <tr>
                                         <th class="text-left">
-                                            {{ headers[4].text }}
+                                            Gesamtsumme
                                         </th>
                                         <th class="text-left">
                                             {{ totalPrice() }} €
@@ -47,14 +44,12 @@
                                     </tr>
                                     </thead>
                                 </v-simple-table>
-                            </v-col>
 
-                            <v-col offset-md="8" md="4" order-md="3">
                                 <v-checkbox
                                     v-model="checkbox_order">
                                     <template v-slot:label>
                                         <div class="font-weight-light text-subtitle-1">
-                                            I accept the
+                                            Ich habe die
                                             <v-tooltip bottom>
                                                 <template v-slot:activator="{ on }">
                                                     <strong><a
@@ -62,17 +57,17 @@
                                                         href="/agb"
                                                         @click.stop
                                                         v-on="on">
-                                                        Terms and Conditions
+                                                        Allgemeinen Geschäftsbedingungen
                                                     </a></strong>
                                                 </template>
                                                 Opens in new window
                                             </v-tooltip>
+                                            gelesen und akzeptiere diese.
                                         </div>
                                     </template>
                                 </v-checkbox>
 
-                                <v-btn @click="makeOrder()" :disabled="canPlaceOrder">Place order</v-btn>
-
+                                <v-btn @click="makeOrder()" :disabled="canPlaceOrder">Jetzt kaufen</v-btn>
                             </v-col>
 
                             <v-col cols="12" md="4" order-md="1">
@@ -115,7 +110,6 @@
                 </v-tab-item>
 
                 <v-tab-item>
-                    <h2 class="mb-3 ml-3">You have placed {{ preorders.length }} items in preorder</h2>
                     <v-data-table
                         :headers="headers"
                         :items="preorders"
@@ -137,14 +131,12 @@
                     </v-data-table>
                     <v-container>
                         <v-row>
-                            <v-col cols="12" offset-md="4" md="4" order-md="2">
-                                <h2>Shopping cart total</h2>
-
+                            <v-col cols="12" offset-md="2" md="6" order-md="2">
                                 <v-simple-table>
                                     <thead>
                                     <tr>
                                         <th class="text-left">
-                                            {{ headers[4].text }}
+                                            Gesamtsumme
                                         </th>
                                         <th class="text-left">
                                             {{ totalPrice(true) }} €
@@ -152,32 +144,30 @@
                                     </tr>
                                     </thead>
                                 </v-simple-table>
-                            </v-col>
 
-                            <v-col cols="12" offset-md="8" md="4" order-md="3">
                                 <v-checkbox
                                     v-model="checkbox_preorder">
                                     <template v-slot:label>
                                         <div class="font-weight-light text-subtitle-1">
-                                            I accept the
+                                            Ich habe die
                                             <v-tooltip bottom>
                                                 <template v-slot:activator="{ on }">
                                                     <strong><a
                                                         target="_blank"
                                                         href="/agb"
                                                         @click.stop
-                                                        v-on="on"
-                                                    >
-                                                        Terms and Conditions
+                                                        v-on="on">
+                                                        Allgemeinen Geschäftsbedingungen
                                                     </a></strong>
                                                 </template>
                                                 Opens in new window
                                             </v-tooltip>
+                                            gelesen und akzeptiere diese.
                                         </div>
                                     </template>
                                 </v-checkbox>
 
-                                <v-btn @click="makeOrder(true)" :disabled="canPlacePreorder">Place pre-order</v-btn>
+                                <v-btn @click="makeOrder(true)" :disabled="canPlacePreorder">Vorbestellen</v-btn>
                             </v-col>
 
                             <v-col cols="12" md="4" order-md="1">
@@ -231,32 +221,32 @@ export default {
         return {
             headers: [
                 {
-                    text: "Product Name",
+                    text: "Produkt",
                     value: "product_name",
                     sortable: false,
                 },
                 {
-                    text: "Variation Type",
+                    text: "Variation",
                     value: "variation_value_name",
                     sortable: false,
                 },
                 {
-                    text: "Quantity",
+                    text: "Menge",
                     value: "quantity",
                     sortable: false,
                 },
                 {
-                    text: "Price",
+                    text: "Preis",
                     value: "price",
                     sortable: false,
                 },
                 {
-                    text: "Total Price",
+                    text: "Summe",
                     value: "total",
                     sortable: false,
                 },
                 {
-                    text: "Options",
+                    text: "Optionen",
                     value: "actions",
                     sortable: false,
                 },

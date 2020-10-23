@@ -2,6 +2,7 @@
     <v-container>
         <v-data-table
             show-select
+            :footer-props="table.footerProps"
             :headers="table.headers"
             :items="table.data"
             :items-per-page="25"
@@ -9,13 +10,13 @@
         >
             <template v-slot:top>
                 <v-toolbar flat color="white">
-                    <v-toolbar-title>Products</v-toolbar-title>
+                    <v-toolbar-title>Produkte</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-spacer></v-spacer>
                     <v-dialog v-model="dialog" max-width="1000px">
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
-                            >New Product
+                            >+ Neues Produkt
                             </v-btn>
                         </template>
                         <v-card>
@@ -41,7 +42,7 @@
                                             <v-col cols="12">
                                                 <vue-editor
                                                     v-model="editedItem.description"
-                                                    label="Description"
+                                                    label="Beschreibung"
                                                 ></vue-editor>
                                             </v-col>
 
@@ -286,7 +287,7 @@
                 <v-icon small @click="deleteItem(item)"> mdi-delete</v-icon>
             </template>
             <template v-slot:no-data>
-                <v-btn color="primary" @click="initialize">Reset</v-btn>
+                <v-btn color="primary" @click="initialize">Zürücksetzen</v-btn>
             </template>
         </v-data-table>
     </v-container>
@@ -299,49 +300,55 @@ export default {
     data() {
         return {
             table: {
+                footerProps: {
+                    itemsPerPageAllText: 'Alle',
+                    itemsPerPageText: 'Produkte pro Seite:',
+                    pageText: '{0}-{1} von {2}',
+                },
+
                 headers: [
                     {
                         text: "ID",
                         value: "id",
                     },
                     {
-                        text: "Name",
+                        text: "Produktname",
                         value: "name",
                     },
                     {
-                        text: "Variation Values",
+                        text: "Variationswerte",
                         value: "type",
                         sortable: false,
                     },
                     {
-                        text: "Price Variation Values",
+                        text: "Preisvariationen",
                         value: "price",
                         align: "right",
                         sortable: false,
                     },
                     {
-                        text: "Variation Values Quantity",
+                        text: "Mengenvariationen",
                         value: "quantity",
                         align: "right",
                         sortable: false,
                     },
                     {
-                        text: "SKU",
+                        text: "PZN",
                         value: "sku",
                         sortable: false,
                     },
                     {
-                        text: "Category",
+                        text: "Kategorie",
                         value: "category.name",
                         sortable: false,
                     },
                     {
-                        text: "Date",
+                        text: "Datum",
                         value: "date",
                         sortable: false,
                     },
                     {
-                        text: "Options",
+                        text: "Optionen",
                         value: "actions",
                         sortable: false,
                     },
@@ -431,7 +438,7 @@ export default {
 
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? "New Product" : "Edit Product";
+            return this.editedIndex === -1 ? "Neues Produkt" : "Produkt bearbeiten";
         },
 
         selectedVariation() {

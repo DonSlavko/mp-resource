@@ -24,7 +24,7 @@
                 />
             </div>
             <v-col cols="12">
-                <vue-editor v-model="description" label="Description"></vue-editor>
+                <vue-editor v-model="description" label="Beschreibung"></vue-editor>
             </v-col>
             <div class="col-md-12">
                 <button

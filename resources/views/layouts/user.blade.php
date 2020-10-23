@@ -336,7 +336,7 @@
                         </v-btn>
                     @endif
                     <v-btn href="{{ route('user.dashboard') }}" text class="text--secondary">
-                        My Account
+                        Mein Konto
                     </v-btn>
                     <v-btn @click="logout()" text class="text--secondary">
                         Logout
@@ -386,10 +386,10 @@
                                     @csrf
                                     <div class="input-group mb-2 mr-sm-2">
                                         <input type="text" name="email" class="form-control"
-                                               id="inlineFormInputGroupUsername2" placeholder="Email Address">
+                                               id="inlineFormInputGroupUsername2" placeholder="Email Adresse">
                                         <div class="input-group-prepend">
                                             <div class="">
-                                                <button type="submit" class="btn btn-info mb-1">Submit</button>
+                                                <button type="submit" class="btn btn-info mb-1">Anmelden</button>
                                             </div>
                                         </div>
                                     </div>

@@ -277,49 +277,47 @@
                     </div>
                     <v-spacer></v-spacer>
                     <div class="col-md-10">
-                        <v-btn href="{{ route('admin.product.index') }}" text
-                               class="text--secondary {{ Route::currentRouteNamed('admin.product.*') ? 'active' : '' }}">
-                            Products
+                        <v-btn href="{{ route('admin.product.index') }}" text class="text--secondary">
+                            Produkte
                         </v-btn>
-                        <v-btn href="{{ route('admin.category.index') }}" text
-                               class="text--secondary {{ Route::currentRouteNamed('admin.category.index') ? 'active' : '' }}">
-                            Categories
+                        <v-btn href="{{ route('admin.category.index') }}" text class="text--secondary">
+                            Kategorien
                         </v-btn>
                         <v-btn href="{{ route('admin.attribute.index') }}" text class="text--secondary">
-                            Attributes
+                            Eingenschaften
                         </v-btn>
                         <v-btn href="{{ route('admin.attribute-value.index') }}" text class="text--secondary">
-                            Attributes Values
+                            Eigenschaftswerte
                         </v-btn>
                         <v-btn href="{{ route('admin.variation.index') }}" text class="text--secondary">
-                            Variations
+                            Variationen
                         </v-btn>
                         <v-btn href="{{ route('admin.variation-value.index') }}" text class="text--secondary">
-                            Variations Values
+                            Variationswerte
                         </v-btn>
                         <v-btn href="{{ route('admin.brand.index') }}" text class="text--secondary">
-                            Brand
+                            Marke
                         </v-btn>
                         <v-btn href="{{ route('admin.user.index') }}" text class="text--secondary">
-                            Users
+                            Benutzer
                         </v-btn>
                         <v-btn href="{{ route('admin.order.index') }}" text class="text--secondary">
-                            Orders
+                            Bestellungen
                         </v-btn>
                         <v-btn href="{{ route('admin.invoice.index') }}" text class="text--secondary">
-                            Invoices
+                            Rechnungen
                         </v-btn>
                         <v-btn href="{{ route('admin.newsletterindex') }}" text class="text--secondary">
                             Newsletter
                         </v-btn>
                         <v-btn href="{{ route('admin.call-service') }}" text class="text--secondary">
-                            Call Service
+                            Rückrufservice
                         </v-btn>
                         <v-btn href="{{ route('user.shop') }}" text class="text--secondary">
-                            Back to Shop
+                            Zum Shop
                         </v-btn>
                         <v-btn @click="logout()" text class="text--secondary">
-                            Logout
+                            Abmelden
                         </v-btn>
                     </div>
                 </v-row>
@@ -366,10 +364,10 @@
                                     @csrf
                                     <div class="input-group mb-2 mr-sm-2">
                                         <input type="text" name="email" class="form-control"
-                                               id="inlineFormInputGroupUsername2" placeholder="Email Address">
+                                               id="inlineFormInputGroupUsername2" placeholder="Email Adresse">
                                         <div class="input-group-prepend">
                                             <div class="">
-                                                <button type="submit" class="btn btn-info mb-1">Submit</button>
+                                                <button type="submit" class="btn btn-info mb-1">Anmelden</button>
                                             </div>
                                         </div>
                                     </div>

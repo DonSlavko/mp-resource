@@ -2,15 +2,17 @@
     <v-container>
         <v-card>
             <v-tabs color="light-green darken-1" left>
-                <v-tab>Orders</v-tab>
-                <v-tab>Preorders</v-tab>
+                <v-tab>Bestellungen</v-tab>
+                <v-tab>Vorbestellungen</v-tab>
 
                 <v-tab-item>
-                    <v-data-table show-select
-                                  :headers="table.headers"
-                                  :items="table.orders"
-                                  :items-per-page="5"
-                                  class="elevation-1">
+                    <v-data-table
+                        show-select
+                        :footer-props="table.footerProps1"
+                        :headers="table.headers"
+                        :items="table.orders"
+                        :items-per-page="5"
+                        class="elevation-1">
                         <template v-slot:top>
                             <v-toolbar flat color="white">
 
@@ -19,12 +21,12 @@
                                 <v-dialog v-model="dialog" max-width="500px">
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
-                                        >Export CSV
+                                        >CSV Exportieren
                                         </v-btn>
                                     </template>
                                     <v-card>
                                         <v-card-title>
-                                            <span class="headline">Export CSV</span>
+                                            <span class="headline">CSV Exportieren</span>
                                         </v-card-title>
 
                                         <v-card-text>
@@ -169,17 +171,19 @@
                             </v-btn>
                         </template>
                         <template v-slot:no-data>
-                            <v-btn color="primary" @click="initialize">Reset</v-btn>
+                            <v-btn color="primary" @click="initialize">Zürücksetzen</v-btn>
                         </template>
                     </v-data-table>
                 </v-tab-item>
 
                 <v-tab-item>
-                    <v-data-table show-select
-                                  :headers="table.headers"
-                                  :items="table.preorders"
-                                  :items-per-page="5"
-                                  class="elevation-1">
+                    <v-data-table
+                        show-select
+                        :footer-props="table.footerProps2"
+                        :headers="table.headers"
+                        :items="table.preorders"
+                        :items-per-page="5"
+                        class="elevation-1">
                         <template v-slot:item.products="{ item }">
                             {{ item.carts.length }}
                         </template>
@@ -240,7 +244,7 @@
                             </v-btn>
                         </template>
                         <template v-slot:no-data>
-                            <v-btn color="primary" @click="initialize">Reset</v-btn>
+                            <v-btn color="primary" @click="initialize">Zürücksetzen</v-btn>
                         </template>
                     </v-data-table>
                 </v-tab-item>
@@ -256,22 +260,34 @@ export default {
     data() {
         return {
             table: {
+                footerProps1: {
+                    itemsPerPageAllText: 'Alle',
+                    itemsPerPageText: 'Bestellungen pro Seite:',
+                    pageText: '{0}-{1} von {2}',
+                },
+
+                footerProps2: {
+                    itemsPerPageAllText: 'Alle',
+                    itemsPerPageText: 'Vorbestellungen pro Seite:',
+                    pageText: '{0}-{1} von {2}',
+                },
+
                 headers: [
                     {
                         text: 'ID',
                         value: 'id'
                     },
                     {
-                        text: 'User',
+                        text: 'Benutzername',
                         value: 'user.username'
                     },
                     {
-                        text: 'Number of Products',
+                        text: 'Anzahl der Produkte',
                         value: 'products',
                         sortable: false,
                     },
                     {
-                        text: 'Price',
+                        text: 'Preis',
                         value: 'price',
                         sortable: false,
                     },
@@ -281,17 +297,17 @@ export default {
                         sortable: false
                     },
                     {
-                        text: 'Date',
+                        text: 'Datum',
                         value: 'date',
                         sortable: false,
                     },
                     {
-                        text: 'Files',
+                        text: 'Dokumente',
                         value: 'files',
                         sortable: false,
                     },
                     {
-                        text: 'Options',
+                        text: 'Optionen',
                         value: 'options',
                         sortable: false
                     }

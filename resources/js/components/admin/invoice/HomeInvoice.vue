@@ -1,10 +1,17 @@
 <template>
     <v-container>
-        <v-data-table show-select
-                      :headers="table.headers"
-                      :items="table.items"
-                      :items-per-page="5"
-                      class="elevation-1">
+        <v-data-table
+            show-select
+            :footer-props="table.footerProps"
+            :headers="table.headers"
+            :items="table.items"
+            :items-per-page="5"
+            class="elevation-1">
+            <template v-slot:top>
+                <v-toolbar flat color="white">
+                    <v-toolbar-title>Rechnungen</v-toolbar-title>
+                </v-toolbar>
+            </template>
             <template v-slot:item.created_at="{ item }">
                 {{ getDate(item.created_at) }}
             </template>
@@ -18,7 +25,7 @@
                 </v-btn>
             </template>
             <template v-slot:no-data>
-                <v-btn color="primary" @click="initialize">Reset</v-btn>
+                <v-btn color="primary" @click="initialize">Zürücksetzen</v-btn>
             </template>
         </v-data-table>
     </v-container>
@@ -31,21 +38,27 @@ export default {
     data() {
         return {
             table: {
+                footerProps: {
+                    itemsPerPageAllText: 'Alle',
+                    itemsPerPageText: 'Rechnungen pro Seite:',
+                    pageText: '{0}-{1} von {2}',
+                },
+
                 headers: [
                     {
                         text: 'ID',
                         value: 'id'
                     },
                     {
-                        text: 'User',
+                        text: 'Benutzername',
                         value: 'customer_name'
                     },
                     {
-                        text: 'Order Id',
+                        text: 'Bestell- ID',
                         value: 'order_id'
                     },
                     {
-                        text: 'Amount',
+                        text: 'Summe',
                         value: 'payment_amount'
                     },
                     {
@@ -53,11 +66,11 @@ export default {
                         value: 'status'
                     },
                     {
-                        text: 'Created',
+                        text: 'Erstellt am',
                         value: 'created_at'
                     },
                     {
-                        text: 'Options',
+                        text: 'Optionen',
                         value: 'options'
                     }
                 ],
