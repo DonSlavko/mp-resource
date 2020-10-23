@@ -21,17 +21,20 @@ Route::middleware(['auth','verified'])->group(function () {
 
     Route::namespace('Frontend')->name('user.')->group(function () {
         Route::get('neuigkeiten', 'UserController@news')->name('news');
-        Route::get('shop', 'UserController@shop')->name('shop');
-        Route::get('shop/product/{product}', 'UserController@product')->name('shop.product');
-        Route::get('vorbestellungen/my-pre-orders', 'UserController@preorder')->name('preorder');
-        Route::get('warenkorb', 'UserController@cart')->name('cart');
-        Route::get('dashboard', 'UserDashboardController@index')->name('dashboard');
-        Route::get('delete-account', 'UserDashboardController@delete')->name('delete.account');
-        Route::post('user/update', 'UserDashboardController@update')->name('profile.update');
-        Route::post('add_to_newsletter','UserController@add_to_newsletter')->name('add_to_newsletter');
 
-        Route::get('payment', 'PaymentController@preparePayment')->name('payment');
-        Route::get('payment_success', 'PaymentController@orderSuccess')->name('order.success');
+        Route::middleware('activated')->group(function () {
+            Route::get('shop', 'UserController@shop')->name('shop');
+            Route::get('shop/product/{product}', 'UserController@product')->name('shop.product');
+            Route::get('vorbestellungen/my-pre-orders', 'UserController@preorder')->name('preorder');
+            Route::get('warenkorb', 'UserController@cart')->name('cart');
+            Route::get('dashboard', 'UserDashboardController@index')->name('dashboard');
+            Route::get('delete-account', 'UserDashboardController@delete')->name('delete.account');
+            Route::post('user/update', 'UserDashboardController@update')->name('profile.update');
+            Route::post('add_to_newsletter','UserController@add_to_newsletter')->name('add_to_newsletter');
+
+            Route::get('payment', 'PaymentController@preparePayment')->name('payment');
+            Route::get('payment_success', 'PaymentController@orderSuccess')->name('order.success');
+        });
     });
 
     Route::middleware(['isAdmin'])->group(function () {

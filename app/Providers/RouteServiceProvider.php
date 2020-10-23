@@ -23,6 +23,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/shop';
 
+    public const UNVERIFIED = '/neuigkeiten';
+
     /**
      * Define your route model bindings, pattern filters, etc.
      *
