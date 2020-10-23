@@ -28,7 +28,9 @@ class ProductController extends Controller
                 $attributes = [];
 
                 foreach ($valIds as $key => $value) {
-                    $attributes[$attrIds[$key]] = $value;
+                    if ($attrIds[$key]) {
+                        $attributes[$attrIds[$key]] = $value;
+                    }
                 }
 
                 $prod->attributes_values = $attributes;
@@ -39,13 +41,20 @@ class ProductController extends Controller
                 $quantities = $prod->variationValues()->pluck('quantity');
                 $prices = $prod->variationValues()->pluck('price');
 
-                $variations_values = [];
+                $variations_values = [
+                    'quantity' => [],
+                    'price' => []
+                ];
 
                 foreach ($quantities as $key => $quantity) {
-                    $variations_values['quantity'][$varIds[$key]] = "$quantity";
+                    if ($varIds[$key]) {
+                        $variations_values['quantity'][$varIds[$key]] = "$quantity";
+                    }
                 }
                 foreach ($prices as $key => $price) {
-                    $variations_values['price'][$varIds[$key]] = "$price";
+                    if ($varIds[$key]) {
+                        $variations_values['price'][$varIds[$key]] = "$price";
+                    }
                 }
 
                 $prod->variations_values = $variations_values;

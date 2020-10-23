@@ -52,6 +52,7 @@ class VariationValueController extends Controller
 
     public function destroy(VariationValue $variationValue) {
         try {
+            $variationValue->products()->detach();
             $variationValue->delete();
 
             return response(['Value delete']);

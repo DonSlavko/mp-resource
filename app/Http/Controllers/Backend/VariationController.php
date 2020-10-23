@@ -83,12 +83,18 @@ class VariationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Variation $variation) {
-        try {
+        //try {
+            $variation->variationValues()->each(function ($var) {
+                $var->products()->detach();
+            });
+
+            $variation->variationValues()->delete();
+
             $variation->delete();
 
             return response(['Variation deleted']);
-        } catch (\Exception $exception) {
+       /* } catch (\Exception $exception) {
             return response(['message' => 'There was an error. Please try again later'], 500);
-        }
+        }*/
     }
 }

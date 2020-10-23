@@ -50,6 +50,7 @@ class AttributeValueController extends Controller
 
     public function destroy(AttributeValue $attributeValue) {
         try {
+            $attributeValue->products()->detach();
             $attributeValue->delete();
 
             return response(['Value delete']);

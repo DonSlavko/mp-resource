@@ -60,6 +60,12 @@ class AttributeController extends Controller
 
     public function destroy(Attribute $attribute) {
         try {
+            $attribute->attributeValues()->each(function ($var) {
+                $var->products()->detach();
+            });
+
+            $attribute->attributeValues()->delete();
+
             $attribute->delete();
 
             return response(['Attribute delete']);
