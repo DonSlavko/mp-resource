@@ -93,17 +93,6 @@
                                     dense
                                     clearable
                                 ></v-file-input>
-                                <v-file-input
-                                    :rules="rules.file"
-                                    v-model="order.file3"
-                                    accept="image/png, image/jpeg, application/pdf"
-                                    label=" Approbation:"
-                                    prepend-icon="mdi-paperclip"
-                                    outlined
-                                    :show-size="1000"
-                                    dense
-                                    clearable
-                                ></v-file-input>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -193,17 +182,6 @@
                                     dense
                                     clearable
                                 ></v-file-input>
-                                <v-file-input
-                                    :rules="rules.file"
-                                    v-model="preorder.file3"
-                                    accept="image/png, image/jpeg, application/pdf"
-                                    label=" Approbation:"
-                                    prepend-icon="mdi-paperclip"
-                                    outlined
-                                    :show-size="1000"
-                                    dense
-                                    clearable
-                                ></v-file-input>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -266,7 +244,6 @@ export default {
             preorder: {
                 file1: null,
                 file2: null,
-                file3: null,
             },
             orders: [],
             preorders: [],
@@ -364,14 +341,12 @@ export default {
 
                 form.append("file1", this.preorder.file1, this.preorder.file1.name);
                 form.append("file2", this.preorder.file2, this.preorder.file2.name);
-                form.append("file3", this.preorder.file3, this.preorder.file3.name);
             } else {
                 form.append("carts_id", this.orderIds);
                 form.append("total_price", this.totalPrice());
 
                 form.append("file1", this.order.file1, this.order.file1.name);
                 form.append("file2", this.order.file2, this.order.file2.name);
-                form.append("file3", this.order.file3, this.order.file3.name);
             }
 
             return form;

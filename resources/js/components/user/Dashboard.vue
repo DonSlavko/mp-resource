@@ -42,7 +42,7 @@
 							<p class="pb-4">Eine Bearbeitung der Anschrift (Betriebsstätte=Lieferadresse)
 								und E-Mail Adresse ist nicht gestattet!</p>
 
-							<p class="pb-4">Nach unseren <a href="" download class="text-decoration-underline">allgemeinen
+							<p class="pb-4">Nach unseren <a href="/abg" class="text-decoration-underline">allgemeinen
 								Geschäftsbedingungen</a>
 								<span class="font-weight-bold">gem. Ziffer 3.3</span>, sind Sie als „Kunde“
 								verpflichtet, uns „dem Verkäufer“ unverzüglich via E-Mail oder Fax und zusätzlich
@@ -53,9 +53,9 @@
 								Sie einen Rückruf über unseren Rückrufservice im Onlineshop an.</p>
 
 							<p class="font-weight-bold">Hotline und E-Mail: Ärzte:</p>
-							<p>02173 \ 940 9601 | aertze@mp-resource.shop</p>
+							<p>02173 \ 940 9601 | aerzte@mp-resource.shop</p>
 							<p class="font-weight-bold">Apotheker:</p>
-							<p>02173 \ 940 9602| apotheker@mp-resource.shop </p>
+							<p>02173 \ 940 9602 | apotheken@mp-resource.shop</p>
 						</v-card-text>
 					</v-card>
 				</v-tab-item>

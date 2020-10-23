@@ -73,7 +73,7 @@ class VarAttrSeed extends Seeder
             'name' => '30 Stk.'
         ]);
         $varr1->variationValues()->create([
-            'name' => '30 Stk.'
+            'name' => '90 Stk.'
         ]);
 
 

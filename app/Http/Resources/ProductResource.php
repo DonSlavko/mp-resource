@@ -15,6 +15,8 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'sku' => $this->sku,
+            'charge' => $this->charge,
+            'expires' => $this->expires->toDateString(),
             'category_id' => $this->category_id,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),

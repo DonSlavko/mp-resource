@@ -14,7 +14,8 @@ class Product extends Model implements HasMedia
 
     protected $dates = [
         'updated_at',
-        'created_at'
+        'created_at',
+        'expires',
     ];
 
     public function category() {

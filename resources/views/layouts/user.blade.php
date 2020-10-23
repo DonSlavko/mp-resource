@@ -8,7 +8,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'MP Resource') }}</title>
+
+    <link rel="icon" href="/images/cropped-mpr_rund_neu-32x32.png" sizes="32x32">
+    <link rel="icon" href="/images/cropped-mpr_rund_neu-192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon-precomposed" href="/images/cropped-mpr_rund_neu-180x180.png">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -307,9 +311,9 @@
         <v-app-bar app height="100" flat color="#fff">
             <v-container>
                 <v-row align="center" justify="center">
-                    <a href="/">
+                    <a href="/neuigkeiten">
                         <v-img max-width="162"
-                               src="https://mp-resource.shop/wp-content/uploads/2019/12/Logo-Original.png"
+                               src="/images/Logo-Original.png"
                                contain></v-img>
                     </a>
                     <v-spacer></v-spacer>
@@ -355,8 +359,8 @@
                 <div class="row">
                     <div class="col-md-3 first mt-2">
                         <a href="/">
-                            <v-img max-width="182" src="/Logo-white-300x134.png" contain></v-img>
-                            <v-img max-width="160" class="mt-2 ml-2" src="/MPR-Canna-white-200x32.png" contain></v-img>
+                            <v-img max-width="182" src="/images/Logo-white-300x134.png" contain></v-img>
+                            <v-img max-width="160" class="mt-2 ml-2" src="/images/MPR-Canna-white-200x32.png" contain></v-img>
 
                         </a></div>
                     <div class="col-md-3 ">
@@ -399,16 +403,12 @@
                                 <p class="text-white">Zahlungsmöglichkeiten</p>
                                 <div class="row ml-2">
                                     <div class="ml-2 mr-2">
-                                        <a href="#" class="">
-                                            <img src="https://mp-resource.shop/wp-content/uploads/2019/12/SEPA-rund.png"
+                                            <img src="/images/SEPA-rund.png"
                                                  class="" alt="">
-                                        </a>
                                     </div>
                                     <div class="ml-2 mr-2">
-                                        <a href="#" class="">
-                                            <img src="https://mp-resource.shop/wp-content/uploads/2019/12/Vorkasse-rund.png"
+                                            <img src="/images/Vorkasse-rund.png"
                                                  class="" alt="">
-                                        </a>
                                     </div>
                                 </div>
                             </div>

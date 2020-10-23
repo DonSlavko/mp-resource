@@ -2,7 +2,7 @@
 
 @section('content')
     <v-container style="color: #505050">
-        <v-img src="Banner-MPR_2.png"></v-img>
+        <v-img src="/images/Banner-MPR_2.png"></v-img>
 
         <h2 class="py-14">WIR SIND MPR!</h2>
 

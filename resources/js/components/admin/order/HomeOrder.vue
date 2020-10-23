@@ -211,11 +211,6 @@
                                         <a :href="item.file2" download>BtM-Nummernzuweisung</a>
                                     </v-list-item-content>
                                 </v-list-item>
-                                <v-list-item dense v-if="item.file3">
-                                    <v-list-item-content>
-                                        <a :href="item.file3" download>Approbation</a>
-                                    </v-list-item-content>
-                                </v-list-item>
                             </v-list-item-group>
                         </template>
                         <template v-slot:item.options="{ item }">

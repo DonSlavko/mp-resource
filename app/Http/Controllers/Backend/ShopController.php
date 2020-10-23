@@ -124,21 +124,16 @@ class ShopController extends Controller
 
         $file1 = $request->file('file1');
         $file2 = $request->file('file2');
-        $file3 = $request->file('file3');
+
         if ($file1) {
             $name1 = time() . '_' . $file1->getClientOriginalName();
-            $path1 = 'order/files/' . $name1;
-            $file1->move('order/files/', $name1);
+            $path1 = 'orders/files/' . $name1;
+            $file1->move('orders/files/', $name1);
         }
         if ($file2) {
             $name2 = time() . '_' . $file2->getClientOriginalName();
-            $path2 = 'order/files/' . $name2;
-            $file2->move('order/files/', $name2);
-        }
-        if ($file3) {
-            $name3 = time() . '_' . $file3->getClientOriginalName();
-            $path3 = 'order/files/' . $name3;
-            $file3->move('order/files/', $name3);
+            $path2 = 'orders/files/' . $name2;
+            $file2->move('orders/files/', $name2);
         }
 
         $data = [
@@ -148,7 +143,6 @@ class ShopController extends Controller
             'status' => 'On hold',
             'file1' => $path1 ?? null,
             'file2' => $path2 ?? null,
-            'file3' => $path3 ?? null,
         ];
 
         $files = [
@@ -161,12 +155,7 @@ class ShopController extends Controller
                 'name' => $name2,
                 'file' => $path2,
                 'options' => [],
-            ],
-            [
-                'name' => $name3,
-                'file' => $path3,
-                'options' => [],
-            ],
+            ]
         ];
 
         $order = UserOrder::create($data);

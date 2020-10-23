@@ -48,22 +48,24 @@
             <v-col cols="12" md="8">
                 <h3 class="mb-3">{{ item.name }}</h3>
 
-                <v-divider></v-divider>
-                <v-divider></v-divider>
+                <v-divider class="mb-1"></v-divider>
+                <v-divider class="mt-1"></v-divider>
 
                 <p v-html="this.$sanitize(item.description)"></p>
 
                 <p><i>(Originalverpackung kann vom Abbild abweichen)</i></p>
 
                 <p class="text-subtitle-1">
-                    <strong>SKU:</strong> {{ item.sku }}
+                    <strong>PZN:</strong> {{ item.sku }} <br>
+                    <strong>Charge:</strong> {{ item.charge }} <br>
+                    <strong>Expire Date:</strong> {{ item.expires }} <br>
                 </p>
 
+                <p class="text-subtitle-1">
                 <template v-for="value in item.variationValues">
-                    <p class="text-subtitle-1">
-                        <strong>{{ value.name }}:</strong> {{ value.pivot.price }} €
-                    </p>
+                        <strong>{{ value.name }}:</strong> {{ value.pivot.price }} € <br>
                 </template>
+                </p>
 
                 <v-divider></v-divider>
 
