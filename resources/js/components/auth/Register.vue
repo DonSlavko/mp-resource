@@ -361,7 +361,7 @@ export default {
     data() {
         return {
             stepper: 1,
-            complete: 4,
+            complete: 1,
             show_pass: 0,
             complete_step1: false,
             complete_step2: false,
@@ -617,6 +617,7 @@ export default {
                 }).then((response) => {
                     window.location = "/"
                 }).catch((error) => {
+                    this.$toasted.show("There was and error");
                     console.log(error.response.data.errors)
                     // let errors = error.response.data.errors;
                 });
