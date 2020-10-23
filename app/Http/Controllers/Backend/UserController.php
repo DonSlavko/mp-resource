@@ -24,21 +24,21 @@ class UserController extends Controller
             if ($user->file1) {
                 $user_files[] = [
                     'name' => $user->file1,
-                    'path' => 'user/' . $user->username . '-' . $user->id . '/files/' . $user->file1,
+                    'path' => '/user/' . $user->username . '-' . $user->id . '/files/' . $user->file1,
                 ];
             }
 
             if ($user->file2) {
                 $user_files[] = [
                     'name' => $user->file2,
-                    'path' => 'user/' . $user->username . '-' . $user->id . '/files/' . $user->file2
+                    'path' => '/user/' . $user->username . '-' . $user->id . '/files/' . $user->file2
                 ];
             }
 
             if ($user->file3) {
                 $user_files[] = [
                     'name' => $user->file3,
-                    'path' => 'user/' . $user->username . '-' . $user->id . '/files/' . $user->file3
+                    'path' => '/user/' . $user->username . '-' . $user->id . '/files/' . $user->file3
                 ];
             }
 
