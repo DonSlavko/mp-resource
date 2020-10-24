@@ -35,6 +35,6 @@ class UserOrder extends Mailable
     public function build()
     {
 
-        return $this->view('email.PreOrder_mail_to_customer')->attachData($this->pdf, 'preorder.pdf');
+        return $this->view('email.PreOrder_mail_to_customer')->attachData($this->pdf->output(), 'preorder.pdf');
     }
 }
