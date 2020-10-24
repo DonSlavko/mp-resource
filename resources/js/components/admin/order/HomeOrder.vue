@@ -1,250 +1,169 @@
 <template>
     <v-container>
-        <v-card>
-            <v-tabs color="light-green darken-1" left>
-                <v-tab>Bestellungen</v-tab>
-                <v-tab>Vorbestellungen</v-tab>
+        <v-data-table
+            show-select
+            :footer-props="table.footerProps"
+            :headers="table.headers"
+            :items="table.orders"
+            :items-per-page="5"
+            class="elevation-1">
+            <template v-slot:top>
+                <v-toolbar flat color="white">
+                    <v-toolbar-title>Bestellungen</v-toolbar-title>
 
-                <v-tab-item>
-                    <v-data-table
-                        show-select
-                        :footer-props="table.footerProps1"
-                        :headers="table.headers"
-                        :items="table.orders"
-                        :items-per-page="5"
-                        class="elevation-1">
-                        <template v-slot:top>
-                            <v-toolbar flat color="white">
+                    <v-spacer></v-spacer>
 
+                    <v-dialog v-model="dialog" max-width="500px">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
+                            >CSV Exportieren
+                            </v-btn>
+                        </template>
+                        <v-card>
+                            <v-card-title>
+                                <span class="headline">CSV Exportieren</span>
+                            </v-card-title>
+
+                            <v-card-text>
+                                <v-container>
+                                    <v-row>
+                                        <v-col cols="12">
+                                            <v-select
+                                                v-model="dateSelect"
+                                                :items="dateSelectors"
+                                                name="brand_id"
+                                                label="Select interval"
+                                                outlined
+                                                dense
+                                            ></v-select>
+                                        </v-col>
+
+                                        <v-col cols="12" v-if="dateSelect === 4">
+                                            <v-menu
+                                                v-model="datePicker1"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                transition="scale-transition"
+                                                offset-y
+                                                min-width="290px"
+                                            >
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-text-field
+                                                        v-model="dateStart"
+                                                        label="Start date"
+                                                        readonly
+                                                        v-bind="attrs"
+                                                        v-on="on"
+                                                        outlined
+                                                        dense
+                                                    ></v-text-field>
+                                                </template>
+                                                <v-date-picker
+                                                    v-model="dateStart"
+                                                    @input="datePicker1 = false"
+                                                ></v-date-picker>
+                                            </v-menu>
+                                        </v-col>
+                                        <v-col cols="12" v-if="dateSelect === 4">
+                                            <v-menu
+                                                v-model="datePicker2"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                transition="scale-transition"
+                                                offset-y
+                                                min-width="290px"
+                                            >
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-text-field
+                                                        v-model="dateEnd"
+                                                        label="End date"
+                                                        readonly
+                                                        v-bind="attrs"
+                                                        v-on="on"
+                                                        outlined
+                                                        dense
+                                                    ></v-text-field>
+                                                </template>
+                                                <v-date-picker
+                                                    v-model="dateEnd"
+                                                    @input="datePicker2 = false"
+                                                ></v-date-picker>
+                                            </v-menu>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card-text>
+
+                            <v-card-actions>
                                 <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" text @click="close">Close</v-btn>
+                                <v-btn color="blue darken-1" text @click="exportCsv()"
+                                       :disabled="!canExport">Export
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                </v-toolbar>
+            </template>
+            <template v-slot:item.products="{ item }">
+                {{ item.carts.length }}
+            </template>
+            <template v-slot:item.price="{ item }">
+                {{ item.total_price }} €
+            </template>
+            <template v-slot:item.date="{ item }">
+                {{ getDate(item.created_at) }}
+            </template>
 
-                                <v-dialog v-model="dialog" max-width="500px">
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
-                                        >CSV Exportieren
-                                        </v-btn>
-                                    </template>
-                                    <v-card>
-                                        <v-card-title>
-                                            <span class="headline">CSV Exportieren</span>
-                                        </v-card-title>
+            <template v-slot:item.files="{ item }">
+                <v-btn v-if="item.file1 && item.file2 && item.file3" small dense @click="showFiles(item)">
+                    Show Files
+                </v-btn>
+                <v-btn v-else small dense disabled>No Files</v-btn>
 
-                                        <v-card-text>
-                                            <v-container>
-                                                <v-row>
-                                                    <v-col cols="12">
-                                                        <v-select
-                                                            v-model="dateSelect"
-                                                            :items="dateSelectors"
-                                                            name="brand_id"
-                                                            label="Select interval"
-                                                            outlined
-                                                            dense
-                                                        ></v-select>
-                                                    </v-col>
+                <v-list-item-group color="primary" v-if="item.show_files">
+                    <v-list-item dense v-if="item.file1">
+                        <v-list-item-content>
+                            <a :href="item.file1" download>Apothekenzulassung</a>
+                        </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item dense v-if="item.file2">
+                        <v-list-item-content>
+                            <a :href="item.file2" download>BtM-Nummernzuweisung</a>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-item-group>
+            </template>
 
-                                                    <v-col cols="12" v-if="dateSelect === 4">
-                                                        <v-menu
-                                                            v-model="datePicker1"
-                                                            :close-on-content-click="false"
-                                                            :nudge-right="40"
-                                                            transition="scale-transition"
-                                                            offset-y
-                                                            min-width="290px"
-                                                        >
-                                                            <template v-slot:activator="{ on, attrs }">
-                                                                <v-text-field
-                                                                    v-model="dateStart"
-                                                                    label="Start date"
-                                                                    readonly
-                                                                    v-bind="attrs"
-                                                                    v-on="on"
-                                                                    outlined
-                                                                    dense
-                                                                ></v-text-field>
-                                                            </template>
-                                                            <v-date-picker
-                                                                v-model="dateStart"
-                                                                @input="datePicker1 = false"
-                                                            ></v-date-picker>
-                                                        </v-menu>
-                                                    </v-col>
-                                                    <v-col cols="12" v-if="dateSelect === 4">
-                                                        <v-menu
-                                                            v-model="datePicker2"
-                                                            :close-on-content-click="false"
-                                                            :nudge-right="40"
-                                                            transition="scale-transition"
-                                                            offset-y
-                                                            min-width="290px"
-                                                        >
-                                                            <template v-slot:activator="{ on, attrs }">
-                                                                <v-text-field
-                                                                    v-model="dateEnd"
-                                                                    label="End date"
-                                                                    readonly
-                                                                    v-bind="attrs"
-                                                                    v-on="on"
-                                                                    outlined
-                                                                    dense
-                                                                ></v-text-field>
-                                                            </template>
-                                                            <v-date-picker
-                                                                v-model="dateEnd"
-                                                                @input="datePicker2 = false"
-                                                            ></v-date-picker>
-                                                        </v-menu>
-                                                    </v-col>
-                                                </v-row>
-                                            </v-container>
-                                        </v-card-text>
-
-                                        <v-card-actions>
-                                            <v-spacer></v-spacer>
-                                            <v-btn color="blue darken-1" text @click="close">Close</v-btn>
-                                            <v-btn color="blue darken-1" text @click="exportCsv()"
-                                                   :disabled="!canExport">Export
-                                            </v-btn>
-                                        </v-card-actions>
-                                    </v-card>
-                                </v-dialog>
-                            </v-toolbar>
-                        </template>
-                        <template v-slot:item.products="{ item }">
-                            {{ item.carts.length }}
-                        </template>
-                        <template v-slot:item.price="{ item }">
-                            {{ item.total_price }} €
-                        </template>
-                        <template v-slot:item.date="{ item }">
-                            {{ getDate(item.created_at) }}
-                        </template>
-
-                        <template v-slot:item.files="{ item }">
-                            <v-btn v-if="item.file1 && item.file2 && item.file3" small dense @click="showFiles(item)">
-                                Show Files
-                            </v-btn>
-                            <v-btn v-else small dense disabled>No Files</v-btn>
-
-                            <v-list-item-group color="primary" v-if="item.show_files">
-                                <v-list-item dense v-if="item.file1">
-                                    <v-list-item-content>
-                                        <a :href="item.file1" download>Apothekenzulassung</a>
-                                    </v-list-item-content>
-                                </v-list-item>
-                                <v-list-item dense v-if="item.file2">
-                                    <v-list-item-content>
-                                        <a :href="item.file2" download>BtM-Nummernzuweisung</a>
-                                    </v-list-item-content>
-                                </v-list-item>
-                                <v-list-item dense v-if="item.file3">
-                                    <v-list-item-content>
-                                        <a :href="item.file3" download>Approbation</a>
-                                    </v-list-item-content>
-                                </v-list-item>
-                            </v-list-item-group>
-                        </template>
-
-                        <template v-slot:item.options="{ item }">
-                            <v-btn v-if="item.status === 'On hold'"
-                                   @click="approve(item)"
-                                   small icon color="primary">
-                                <v-icon>
-                                    mdi-check
-                                </v-icon>
-                            </v-btn>
-                            <v-btn v-if="item.status === 'On hold'"
-                                   @click="denied(item)"
-                                   small icon color="red">
-                                <v-icon>
-                                    mdi-close
-                                </v-icon>
-                            </v-btn>
+            <template v-slot:item.options="{ item }">
+                <v-btn v-if="item.status === 'On hold'"
+                       @click="approve(item)"
+                       small icon color="primary">
+                    <v-icon>
+                        mdi-check
+                    </v-icon>
+                </v-btn>
+                <v-btn v-if="item.status === 'On hold'"
+                       @click="denied(item)"
+                       small icon color="red">
+                    <v-icon>
+                        mdi-close
+                    </v-icon>
+                </v-btn>
 
 
-                            <v-btn
-                                :href="'/back/order-download/'+item.id"
-                                small icon color="green">
-                                <v-icon>
-                                    mdi-download
-                                </v-icon>
-                            </v-btn>
-                        </template>
-                        <template v-slot:no-data>
-                            <v-btn color="primary" @click="initialize">Zürücksetzen</v-btn>
-                        </template>
-                    </v-data-table>
-                </v-tab-item>
-
-                <v-tab-item>
-                    <v-data-table
-                        show-select
-                        :footer-props="table.footerProps2"
-                        :headers="table.headers"
-                        :items="table.preorders"
-                        :items-per-page="5"
-                        class="elevation-1">
-                        <template v-slot:item.products="{ item }">
-                            {{ item.carts.length }}
-                        </template>
-                        <template v-slot:item.price="{ item }">
-                            {{ item.total_price }} €
-                        </template>
-                        <template v-slot:item.date="{ item }">
-                            {{ getDate(item.created_at) }}
-                        </template>
-
-                        <template v-slot:item.files="{ item }">
-                            <v-btn v-if="item.file1 && item.file2 && item.file3" small dense @click="showFiles(item)">
-                                Show Files
-                            </v-btn>
-                            <v-btn v-else small dense disabled>No Files</v-btn>
-
-                            <v-list-item-group color="primary" v-if="item.show_files">
-                                <v-list-item dense v-if="item.file1">
-                                    <v-list-item-content>
-                                        <a :href="item.file1" download>Apothekenzulassung</a>
-                                    </v-list-item-content>
-                                </v-list-item>
-                                <v-list-item dense v-if="item.file2">
-                                    <v-list-item-content>
-                                        <a :href="item.file2" download>BtM-Nummernzuweisung</a>
-                                    </v-list-item-content>
-                                </v-list-item>
-                            </v-list-item-group>
-                        </template>
-                        <template v-slot:item.options="{ item }">
-                            <v-btn v-if="item.status === 'On hold'"
-                                   @click="approve(item)"
-                                   small icon color="primary">
-                                <v-icon>
-                                    mdi-check
-                                </v-icon>
-                            </v-btn>
-                            <v-btn v-if="item.status === 'On hold'"
-                                   @click="denied(item)"
-                                   small icon color="red">
-                                <v-icon>
-                                    mdi-close
-                                </v-icon>
-                            </v-btn>
-
-
-                            <v-btn
-                                :href="'/back/preorder-download/'+item.id"
-                                small icon color="green">
-                                <v-icon>
-                                    mdi-download
-                                </v-icon>
-                            </v-btn>
-                        </template>
-                        <template v-slot:no-data>
-                            <v-btn color="primary" @click="initialize">Zürücksetzen</v-btn>
-                        </template>
-                    </v-data-table>
-                </v-tab-item>
-            </v-tabs>
-        </v-card>
+                <v-btn
+                    :href="'/back/order-download/'+item.id"
+                    small icon color="green">
+                    <v-icon>
+                        mdi-download
+                    </v-icon>
+                </v-btn>
+            </template>
+            <template v-slot:no-data>
+                <v-btn color="primary" @click="initialize">Zürücksetzen</v-btn>
+            </template>
+        </v-data-table>
     </v-container>
 </template>
 
@@ -258,12 +177,6 @@ export default {
                 footerProps1: {
                     itemsPerPageAllText: 'Alle',
                     itemsPerPageText: 'Bestellungen pro Seite:',
-                    pageText: '{0}-{1} von {2}',
-                },
-
-                footerProps2: {
-                    itemsPerPageAllText: 'Alle',
-                    itemsPerPageText: 'Vorbestellungen pro Seite:',
                     pageText: '{0}-{1} von {2}',
                 },
 
@@ -308,7 +221,6 @@ export default {
                     }
                 ],
                 orders: [],
-                preorders: [],
             },
             dialog: false,
 
@@ -368,11 +280,6 @@ export default {
                     item.show_files = false;
                     return item;
                 })
-                this.table.preorders = response.data.preorders.map(item => {
-                    item.show_files = false;
-                    return item;
-                })
-
             }).catch(error => {
                 console.log(error.message);
             });

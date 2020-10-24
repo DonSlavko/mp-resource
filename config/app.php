@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -232,4 +232,13 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Custom data
+    |--------------------------------------------------------------------------
+    */
+
+    'order_status' => ['On hold', 'Approved', 'Completed'],
+    'preorder_status' => ['On hold', 'Approved', 'Completed'],
+    'upload_type' => ['images', 'files', 'brochure', 'analysis', 'other']
 ];

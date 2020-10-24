@@ -298,7 +298,7 @@
                                     </template>
                                 </v-checkbox>
 
-                                <v-btn class="mt-10" color="primary" @click="validateStep4">Registrieren</v-btn>
+                                <v-btn class="mt-10" color="primary" @click="validateStep4" :loading="loading">Registrieren</v-btn>
                             </v-form>
                         </v-stepper-content>
                     </v-stepper-items>
@@ -366,6 +366,8 @@ export default {
             complete_step1: false,
             complete_step2: false,
             complete_step3: false,
+
+            loading: false,
 
 
             title: ['Apotheker/Apothekerin', 'Arzt/Ärztin'],
@@ -609,17 +611,20 @@ export default {
         },
 
         validateStep4() {
+            this.loading = true;
             if (this.$refs.step4.validate()) {
                 axios.post('register', this.formData(), {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then((response) => {
+                    this.loading = false;
                     window.location = "/"
                 }).catch((error) => {
-                    this.$toasted.show("There was and error");
-                    console.log(error.response.data.errors)
-                    // let errors = error.response.data.errors;
+                    this.$toasted.show("There was and error, please try again later.");
+
+                    this.loading = false;
+                    console.log(error.response.data.message)
                 });
             }
         }

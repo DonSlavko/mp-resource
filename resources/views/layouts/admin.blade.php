@@ -308,6 +308,9 @@
                         <v-btn href="{{ route('admin.order.index') }}" text class="text--secondary">
                             Bestellungen
                         </v-btn>
+                        <v-btn href="{{ route('admin.preorder.index') }}" text class="text--secondary">
+                            Vorbestellungen
+                        </v-btn>
                         <v-btn href="{{ route('admin.invoice.index') }}" text class="text--secondary">
                             Rechnungen
                         </v-btn>

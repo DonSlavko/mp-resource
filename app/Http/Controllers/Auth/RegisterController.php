@@ -88,90 +88,112 @@ class RegisterController extends Controller
     }
 
     protected function create(array $data) {
-        $user = User::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'title' => $data['title'],
-            'honorific' => $data['honorific'],
-            'titles' => $data['titles'],
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'pharmacy' => $data['pharmacy'],
-            'street' => $data['street'],
-            'address' => $data['address'],
-            'postal' => $data['postal'],
-            'city' => $data['city'],
-            'phone' => $data['phone'],
-            'fax' => $data['fax'],
-            'subscribed' => $data['subscribe'] ? 1 : 0,
-        ]);
+        try {
+            $user = User::create([
+                'username' => $data['username'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'title' => $data['title'],
+                'honorific' => $data['honorific'],
+                'titles' => $data['titles'],
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'pharmacy' => $data['pharmacy'],
+                'street' => $data['street'],
+                'address' => $data['address'],
+                'postal' => $data['postal'],
+                'city' => $data['city'],
+                'phone' => $data['phone'],
+                'fax' => $data['fax'],
+                'subscribed' => $data['subscribe'] ? 1 : 0,
+            ]);
 
-        $file1 = $data['file1'];
-        $file2 = $data['file2'];
-        $file3 = $data['file3'];
+            $file1 = $data['file1'];
+            $file2 = $data['file2'];
+            $file3 = $data['file3'];
 
-        if ($file1) {
-            $name1 = time() . '_' . $file1->getClientOriginalName();
-            $path1 = 'user/' . $user->username . '-' . $user->id . '/files/' . $name1;
-            $file1->move('user/' . $user->username . '-' . $user->id . '/files/', $name1);
+            if ($file1) {
+                $name1 = time() . '_' . $file1->getClientOriginalName();
+                $path1 = 'user/' . $user->username . '-' . $user->id . '/files/' . $name1;
+                $file1->move('user/' . $user->username . '-' . $user->id . '/files/', $name1);
+            }
+
+            if ($file2) {
+                $name2 = time() . '_' . $file2->getClientOriginalName();
+                $path2 = 'user/' . $user->username . '-' . $user->id . '/files/' . $name2;
+                $file2->move('user/' . $user->username . '-' . $user->id . '/files/', $name2);
+            }
+
+            if ($file3) {
+                $name3 = time() . '_' . $file3->getClientOriginalName();
+                $path3 = 'user/' . $user->username . '-' . $user->id . '/files/' . $name3;
+                $file3->move('user/' . $user->username . '-' . $user->id . '/files/', $name3);
+            }
+
+            $user->update([
+                'file1' => $name1,
+                'file2' => $name2,
+                'file3' => $name3,
+            ]);
+
+            $data = [
+                'titles' => $data['titles'],
+                'honorific' => $data['honorific'],
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'username' => $data['username'],
+                'email' => $data['email'],
+            ];
+
+            Mail::to($data['email'])->send(new UserRegister($data));
+
+            $files = [
+                [
+                    'name' => $name1,
+                    'file' => $path1,
+                    'options' => [],
+                ],
+                [
+                    'name' => $name2,
+                    'file' => $path2,
+                    'options' => [],
+                ],
+                [
+                    'name' => $name3,
+                    'file' => $path3,
+                    'options' => [],
+                ],
+            ];
+
+            $adminEmails = User::where('is_admin', 1)->pluck('email')->toArray();
+
+            Mail::to($adminEmails)->send(new UserRegisterAdmin($user, $files));
+
+            return $user;
+        } catch (\Throwable $exception) {
+            return response($exception);
         }
-        if ($file2) {
-            $name2 = time() . '_' . $file2->getClientOriginalName();
-            $path2 = 'user/' . $user->username . '-' . $user->id . '/files/' . $name2;
-            $file2->move('user/' . $user->username . '-' . $user->id . '/files/', $name2);
-        }
-        if ($file3) {
-            $name3 = time() . '_' . $file3->getClientOriginalName();
-            $path3 = 'user/' . $user->username . '-' . $user->id . '/files/' . $name3;
-            $file3->move('user/' . $user->username . '-' . $user->id . '/files/', $name3);
-        }
-
-        $user->update([
-            'file1' => $name1,
-            'file2' => $name2,
-            'file3' => $name3,
-        ]);
-
-        $data = [
-            'titles' => $data['titles'],
-            'honorific' => $data['honorific'],
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'username' => $data['username'],
-            'email' => $data['email'],
-        ];
-
-        Mail::to($data['email'])->send(new UserRegister($data));
-
-        $files = [
-            [
-                'name' => $name1,
-                'file' => $path1,
-                'options' => [],
-            ],
-            [
-                'name' => $name2,
-                'file' => $path2,
-                'options' => [],
-            ],
-            [
-                'name' => $name3,
-                'file' => $path3,
-                'options' => [],
-            ],
-        ];
-
-        $adminEmails = User::where('is_admin', 1)->pluck('email')->toArray();
-
-        Mail::to($adminEmails)->send(new UserRegisterAdmin($user, $files));
-
-        return $user;
     }
 
     public function checkIfExists(Request $request) {
         $email = $request->get('email', null);
         $username = $request->get('username', null);
+
+        $edit = $request->get('edit', false);
+
+        if ($edit) {
+            if ($username) {
+                if (optional(User::where('id', '!=', $edit)->where('username', $username)->first())->exists()) {
+                    return response(['value' => true]);
+                }
+            }
+
+            if ($email) {
+                if (optional(User::where('id', '!=', $edit)->where('email', $email)->first())->exists()) {
+                    return response(['value' => true]);
+                }
+            }
+        }
 
         if ($username) {
             if (optional(User::where('username', $username)->first())->exists()) {

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class UserOrder extends Model implements HasMedia
+class UserPreorder extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
@@ -16,11 +16,11 @@ class UserOrder extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
-    public function preorder() {
-        return $this->belongsTo(UserPreorder::class, 'preorder_id');
+    public function order() {
+        return $this->hasOne(UserOrder::class, 'preorder_id');
     }
 
     public function carts() {
-        return $this->hasMany(Cart::class, 'order_id');
+        return $this->hasMany(Cart::class, 'preorder_id');
     }
 }

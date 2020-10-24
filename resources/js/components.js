@@ -30,6 +30,7 @@ import ShowVariation from "./components/admin/variation/ShowVariation";
 import HomeVariationValue from "./components/admin/variation_value/HomeVariationValue";
 
 import HomeOrder from "./components/admin/order/HomeOrder";
+import HomePreorder from "./components/admin/preorder/HomePreorder";
 
 import HomeCallService from "./components/admin/call-service/HomeCallService";
 
@@ -67,6 +68,7 @@ Vue.component('show-variation', ShowVariation);
 Vue.component('home-variation-value', HomeVariationValue);
 
 Vue.component('home-order', HomeOrder);
+Vue.component('home-preorder', HomePreorder);
 
 Vue.component('home-invoice', HomeInvoice);
 

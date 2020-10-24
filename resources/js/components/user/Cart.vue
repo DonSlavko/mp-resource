@@ -67,7 +67,7 @@
                                     </template>
                                 </v-checkbox>
 
-                                <v-btn @click="makeOrder()" :disabled="canPlaceOrder">Jetzt kaufen</v-btn>
+                                <v-btn @click="makeOrder()" :loading="loading" :disabled="canPlaceOrder">Jetzt kaufen</v-btn>
                             </v-col>
 
                             <v-col cols="12" md="4" order-md="1">
@@ -118,6 +118,7 @@
                         </template>
                         <template v-slot:no-data>Preorder is empty</template>
                     </v-data-table>
+
                     <v-container>
                         <v-row>
                             <v-col cols="12" offset-md="2" md="6" order-md="2">
@@ -135,7 +136,18 @@
                                 </v-simple-table>
 
                                 <v-checkbox
-                                    v-model="checkbox_preorder">
+                                    v-model="checkbox_preorder2">
+                                    <template v-slot:label>
+                                        <div class="font-weight-light text-subtitle-1">
+                                            Ich habe den
+                                            <span class="font-weight-bold">Hinweis zur Vorbestellung</span>
+                                            zur Kenntnis genommen und bin damit einverstanden.
+                                        </div>
+                                    </template>
+                                </v-checkbox>
+
+                                <v-checkbox
+                                    v-model="checkbox_preorder1">
                                     <template v-slot:label>
                                         <div class="font-weight-light text-subtitle-1">
                                             Ich habe die
@@ -156,7 +168,7 @@
                                     </template>
                                 </v-checkbox>
 
-                                <v-btn @click="makeOrder(true)" :disabled="canPlacePreorder">Vorbestellen</v-btn>
+                                <v-btn @click="makeOrder(true)" :loading="loading" :disabled="canPlacePreorder">Vorbestellen</v-btn>
                             </v-col>
 
                             <v-col cols="12" md="4" order-md="1">
@@ -249,7 +261,9 @@ export default {
             preorders: [],
             product_detail: [],
             checkbox_order: false,
-            checkbox_preorder: false,
+            checkbox_preorder1: false,
+            checkbox_preorder2: false,
+            loading: false,
         };
     },
 
@@ -276,7 +290,8 @@ export default {
 
         canPlacePreorder() {
             return !(this.preorderIds.length > 0
-                && this.checkbox_preorder
+                && this.checkbox_preorder1
+                && this.checkbox_preorder2
                 && this.preorder.file1
                 && this.preorder.file2
                 && this.preorder.file3);
@@ -353,6 +368,7 @@ export default {
         },
 
         makeOrder(preorder = false) {
+            this.loading = true;
             if (preorder) {
                 axios.post("/back/make-order", this.formData(preorder), {
                     headers: {
@@ -361,9 +377,10 @@ export default {
                 }).then((response) => {
                     this.initialize();
                     this.$toasted.show(response.data);
-                    window.location.href = "/vorbestellungen/my-pre-orders";
+                    this.loading = false;
                 }).catch((error) => {
                     console.log(error.message);
+                    this.loading = false;
                 });
             } else {
                 axios.post("/back/make-order", this.formData(), {
@@ -373,8 +390,10 @@ export default {
                 }).then((response) => {
                     this.initialize();
                     this.$toasted.show(response.data);
+                    this.loading = false;
                 }).catch((error) => {
                     console.log(error.message);
+                    this.loading = false;
                 });
             }
         },

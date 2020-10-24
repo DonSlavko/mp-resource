@@ -12,17 +12,19 @@ class UserOrder extends Mailable
     use Queueable, SerializesModels;
 
     public $data;
+    public $pdf;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data, $from, $subject)
+    public function __construct($data, $pdf, $from, $subject)
     {
         $this->data = $data;
         $this->from = $from;
         $this->subject = $subject;
+        $this->pdf = $pdf;
     }
 
     /**
@@ -32,6 +34,7 @@ class UserOrder extends Mailable
      */
     public function build()
     {
-        return $this->view('email.PreOrder_mail_to_customer');
+
+        return $this->view('email.PreOrder_mail_to_customer')->attachData($this->pdf, 'preorder.pdf');
     }
 }

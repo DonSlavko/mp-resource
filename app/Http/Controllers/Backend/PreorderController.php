@@ -4,25 +4,24 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\PaymentStatus;
-use App\UserOrder;
+use App\UserPreorder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-class OrderController extends Controller
+class PreorderController extends Controller
 {
     public function index()
     {
-        $orders = UserOrder::with(['user', 'carts.product'])->get()->toArray();
+        $preorders = UserPreorder::with(['user', 'carts.product'])->get()->toArray();
 
-        return response(['orders' => $orders]);
+        return response(['preorders' => $preorders]);
     }
 
-    public function approve(UserOrder $order)
+    public function approve(UserPreorder $order)
     {
         $order->update([
             'status' => 'Approved',
         ]);
-
 
         Mail::to($order->user->email)->send(new \App\Mail\UserOrder([
             'order' => $order,
@@ -30,12 +29,12 @@ class OrderController extends Controller
         ], [
             'address' => 'auftragsbestaetigung@mp-resource.shop',
             'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
-        ], 'Your Order is approved'));
+        ], 'Your Preorder is approved'));
 
-        return response(['message' => 'Order successfully approved']);
+        return response(['message' => 'Preorder successfully approved']);
     }
 
-    public function denied(UserOrder $order)
+    public function denied(UserPreorder $order)
     {
         $order->update([
             'status' => 'Denied',
@@ -47,15 +46,8 @@ class OrderController extends Controller
         ], [
             'address' => 'auftragsbestaetigung@mp-resource.shop',
             'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
-        ], 'Your Order is denied'));
+        ], 'Your Preorder is denied'));
 
-        return response(['message' => 'Order successfully denied']);
-    }
-
-    public function invoice()
-    {
-        $invoices = PaymentStatus::all();
-
-        return response(['data' => $invoices]);
+        return response(['message' => 'Preorder successfully denied']);
     }
 }

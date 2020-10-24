@@ -49,6 +49,10 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         return $this->hasMany(UserOrder::class);
     }
 
+    public function userPreorders() {
+        return $this->hasMany(UserPreorder::class);
+    }
+
     public function paymentStatus() {
         return $this->hasMany(PaymentStatus::class);
     }

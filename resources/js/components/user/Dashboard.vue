@@ -23,10 +23,16 @@
 				</v-tab>
 				<v-tab class="justify-start">
 					<v-icon left>mdi-clipboard-text</v-icon>
-					Bestellungen
+                    Vorbestellungen
 					<v-spacer></v-spacer>
 					<v-icon right>mdi-menu-right-outline</v-icon>
 				</v-tab>
+                <v-tab class="justify-start">
+                    <v-icon left>mdi-clipboard-text</v-icon>
+                    Bestellungen
+                    <v-spacer></v-spacer>
+                    <v-icon right>mdi-menu-right-outline</v-icon>
+                </v-tab>
 				<v-tab class="justify-start">
 					<v-icon left>mdi-delete</v-icon>
 					Konto löschen
@@ -98,17 +104,14 @@
 						<v-card-text>
 							<h3 class="pb-8">
 								<v-icon left>mdi-clipboard-text</v-icon>
-								Bestellungen
+                                Vorbestellungen
 							</h3>
 
 							<v-data-table
 									:headers="orders.headers"
-									:items="orders.data"
+									:items="preorders.data"
 									class="elevation-1"
 							>
-                                <template v-slot:item.type="{ item }">
-                                    {{ item.preorder ? 'Preorder' : 'Order' }}
-                                </template>
 								<template v-slot:no-data>
 									<p>Keine Rechnungen vorhanden.</p>
 								</template>
@@ -116,6 +119,27 @@
 						</v-card-text>
 					</v-card>
 				</v-tab-item>
+
+                <v-tab-item>
+                    <v-card flat>
+                        <v-card-text>
+                            <h3 class="pb-8">
+                                <v-icon left>mdi-clipboard-text</v-icon>
+                                Bestellungen
+                            </h3>
+
+                            <v-data-table
+                                :headers="orders.headers"
+                                :items="orders.data"
+                                class="elevation-1"
+                            >
+                                <template v-slot:no-data>
+                                    <p>Keine Rechnungen vorhanden.</p>
+                                </template>
+                            </v-data-table>
+                        </v-card-text>
+                    </v-card>
+                </v-tab-item>
 
 				<v-tab-item>
 					<v-card flat>
@@ -202,10 +226,6 @@ export default {
 						text: 'Status',
 						value: 'status'
 					},
-                    {
-                        text: 'Type',
-                        value: 'type'
-                    },
 					{
 						text: 'Erstellt am',
 						value: 'created_at'
@@ -213,12 +233,16 @@ export default {
 				],
 				data: []
 			},
+            preorders: {
+			    data: []
+            }
 		};
 	},
 
 	created() {
 		this.getPayments();
 		this.getOrders();
+		this.getPreorders();
 	},
 
 	methods: {
@@ -242,6 +266,27 @@ export default {
 						console.log(error.message);
 					});
 		},
+
+        getPreorders() {
+            axios.get('/back/user/preorders')
+                .then((response) => {
+                    this.preorders.data = response.data.data.map((item, index) => {
+
+                        let date = new Date(item.created_at);
+                        let year = date.getFullYear();
+                        let month = (1 + date.getMonth()).toString().padStart(2, '0');
+                        let day = date.getDate().toString().padStart(2, '0');
+
+                        item.created_at = year + '/' + month + '/' + day;
+                        item.iteration = index + 1;
+
+                        return item;
+                    });
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        },
 
 		getPayments() {
 			axios.get('/back/user/payments')

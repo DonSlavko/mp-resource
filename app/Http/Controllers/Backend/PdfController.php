@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\PaymentStatus;
 use App\UserOrder;
+use App\UserPreorder;
 use \PDF;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class PdfController extends Controller
         return $pdf->download($order->id . '-order.pdf');
     }
 
-    public function downloadPreorderPdf(UserOrder $preorder) {
+    public function downloadPreorderPdf(UserPreorder $preorder) {
         $pdf = PDF::loadView('pdf.preorder', ['preorder' => $preorder]);
         return $pdf->download($preorder->id . '-preorder.pdf');
     }

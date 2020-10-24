@@ -11,6 +11,7 @@ use App\Http\Resources\ProductResource;
 use App\Mail\UserOrderAdmin;
 use App\UserOrder;
 use App\Product;
+use App\UserPreorder;
 use App\Variation;
 use App\VariationValue;
 use Illuminate\Http\Request;
@@ -139,7 +140,6 @@ class ShopController extends Controller
         $data = [
             'user_id' => Auth::user()->id,
             'total_price' => $request->get('total_price'),
-            'preorder' => $preorder,
             'status' => 'On hold',
             'file1' => $path1 ?? null,
             'file2' => $path2 ?? null,
@@ -158,9 +158,16 @@ class ShopController extends Controller
             ]
         ];
 
-        $order = UserOrder::create($data);
+        if ($preorder) {
+            $order = UserPreorder::create($data);
 
-        Cart::whereIn('id', $carts_id)->update(['order_id' => $order->id]);
+            Cart::whereIn('id', $carts_id)->update(['preorder_id' => $order->id]);
+        } else {
+            $order = UserOrder::create($data);
+
+            Cart::whereIn('id', $carts_id)->update(['order_id' => $order->id]);
+        }
+
 
         $user_name = Auth::user()->username;
         $user_email = Auth::user()->email;
@@ -178,7 +185,9 @@ class ShopController extends Controller
                 'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
             ]];
 
-            Mail::to($user_email)->send(new \App\Mail\UserOrder($data, $from, 'Your Pre-order is created'));
+            $pdf = \PDF::loadView('pdf.preorder', ['preorder' => $order]);
+
+            Mail::to($user_email)->send(new \App\Mail\UserOrder($data, $pdf, $from, 'Your Pre-order is created'));
 
             $adminEmails = User::where('is_admin', 1)->pluck('email')->toArray();
 
@@ -199,8 +208,10 @@ class ShopController extends Controller
                 'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
             ]];
 
+            $pdf = \PDF::loadView('pdf.order', ['order' => $order]);
+
             Mail::to($user_email)
-                ->send(new \App\Mail\UserOrder($data, $from, 'Your Order is created'));
+                ->send(new \App\Mail\UserOrder($data, $pdf, $from, 'Your Order is created'));
 
             $adminEmails = User::where('is_admin', 1)->pluck('email')->toArray();
 
@@ -221,29 +232,25 @@ class ShopController extends Controller
     }
 
     public function moveToOrder(Request $request) {
-        $preorder = UserOrder::whereId($request->get('preorder_id'))->first();
+        $preorder = UserPreorder::whereId($request->get('preorder_id'))->first();
 
-        $preorder->carts->each(function($cart) {
-            Auth::user()->carts()->create([
-                'quantity' => $cart->quantity,
-                'product_name' => $cart->product_name,
-                'variation_value_name' => $cart->variation_value_name,
-                'stock' => $cart->stock,
-                'price' => $cart->price,
-                'preorder' => false
-            ]);
+        $order = UserOrder::create([
+            'user_id' => $preorder->user_id,
+            'total_price' => $preorder->total_price,
+            'status' => 'Approved',
+            'file1' => $preorder->file1,
+            'file2' => $preorder->file2,
+        ]);
+
+        $preorder->carts->each(function($cart) use ($order) {
+            $cart->update('order_id', $order->id);
         });
 
         $preorder->update([
             'status' => 'Completed'
         ]);
 
-        $count = Auth::user()->inCart()->count();
-
-        return response([
-            ["$count"],
-            ['Product added to cart successfully']
-        ]);
+        return response(['message' => 'Order placed']);
     }
 
     public function getcount() {

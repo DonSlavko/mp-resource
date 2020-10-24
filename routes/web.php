@@ -47,6 +47,8 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::resource('variation-value', 'VariationValueController');
             Route::resource('user', 'UserController');
             Route::resource('order', 'OrderController');
+            Route::resource('preorder', 'PreorderController');
+
             Route::get('invoce', 'OrderController@invoice')->name('invoice.index');
             Route::get('newsletterindex','NewsletterController@index')->name('newsletterindex');
             Route::get('newsletter_list','NewsletterController@list')->name('newsletter_list');
@@ -68,11 +70,16 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::resource('products', 'ProductController');
             Route::resource('brands','BrandController');
             Route::resource('orders', 'OrderController');
+            Route::resource('preorders', 'PreorderController');
 
             Route::get('invoice', 'OrderController@invoice');
 
             Route::post('orders/{order}/approve', 'OrderController@approve');
             Route::post('orders/{order}/denied', 'OrderController@denied');
+
+            Route::post('preorders/{order}/approve', 'PreorderController@approve');
+            Route::post('preorders/{order}/denied', 'PreorderController@denied');
+
 
             route::get('call-service', 'CallServiceController@index');
             route::post('call-service', 'CallServiceController@store');
@@ -106,6 +113,7 @@ Route::middleware(['auth','verified'])->group(function () {
         Route::get('get-orders', 'ShopController@getOrders');
 
         Route::get('user/orders', 'UserController@userOrders');
+        Route::get('user/preorders', 'UserController@userPreorders');
         Route::get('user/payments', 'UserController@userPaymentStatus');
 
         Route::post('move-to-order', 'ShopController@moveToOrder');

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Preorder extends Model
 {
     protected $guarded = [];
 
@@ -12,8 +12,8 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function preorder() {
-        return $this->hasOne(Preorder::class);
+    public function order() {
+        return $this->belongsTo(Order::class);
     }
 
     public function carts() {

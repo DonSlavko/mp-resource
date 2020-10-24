@@ -57,7 +57,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+
     }
 
     /**
@@ -68,6 +68,34 @@ class UserController extends Controller
      */
     public function show($id) {
         //
+    }
+
+    public function update(Request $request, User $user) {
+        try {
+            $data = [];
+
+            $request->exists('username') ? $request->get('username') : null;
+            $request->exists('email') ? $data['email'] = $request->get('email') : null;
+            $request->exists('titles') ? $data['titles'] = $request->get('titles') : null;
+            $request->exists('honorific') ? $data['honorific'] = $request->get('honorific') : null;
+            $request->exists('title') ? $data['title'] = $request->get('title') : null;
+            $request->exists('first_name') ? $data['first_name'] = $request->get('first_name') : null;
+            $request->exists('last_name') ? $data['last_name'] = $request->get('last_name') : null;
+            $request->exists('pharmacy') ? $data['pharmacy'] = $request->get('pharmacy') : null;
+            $request->exists('street') ? $data['street'] = $request->get('street') : null;
+            $request->exists('address') ? $data['address'] = $request->get('address') : null;
+            $request->exists('postal') ? $data['postal'] = $request->get('postal') : null;
+            $request->exists('city') ? $data['city'] = $request->get('city') : null;
+            $request->exists('phone') ? $data['phone'] = $request->get('phone') : null;
+            $request->exists('fax') ? $data['fax'] = $request->get('fax') : null;
+
+
+            $user->update($data);
+
+            return response(['User updated']);
+        } catch (\Exception $exception) {
+            return response(['message' => 'There was an error. Please try again later'], 500);
+        }
     }
 
 
@@ -97,7 +125,7 @@ class UserController extends Controller
 
     }
 
-    public function delete(User $user) {
+    public function destroy(User $user) {
         $user->delete();
         return response(['message' => 'Account deleted']);
     }
@@ -109,6 +137,12 @@ class UserController extends Controller
 
     public function userOrders() {
         $orders = Auth::user()->userOrders->all();
+
+        return response(['data' => $orders]);
+    }
+
+    public function userPreorders() {
+        $orders = Auth::user()->userPreorders->all();
 
         return response(['data' => $orders]);
     }
