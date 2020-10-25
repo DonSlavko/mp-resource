@@ -135,6 +135,20 @@
                                     </thead>
                                 </v-simple-table>
 
+                                <p>
+                                    Hinweis zur Vorbestellung:
+                                    Sie bekommen 5 Werktage vor der tatsächlichen Verfügbarkeit eine Benachrichtigung per E-Mail. Ihre
+                                    Vorbestellung wird in eine Bestellung umgewandelt.
+                                    Ihre verbindlichen Vorbestellungen sind für uns unverbindlich, da wir Abhängig vom
+                                    Hersteller\Lieferanten sind. Das heißt, es könnte z.B. eine Lieferung verspätet oder durch einen
+                                </p>
+                                <p>
+                                    Misserfolg der Ernte „vorerst“ gar nicht eintreffen. Haben Sie diesbezüglich bitte Verständnis, falls eine
+                                    Lieferung die 3-monatsgrenze überschreiten sollte. Wenn diese drei (3)-Monatsfrist überschritten
+                                    werden, kann der Kunde von seiner Vorbestellung, auf die schriftliche und auf die formlose Art
+                                    zurücktreten. Via E-Mail bitte an die vorbestellung@mp-resource.shop.
+                                </p>
+
                                 <v-checkbox
                                     v-model="checkbox_preorder2">
                                     <template v-slot:label>
@@ -251,7 +265,6 @@ export default {
             order: {
                 file1: null,
                 file2: null,
-                file3: null,
             },
             preorder: {
                 file1: null,
@@ -264,28 +277,35 @@ export default {
             checkbox_preorder1: false,
             checkbox_preorder2: false,
             loading: false,
+            count: null,
         };
     },
 
     computed: {
         orderIds() {
-            return this.orders.map((item) => {
-                return item.id;
-            });
+            if (this.orders.length > 0) {
+                return this.orders.map((item) => {
+                    return item.id;
+                });
+            }
+
+            return []
         },
 
         preorderIds() {
-            return this.preorders.map((item) => {
-                return item.id;
-            });
+            if (this.preorders.length > 0) {
+                return this.preorders.map((item) => {
+                    return item.id;
+                });
+            }
+            return []
         },
 
         canPlaceOrder() {
             return !(this.orderIds.length > 0
                 && this.checkbox_order
                 && this.order.file1
-                && this.order.file2
-                && this.order.file3);
+                && this.order.file2);
         },
 
         canPlacePreorder() {
@@ -293,8 +313,7 @@ export default {
                 && this.checkbox_preorder1
                 && this.checkbox_preorder2
                 && this.preorder.file1
-                && this.preorder.file2
-                && this.preorder.file3);
+                && this.preorder.file2);
         }
     },
 
@@ -332,11 +351,11 @@ export default {
         totalPrice(preorder = false) {
             let total_total = 0;
 
-            if (preorder) {
+            if (preorder && this.preorders.length > 0) {
                 this.preorders.forEach(item => {
                     total_total += item.quantity * item.price;
                 })
-            } else {
+            } else if (this.orders.length > 0) {
                 this.orders.forEach((item) => {
                     total_total += item.quantity * item.price;
                 });
@@ -376,7 +395,9 @@ export default {
                     }
                 }).then((response) => {
                     this.initialize();
-                    this.$toasted.show(response.data);
+                    this.$toasted.show(response.data[1]);
+                    this.count = response.data[0];
+                    document.getElementById("cart-count").innerHTML = this.count;
                     this.loading = false;
                 }).catch((error) => {
                     console.log(error.message);
@@ -389,7 +410,9 @@ export default {
                     }
                 }).then((response) => {
                     this.initialize();
-                    this.$toasted.show(response.data);
+                    this.$toasted.show(response.data[1]);
+                    this.count = response.data[0];
+                    document.getElementById("cart-count").innerHTML = this.count;
                     this.loading = false;
                 }).catch((error) => {
                     console.log(error.message);

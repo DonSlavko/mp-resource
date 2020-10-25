@@ -42,7 +42,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
     }
 
     public function inCart() {
-        return $this->carts()->where('order_id', null)->get();
+        return $this->carts()->where('order_id', null)->where('preorder_id', null)->get();
     }
 
     public function userOrders() {

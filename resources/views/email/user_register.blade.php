@@ -155,7 +155,7 @@
                     <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%;
 						padding-top: 25px;
 						padding-bottom: 5px;" class="button">
-                        <a href="http://127.0.0.1:8000" target="_blank" style="text-decoration: none;">
+                        <a href="{{url($data['verify'])}}" target="_blank" style="text-decoration: none;">
                             <table border="0" cellpadding="0" cellspacing="0" align="center"
                                    style="max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;">
                                 <tr>
@@ -164,7 +164,7 @@
                                         bgcolor="#E9703E">
                                         <a target="_blank" style="text-decoration: none;
 											color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: bold; line-height: 120%;"
-                                           href="http://127.0.0.1:8000">
+                                           href="{{url($data['verify'])}}">
                                             ZUM LOGIN
                                         </a>
                                     </td>

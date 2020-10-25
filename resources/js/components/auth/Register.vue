@@ -282,7 +282,7 @@
                                     </template>
                                 </v-checkbox>
 
-                                <p><a href="/datenschutzerklaerung">Datenschutzerklärung</a> zur Kenntnis zu nehmen und willige in die Datenverarbeitung
+                                <p><a href="/datenschutzerklaerung" target="_blank">Datenschutzerklärung</a> zur Kenntnis zu nehmen und willige in die Datenverarbeitung
                                     meiner
                                     personenbezogenen Daten durch die Medical Pharma Resource GmbH ein. Insbesondere
                                     stimme

@@ -34,6 +34,7 @@ class UserRegisterAdmin extends Mailable
             'last_name' => $user->last_name,
             'username' => $user->username,
             'email' => $user->email,
+            'verify' => route('login'),
         ];
 
         $this->attachments = $files;

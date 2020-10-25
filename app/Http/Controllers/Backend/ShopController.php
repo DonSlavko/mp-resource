@@ -59,11 +59,9 @@ class ShopController extends Controller
     }
 
     public function inCart() {
-        $cart = Cart::where('user_id', Auth::user()->id)->where('order_id', null)->get();
+        $order_cart = Cart::where('user_id', Auth::user()->id)->where('order_id', null)->where('preorder_id', null)->where('preorder', false)->get()->toArray();
 
-        $order_cart = $cart->where('preorder', false)->toArray();
-
-        $preorder_cart = $cart->where('preorder', true)->toArray();
+        $preorder_cart = Cart::where('user_id', Auth::user()->id)->where('order_id', null)->where('preorder_id', null)->where('preorder', true)->get()->toArray();
 
 
         return response(['orders' => $order_cart, 'preorders' => $preorder_cart]);
@@ -223,8 +221,14 @@ class ShopController extends Controller
             Mail::to($adminEmails)
                 ->send(new UserOrderAdmin($order, $from, $files, 'New Order is created'));
         }
+        $count = Auth::user()->inCart()->count();
 
-        return response(['Order created successfully']);
+        if ($preorder) {
+            return response([["$count"],['Preorder created successfully']]);
+        } else {
+            return response([["$count"],['Order created successfully']]);
+        }
+
     }
 
     public function getOrders() {
