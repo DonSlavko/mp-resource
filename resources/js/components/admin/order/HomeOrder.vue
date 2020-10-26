@@ -116,7 +116,7 @@
             </template>
 
             <template v-slot:item.files="{ item }">
-                <v-btn v-if="item.file1 && item.file2 && item.file3" small dense @click="showFiles(item)">
+                <v-btn v-if="item.file1 && item.file2" small dense @click="showFiles(item)">
                     Show Files
                 </v-btn>
                 <v-btn v-else small dense disabled>No Files</v-btn>
@@ -174,7 +174,7 @@ export default {
     data() {
         return {
             table: {
-                footerProps1: {
+                footerProps: {
                     itemsPerPageAllText: 'Alle',
                     itemsPerPageText: 'Bestellungen pro Seite:',
                     pageText: '{0}-{1} von {2}',

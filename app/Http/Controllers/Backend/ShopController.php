@@ -232,7 +232,7 @@ class ShopController extends Controller
     }
 
     public function getOrders() {
-        return response(['data' => Auth::user()->userOrders->load(['carts'])->where('status', 'On hold')->toArray()]);
+        return response(['data' => Auth::user()->userPreorders->load(['carts'])->toArray()]);
     }
 
     public function moveToOrder(Request $request) {
@@ -247,14 +247,14 @@ class ShopController extends Controller
         ]);
 
         $preorder->carts->each(function($cart) use ($order) {
-            $cart->update('order_id', $order->id);
+            $cart->update(['order_id' => $order->id]);
         });
 
         $preorder->update([
             'status' => 'Completed'
         ]);
 
-        return response(['message' => 'Order placed']);
+        return response(['Order placed']);
     }
 
     public function getcount() {

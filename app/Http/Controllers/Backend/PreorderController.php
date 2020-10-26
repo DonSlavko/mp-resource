@@ -26,10 +26,10 @@ class PreorderController extends Controller
         Mail::to($order->user->email)->send(new \App\Mail\UserOrder([
             'order' => $order,
             'name' => $order->user->username,
-        ], [
+        ], null, [[
             'address' => 'auftragsbestaetigung@mp-resource.shop',
             'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
-        ], 'Your Preorder is approved'));
+        ]], 'Your Preorder is approved'));
 
         return response(['message' => 'Preorder successfully approved']);
     }
@@ -43,10 +43,10 @@ class PreorderController extends Controller
         Mail::to($order->user->email)->send(new \App\Mail\UserOrder([
             'order' => $order,
             'name' => $order->user->username,
-        ], [
+        ], null, [[
             'address' => 'auftragsbestaetigung@mp-resource.shop',
             'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
-        ], 'Your Preorder is denied'));
+        ]], 'Your Preorder is denied'));
 
         return response(['message' => 'Preorder successfully denied']);
     }

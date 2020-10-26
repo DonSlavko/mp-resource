@@ -16,26 +16,9 @@
             <template v-slot:item.date="{ item }">
                 {{ getDate(item.created_at) }}
             </template>
-            <template v-slot:item.preorder="{ item }">
-                <span v-if="item.preorder">Preorder</span>
-                <span v-else>Order</span>
-            </template>
-            <template v-slot:item.is_paid="{ item }">
-                <span v-if="!item.is_paid && item.preorder">-</span>
-                <v-chip v-else-if="!item.is_paid && !item.preorder" color="red" small>
-                    Not Paid
-                </v-chip>
-                <v-chip v-else color="blue" small>
-                    Paid
-                </v-chip>
-            </template>
             <template v-slot:item.actions="{ item }">
                 <v-btn small outlined
-                       v-if="(!item.is_paid && !item.preorder) && (item.status === 'Approved' || item.status === 'Failed')"
-                       @click="processOrder(item)">Process to payment
-                </v-btn>
-                <v-btn small outlined
-                       v-if="item.preorder && item.status === 'Approved'"
+                       v-if="item.status === 'Approved'"
                        @click="processPreorder(item)">Process to order
                 </v-btn>
             </template>
@@ -85,16 +68,6 @@ export default {
                     text: 'Datum',
                     value: 'date',
                     sortable: false,
-                },
-                {
-                    text: 'Typ',
-                    value: 'preorder',
-                    sortable: false,
-                },
-                {
-                    text: 'Bezahlt',
-                    value: 'is_paid',
-                    sortable: false
                 },
                 {
                     text: 'Optionen',
@@ -157,19 +130,6 @@ export default {
             return {
                 item_id: item.id,
             }
-        },
-
-        processOrder(item) {
-            axios.get("/payment", {
-                params: {
-                    order_id: item.id,
-                }
-            }).then((response) => {
-                this.initialize();
-                this.$toasted.show(response.data);
-            }).catch((error) => {
-                this.$toasted.show(error.message);
-            });
         },
 
         processPreorder(item) {
