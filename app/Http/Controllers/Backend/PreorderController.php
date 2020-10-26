@@ -31,7 +31,7 @@ class PreorderController extends Controller
             'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
         ]], 'Your Preorder is approved'));
 
-        return response(['message' => 'Preorder successfully approved']);
+        return response(['message' => 'Vorbestellung genehmigt']);
     }
 
     public function denied(UserPreorder $order)
@@ -48,6 +48,6 @@ class PreorderController extends Controller
             'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
         ]], 'Your Preorder is denied'));
 
-        return response(['message' => 'Preorder successfully denied']);
+        return response(['message' => 'Vorbestellung abgelehnt']);
     }
 }

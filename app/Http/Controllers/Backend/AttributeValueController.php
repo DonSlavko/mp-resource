@@ -25,9 +25,9 @@ class AttributeValueController extends Controller
 
             AttributeValue::create($data);
 
-            return response(['Value created']);
+            return response(['Neuer Eigenschaftswert wurde hinzugefügt']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -42,9 +42,9 @@ class AttributeValueController extends Controller
 
             $attributeValue->update($data);
 
-            return response(['Value updated']);
+            return response(['Eigenschaftswert wurde aktualisiert']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -53,9 +53,9 @@ class AttributeValueController extends Controller
             $attributeValue->products()->detach();
             $attributeValue->delete();
 
-            return response(['Value delete']);
+            return response(['Eigenschaftswert wurde gelöscht']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 }

@@ -92,9 +92,9 @@ class UserController extends Controller
 
             $user->update($data);
 
-            return response(['User updated']);
+            return response(['Benutzer wurde aktualisiert']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -107,7 +107,7 @@ class UserController extends Controller
 
         Mail::to($user->email)->send(new UserActivate());
 
-        return response(['data' => $user, 'message' => 'Account enabled']);
+        return response(['data' => $user, 'message' => 'Benutzer aktiviert']);
     }
 
     public function deactivate(User $user) {
@@ -115,7 +115,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return response(['data' => $user, 'message' => 'Account disabled']);
+        return response(['data' => $user, 'message' => 'Benutzer deaktiviert']);
     }
 
     public function declinedUsers() {
@@ -127,7 +127,7 @@ class UserController extends Controller
 
     public function destroy(User $user) {
         $user->delete();
-        return response(['message' => 'Account deleted']);
+        return response(['message' => 'Benutzer gelöscht']);
     }
 
     public function deleteAllUsers() {

@@ -14,7 +14,8 @@ class VariationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $variations = Variation::all();
 
         if ($request->has('with_values')) {
@@ -30,15 +31,16 @@ class VariationController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         try {
             $data = $request->all();
 
             Variation::create($data);
 
-            return response(['Variation created']);
+            return response(['Neue Variation wurde hinzugefügt']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -48,7 +50,8 @@ class VariationController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Variation $variation) {
+    public function show(Variation $variation)
+    {
         $variation = $variation->load('variationValues')->toArray();
 
         return response(['data' => $variation]);
@@ -61,7 +64,8 @@ class VariationController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Variation $variation) {
+    public function update(Request $request, Variation $variation)
+    {
         try {
             $data = [
                 'name' => $request->get('name'),
@@ -70,9 +74,9 @@ class VariationController extends Controller
 
             $variation->update($data);
 
-            return response(['Variation updated']);
+            return response(['Variation wurde aktualisiert']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -82,19 +86,16 @@ class VariationController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Variation $variation) {
-        //try {
-            $variation->variationValues()->each(function ($var) {
-                $var->products()->detach();
-            });
+    public function destroy(Variation $variation)
+    {
+        $variation->variationValues()->each(function ($var) {
+            $var->products()->detach();
+        });
 
-            $variation->variationValues()->delete();
+        $variation->variationValues()->delete();
 
-            $variation->delete();
+        $variation->delete();
 
-            return response(['Variation deleted']);
-       /* } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
-        }*/
+        return response(['Variation wurde gelöscht']);
     }
 }

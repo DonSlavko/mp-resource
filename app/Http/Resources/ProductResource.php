@@ -21,14 +21,10 @@ class ProductResource extends JsonResource
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
 
-            'image' => asset('images/multiple-images/' . ($this->product_images()->first()->path ?? '')),
-            'brochure' => $this->when($this->brochure, asset('images/multiple-images/' . $this->brochure)),
-            'analysis' => $this->when($this->analysis, asset('images/multiple-images/' . $this->analysis)),
-            'images' => $this->product_images->map(function ($image) {
-                return [
-                    'path' => asset('images/multiple-images/' . $image->path),
-                ];
-            }),
+            'image' => $this->product_images()->first()->path,
+            'brochure' => $this->brochure,
+            'analysis' => $this->analysis,
+            'images' => $this->product_images,
 
             'variations' => $this->variation,
             'variations_price' => $this->variationValues()->pluck('price'),

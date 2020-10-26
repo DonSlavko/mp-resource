@@ -26,7 +26,7 @@ class VariationValueController extends Controller
 
             VariationValue::create($data);
 
-            return response(['Value created']);
+            return response(['Neuer Variationswert wurde hinzugefügt']);
         } catch (\Exception $exception) {
             return response(['message' => 'There has been an error. Please try again later'], 500);
         }
@@ -43,9 +43,9 @@ class VariationValueController extends Controller
 
             $variationValue->update($data);
 
-            return response(['Value updated']);
+            return response(['Variationswert wurde aktualisiert']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -55,9 +55,9 @@ class VariationValueController extends Controller
             $variationValue->products()->detach();
             $variationValue->delete();
 
-            return response(['Value delete']);
+            return response(['Variationswert wurde gelöscht']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 }

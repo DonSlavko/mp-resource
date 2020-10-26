@@ -15,7 +15,7 @@
         {{ getDate(item.created_at) }}
       </template>
       <template v-slot:no-data>
-        You have no orders
+          Sie haben keine Bestellungen
       </template>
     </v-data-table>
 

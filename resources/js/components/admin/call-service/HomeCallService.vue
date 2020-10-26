@@ -119,7 +119,7 @@ export default {
 
         deleteItem(item) {
             const index = this.table.data.indexOf(item)
-            confirm('Are you sure you want to delete this item?') &&
+            confirm('Möchten Sie dies wirklich löschen?') &&
             axios.delete('/back/attributes/' + item.id).then(respones => {
                 this.initialize();
             });

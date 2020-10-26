@@ -33,7 +33,7 @@
                                                     :rules="rules.select"
                                                     v-model="editedItem.attribute_id"
                                                     :items="attribute"
-                                                    label="Attribute"
+                                                    label="Eigenschaft"
                                                     outlined
                                                     dense
                                                 ></v-select>
@@ -45,7 +45,7 @@
                                                     :rules="rules"
                                                     :counter="255"
                                                     v-model="editedItem.name"
-                                                    label="Attribute value name"
+                                                    label="Name"
                                                 ></v-text-field>
                                             </v-col>
 
@@ -68,8 +68,8 @@
 
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                                <v-btn color="blue darken-1" text @click="close">Schließen</v-btn>
+                                <v-btn color="blue darken-1" text @click="save">Geschäft</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -197,7 +197,7 @@ export default {
 
         deleteItem(item) {
             const index = this.table.data.indexOf(item);
-            confirm("Are you sure you want to delete this item?") &&
+            confirm("Möchten Sie dies wirklich löschen?") &&
             axios.delete("/back/attribute-values/" + item.id).then((respones) => {
                 this.initialize();
             });

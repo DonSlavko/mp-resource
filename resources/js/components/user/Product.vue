@@ -58,7 +58,7 @@
                 <p class="text-subtitle-1">
                     <strong>PZN:</strong> {{ item.sku }} <br>
                     <strong>Charge:</strong> {{ item.charge }} <br>
-                    <strong>Expire Date:</strong> {{ item.expires }} <br>
+                    <strong>Haltbar bis:</strong> {{ item.expires }} <br>
                 </p>
 
                 <p class="text-subtitle-1">
@@ -69,7 +69,7 @@
 
                 <v-divider></v-divider>
 
-                <h4>By Product:</h4>
+                <h4>Kaufen:</h4>
 
                 <v-row>
                     <v-col cols="12">
@@ -140,7 +140,7 @@
                                     </v-col>
 
                                     <v-col cols="12" md="6">
-                                        <v-btn height="40" @click="addToCart(true)" depressed color="primary">Vorbestellen</v-btn>
+                                        <v-btn height="40" @click="addToCart(true)" :disabled="!canPreorder" depressed color="primary">Vorbestellen</v-btn>
                                     </v-col>
                                 </v-row>
                             </v-col>
@@ -216,6 +216,10 @@ export default {
     computed: {
         canAddToCart() {
             return !!this.selected && this.quantity < this.getAvailableQuantity;
+        },
+
+        canPreorder() {
+            return !!this.preorder.selected;
         },
 
         getAvailableQuantity() {

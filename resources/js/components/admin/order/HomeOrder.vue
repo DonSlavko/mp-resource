@@ -96,7 +96,7 @@
 
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="close">Close</v-btn>
+                                <v-btn color="blue darken-1" text @click="close">Schließen</v-btn>
                                 <v-btn color="blue darken-1" text @click="exportCsv()"
                                        :disabled="!canExport">Export
                                 </v-btn>

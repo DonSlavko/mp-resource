@@ -31,9 +31,9 @@ class CategoryController extends Controller
 
             Category::create($data);
             // this.$toasted.show('Hello, I am from ItSolutionStuff.com');
-            return response(['Category created']);
+            return response(['Neue Kategorie wurde hinzugefügt']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -64,9 +64,9 @@ class CategoryController extends Controller
             $category->update($data);
 
 
-            return response(['Category updated']);
+            return response(['Kategorie wurde aktualisiert']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -80,9 +80,9 @@ class CategoryController extends Controller
         try {
             $category->delete();
 
-            return response(['Category deleted']);
+            return response(['Kategorie wurde gelöscht']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 }

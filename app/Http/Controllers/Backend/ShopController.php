@@ -81,7 +81,7 @@ class ShopController extends Controller
 
         if ($total_quantity < $quantity) {
             return response([
-                [], ['Not enough product in stock']
+                [], ['Nicht genug Produkt auf Lager']
             ]);
         }
 
@@ -100,7 +100,7 @@ class ShopController extends Controller
 
         return response([
             ["$count"],
-            ['Product added to cart successfully']
+            ['Produkt in den Warenkorb gelegt']
         ]);
     }
 
@@ -224,9 +224,9 @@ class ShopController extends Controller
         $count = Auth::user()->inCart()->count();
 
         if ($preorder) {
-            return response([["$count"],['Preorder created successfully']]);
+            return response([["$count"],['Neue Vorbestellung wurde hinzugefügt']]);
         } else {
-            return response([["$count"],['Order created successfully']]);
+            return response([["$count"],['Neue Bestellung wurde hinzugefügt']]);
         }
 
     }
@@ -254,7 +254,7 @@ class ShopController extends Controller
             'status' => 'Completed'
         ]);
 
-        return response(['Order placed']);
+        return response(['Bestellung wurde hinzugefügt']);
     }
 
     public function getcount() {

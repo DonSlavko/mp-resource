@@ -441,7 +441,9 @@
 
         <p><b>USt.-ID:</b> DE323439826</p>
 
-        <p><b>AGB herunterladen oder drucken</b></p>
+        <img src="/images/Copyright-Logo-Agb.png"/>
+
+        <p><a href="/files/AGB-der-Medical-Pharma-Resource.pdf" download>AGB herunterladen oder drucken</a></p>
 
     </v-container>
 @endsection

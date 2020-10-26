@@ -27,7 +27,7 @@
                         <template v-slot:item.actions="{ item }">
                             <v-icon small @click="removeItem(item)"> mdi-delete</v-icon>
                         </template>
-                        <template v-slot:no-data> Cart is empty</template>
+                        <template v-slot:no-data>Einkaufswagen ist leer</template>
                     </v-data-table>
                     <v-container>
                         <v-row>
@@ -116,7 +116,7 @@
                         <template v-slot:item.actions="{ item }">
                             <v-icon small @click="removeItem(item)"> mdi-delete</v-icon>
                         </template>
-                        <template v-slot:no-data>Preorder is empty</template>
+                        <template v-slot:no-data>Vorbestellung ist leer</template>
                     </v-data-table>
 
                     <v-container>

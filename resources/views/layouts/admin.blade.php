@@ -288,7 +288,7 @@
                             Kategorien
                         </v-btn>
                         <v-btn href="{{ route('admin.attribute.index') }}" text class="text--secondary">
-                            Eingenschaften
+                            Eigenschaften
                         </v-btn>
                         <v-btn href="{{ route('admin.attribute-value.index') }}" text class="text--secondary">
                             Eigenschaftswerte

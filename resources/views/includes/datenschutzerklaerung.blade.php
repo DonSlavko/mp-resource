@@ -457,6 +457,8 @@
 
         <p>Vertreten durch die IT-Recht Kanzlei</p>
 
-        <p>Datenschutzerklärung herunterladen oder drucken</p>
+            <img src="/images/Copyright-Logo-Datenschutzerklarung.png"/>
+
+        <p><a href="/files/Datenschutzerklärung-der-Medical-Pharma-Resource-GmbH_Webseite_DE.pdf" download>Datenschutzerklärung</a> herunterladen oder drucken</p>
     </v-container>
 @endsection

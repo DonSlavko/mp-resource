@@ -28,9 +28,9 @@ class AttributeController extends Controller
 
             Attribute::create($data);
 
-            return response(['Attribute created']);
+            return response(['Neue Eigenschaft wurde hinzugefügt']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -51,9 +51,9 @@ class AttributeController extends Controller
 
             $attribute->update($data);
 
-            return response(['Attribute updated']);
+            return response(['Eigenschaft wurde aktualisiert']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -68,9 +68,9 @@ class AttributeController extends Controller
 
             $attribute->delete();
 
-            return response(['Attribute delete']);
+            return response(['Eigenschaft wurde gelöscht']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 }

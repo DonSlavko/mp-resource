@@ -32,7 +32,7 @@ class OrderController extends Controller
             'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
         ]], 'Your Order is approved'));
 
-        return response(['message' => 'Order successfully approved']);
+        return response(['message' => 'Bestellung genehmigt']);
     }
 
     public function denied(UserOrder $order)
@@ -49,7 +49,7 @@ class OrderController extends Controller
             'name' => 'Medical Pharma Resource (MPR) – Onlineshop'
         ]], 'Your Order is denied'));
 
-        return response(['message' => 'Order successfully denied']);
+        return response(['message' => 'Bestellung abgelehnt']);
     }
 
     public function invoice()

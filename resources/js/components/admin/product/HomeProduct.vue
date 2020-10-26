@@ -48,13 +48,29 @@
 
                                             <v-col cols="12" sm="12" md="12">
                                                 <v-file-input
+                                                    v-if="editedIndex < 0"
                                                     v-model="editedItem.images"
                                                     :error="errors.images"
                                                     :error-messages="errors.images"
                                                     :rules="rules.images"
                                                     name="images[]"
                                                     accept="image/png, image/jpeg"
-                                                    label="Select Multiple product images"
+                                                    label="Wählen Sie Mehrere Produktbilder"
+                                                    prepend-icon="mdi-image"
+                                                    outlined
+                                                    :show-size="1000"
+                                                    dense
+                                                    multiple
+                                                    clearable
+                                                ></v-file-input>
+                                                <v-file-input
+                                                    v-else
+                                                    v-model="editedItem.images"
+                                                    :error="errors.images"
+                                                    :error-messages="errors.images"
+                                                    name="images[]"
+                                                    accept="image/png, image/jpeg"
+                                                    label="Wählen Sie Mehrere Produktbilder"
                                                     prepend-icon="mdi-image"
                                                     outlined
                                                     :show-size="1000"
@@ -70,7 +86,7 @@
                                                     v-model="editedItem.brand_id"
                                                     :items="brands"
                                                     name="brand_id"
-                                                    label="Brand"
+                                                    label="Marke"
                                                     outlined
                                                     dense
                                                 ></v-select>
@@ -82,7 +98,7 @@
                                                     v-model="editedItem.category_id"
                                                     :items="categories"
                                                     name="category"
-                                                    label="Category"
+                                                    label="Kategorien"
                                                     outlined
                                                     dense
                                                 ></v-select>
@@ -94,7 +110,7 @@
                                                     :error-messages="errors.sku"
                                                     :rules="rules.sku"
                                                     v-model="editedItem.sku"
-                                                    label="SKU"
+                                                    label="PNZ"
                                                 ></v-text-field>
                                             </v-col>
 
@@ -112,7 +128,7 @@
                                                         <v-text-field
                                                             :rules="rules.expires"
                                                             v-model="editedItem.expires"
-                                                            label="Expire date"
+                                                            label="Haltbar bis"
                                                             readonly
                                                             v-bind="attrs"
                                                             v-on="on"
@@ -165,8 +181,9 @@
 
                                             <v-col cols="12">
                                                 <v-divider></v-divider>
-                                                <h5>Product Attributes</h5>
-                                                <p>Select all Attributes Types that apply for this product.</p>
+                                                <h5>Eingenschaften</h5>
+                                                <p>Wählen Sie alle Eigenschaftswerte aus, die für dieses Produkt
+                                                    gelten.</p>
 
                                             </v-col>
 
@@ -183,9 +200,9 @@
 
                                             <v-col cols="12">
                                                 <v-divider></v-divider>
-                                                <h5>Product Variation</h5>
-                                                <p>Select product variation and enter price and quantity for all
-                                                    variation types.</p>
+                                                <h5>Variation</h5>
+                                                <p>Wählen Sie die Produktvariante aus und geben Sie Preis und Menge für
+                                                    alle Variationswerte ein.</p>
                                             </v-col>
 
                                             <v-col cols="12" md="6">
@@ -193,7 +210,7 @@
                                                     :rules="rules.select"
                                                     :items="variations"
                                                     v-model="editedItem.variation"
-                                                    label="Select Variation"
+                                                    label="Wählen Sie Variation"
                                                     outlined
                                                     dense
                                                     clearable
@@ -207,13 +224,13 @@
                                                         <thead>
                                                         <tr>
                                                             <th class="text-left">
-                                                                Type
+                                                                Typ
                                                             </th>
                                                             <th class="text-left">
-                                                                Price
+                                                                Preis
                                                             </th>
                                                             <th class="text-left">
-                                                                Stock quantity
+                                                                Menge
                                                             </th>
                                                         </tr>
                                                         </thead>
@@ -259,8 +276,8 @@
 
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="close">Close</v-btn>
-                                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                                <v-btn color="blue darken-1" text @click="close">Schließen</v-btn>
+                                <v-btn color="blue darken-1" text @click="save">Geschäft</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -430,7 +447,7 @@ export default {
                     (value) => value > 0 || "Quantity must be greater than 0"
                 ],
                 images: [
-                    (value) => !value || value.length > 0 || "At least on image is required",
+                    (value) => !value || value.length > 0 || "At least one image is required",
                 ]
             },
         };
@@ -495,14 +512,24 @@ export default {
          *
          * todo do this in backend
          */
-        getDate(date) {
-            return new Date(date)
-                .toLocaleString("en-gb", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit",
-                })
-                .replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$1/$2");
+        getDate(date, picker = false) {
+            if (picker) {
+                return new Date(date)
+                    .toLocaleString("en-gb", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                    })
+                    .replace(/(\d+)\/(\d+)\/(\d+)/, "$3-$2-$1");
+            } else {
+                return new Date(date)
+                    .toLocaleString("en-gb", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                    })
+                    .replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$1/$2");
+            }
         },
 
         /**
@@ -605,18 +632,20 @@ export default {
          * @param item
          */
         editItem(item) {
-            this.editedIndex = this.table.data.indexOf(item);
+            this.editedIndex = item.id;
+
+            console.log(item.attributes_values.length)
 
             this.editedItem = {
                 name: item.name,
                 category_id: item.category_id,
                 description: item.description,
                 brand_id: item.brand_id,
-                attributes: item.attributes_values.length > 0 ? item.attributes_values : [],
-                variation: item.variation.length > 0 ? item.variation[0].id : null,
-                variations: item.variations_values.length > 0 ? item.variations_values : [],
+                attributes: item.attributes_values || [],
+                variation: item.variation_id,
+                variations: item.variations_values || [],
                 sku: item.sku,
-                expires: item.expires,
+                expires: this.getDate(item.expires, true),
                 charge: item.charge,
                 images: [],
                 brochure: null,
@@ -644,7 +673,7 @@ export default {
          */
         deleteItem(item) {
             const index = this.table.data.indexOf(item);
-            confirm("Are you sure you want to delete this item?") &&
+            confirm("Möchten Sie dies wirklich löschen?") &&
             axios.delete("/back/products/" + item.id).then((respones) => {
                 this.initialize();
             });
@@ -665,8 +694,12 @@ export default {
          * Prepare data from editedItem for form
          * @returns {FormData}
          */
-        formData() {
+        formData(edit = false) {
             let form = new FormData();
+
+            if (edit) {
+                form.append('_method', 'PATCH');
+            }
 
             form.append("name", this.editedItem.name);
             form.append("description", this.editedItem.description);
@@ -690,7 +723,7 @@ export default {
 
                 price.forEach(item => {
                     if (item[1] !== undefined) {
-                        form.append("variations[" +  item[0] + "][price]", item[1]);
+                        form.append("variations[" + item[0] + "][price]", item[1]);
                     }
                 });
             }
@@ -700,7 +733,7 @@ export default {
 
                 quantity.forEach(item => {
                     if (item[1] !== undefined) {
-                        form.append("variations[" +  item[0] + "][quantity]", item[1]);
+                        form.append("variations[" + item[0] + "][quantity]", item[1]);
                     }
                 });
             }
@@ -745,9 +778,9 @@ export default {
             if (this.$refs.modal.validate()) {
                 if (this.editedIndex > -1) {
                     axios
-                        .patch(
-                            "/back/products/" + this.editedItem.id,
-                            this.formData(),
+                        .post(
+                            "/back/products/" + this.editedIndex,
+                            this.formData(true),
                             {
                                 headers: {
                                     "Content-Type": "multipart/form-data",

@@ -20,7 +20,7 @@ class ProductController extends Controller
     public function index() {
         // todo change this to resource
         $products = Product::all()
-            ->load(['variation', 'variationValues', 'attributes', 'attributeValues', 'brand', 'category'])
+            ->load(['variation', 'variationValues', 'attributes', 'attributeValues', 'brand', 'category', 'product_images'])
             ->map(function ($prod) {
 
                 $attrIds = $prod->attributes->pluck('id');
@@ -59,16 +59,8 @@ class ProductController extends Controller
 
                 $prod->variations_values = $variations_values;
 
-                return $prod;
-            })->map(function ($prod) {
-                $prod->variation = optional($prod->variation()->first())->id;
-                $prod->product_variations = [
-                    'ids' => $prod->variationValues->pluck('id'),
-                    'values' => $prod->variationValues->pluck('id'),
-                    'stocks' => $prod->variationValues()->pluck('quantity'),
-                    'prices' => $prod->variationValues()->pluck('price'),
-                    'variation_name' => $prod->variationValues->pluck('name'),
-                ];
+                $prod->variation_id = $prod->variation()->first()->id;
+
                 return $prod;
             })->toArray();
         return response(['data' => $products]);
@@ -83,19 +75,6 @@ class ProductController extends Controller
     public function store(Request $request) {
         // todo change this
 
-        $brochure = $request->file('brochure');
-        if ($brochure) {
-            $name = time() . '_' . $brochure->getClientOriginalName();
-            $path = 'images/multiple-images' . $name;
-            $brochure->move('images/multiple-images', $name);
-        }
-
-        if ($analysis = $request->file('analysis')) {
-            $analysis_name = time() . '_' . $analysis->getClientOriginalName();
-            $analysis_name_path = 'images/multiple-images' . $analysis_name;
-            $analysis->move('images/multiple-images', $analysis_name);
-        }
-
         $product = Product::create([
             'name' => $request->get('name'),
             'category_id' => $request->get('category_id'),
@@ -104,17 +83,33 @@ class ProductController extends Controller
             'sku' => $request->get('sku'),
             'expires' => $request->get('expires'),
             'charge' => $request->get('charge'),
-            'brochure' => $name ?? null,
-            'analysis' => $analysis_name ?? null,
+        ]);
+
+        $brochure = $request->file('brochure');
+        if ($brochure) {
+            $name = time() . '_' . $brochure->getClientOriginalName();
+            $path = '/files/products/' . $name;
+            $brochure->move('files/products/', $name);
+        }
+
+        if ($analysis = $request->file('analysis')) {
+            $analysis_name = time() . '_' . $analysis->getClientOriginalName();
+            $analysis_name_path = '/files/products/' . $analysis_name;
+            $analysis->move('files/products/', $analysis_name);
+        }
+
+        $product->update([
+            'brochure' => $path ?? null,
+            'analysis' => $analysis_name_path ?? null,
         ]);
 
         foreach ($request->file('images') as $image) {
             $name = time() . '_' . $image->getClientOriginalName();
-            $path = 'images/multiple-images' . $name;
-            $image->move('images/multiple-images', $name);
+            $path = '/images/products/' . $name;
+            $image->move('images/products/', $name);
             $product_images = ProductImages::create([
                 'product_id' => $product->id,
-                'path' => $name
+                'path' => $path
             ]);
         }
 
@@ -128,10 +123,10 @@ class ProductController extends Controller
         }
 
         $i = 0;
-        foreach ($variations as $key => $variation) {
+        foreach ($variations as $key => $varVal) {
             $variationValuesIds[$i]['variation_value_id'] = $key;
-            $variationValuesIds[$i]['price'] = $variation['price'];
-            $variationValuesIds[$i]['quantity'] = $variation['quantity'];
+            $variationValuesIds[$i]['price'] = $varVal['price'];
+            $variationValuesIds[$i]['quantity'] = $varVal['quantity'];
             $i++;
         }
 
@@ -141,33 +136,28 @@ class ProductController extends Controller
         $product->variation()->attach($variation);
         $product->variationValues()->attach($variationValuesIds);
 
-        return response('Product created');
+        return response('Neues Produkt wurde hinzugefügt');
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, Product $product) {
         try {
-            // dd($request->all());
-            $product = Product::find($id);
-            $attributes = $request->get('attribute');
-            $variation = $request->get('variation');
-
             if ($request->hasFile('brochure')) {
                 $brochure = $request->file('brochure');
                 $name = time() . '_' . $brochure->getClientOriginalName();
-                $path = 'images/multiple-images' . $name;
-                $brochure->move('images/multiple-images', $name);
+                $path = '/files/products/' . $name;
+                $brochure->move('files/products/', $name);
                 $product->where('name', '=', 'brochure')->update([
-                    'brochure' => $name,
+                    'brochure' => $path,
                 ]);
             }
 
             if ($request->hasFile('analysis')) {
                 $analysis = $request->file('analysis');
                 $analysis_name = time() . '_' . $analysis->getClientOriginalName();
-                $analysis_name_path = 'images/multiple-images' . $analysis_name;
-                $analysis->move('images/multiple-images', $analysis_name);
+                $analysis_name_path = '/files/products/' . $analysis_name;
+                $analysis->move('files/products/', $analysis_name);
                 $product->where('name', '=', 'analysis')->update([
-                    'analysis' => $analysis_name,
+                    'analysis' => $analysis_name_path,
                 ]);
             }
 
@@ -175,53 +165,58 @@ class ProductController extends Controller
                 'name' => $request->get('name'),
                 'category_id' => $request->get('category_id'),
                 'description' => $request->get('description'),
-                'price' => $request->get('price'),
-                'sku' => $request->get('sku'),
                 'brand_id' => $request->get('brand_id'),
-                //'brochure' =>  $name,
-                //'analysis' => $analysis_name,
+                'sku' => $request->get('sku'),
+                'expires' => $request->get('expires'),
+                'charge' => $request->get('charge'),
             ];
+
             $product->update($data);
 
             if ($request->hasFile('analysis')) {
                 foreach ($request->file('images') as $image) {
                     $name = time() . '_' . $image->getClientOriginalName();
-                    $path = 'images/multiple-images' . $name;
-                    $image->move('images/multiple-images', $name);
+                    $path = '/images/products/' . $name;
+                    $image->move('images/products/', $name);
                     $product_images = ProductImages::create([
                         'product_id' => $product->id,
-                        'path' => $name
+                        'path' => $path
                     ]);
                 }
             }
 
-            $product->attributes()->detach($product->attributes->pluck('id'));
-            $product->attributeValues()->detach($product->attributeValues->pluck('id'));
+            $product->attributes()->detach();
+            $product->attributeValues()->detach();
 
-            $product->attributes()->attach($attributes['ids']);
-            $product->attributeValues()->attach($attributes['values']);
+            $product->variation()->detach();
+            $product->variationValues()->detach();
 
+            $variations = $request->get('variations');
+            $variation = $request->get('variation');
+            $attributes = $request->get('attributes');
 
-            $stock_qty = [];
-            for ($i = 0; $i < sizeof($variation['ids']); $i++) {
-                $stock_qty[$variation['ids'][$i]] = ['stock_quantity' => $variation['stocks'][$i]];
+            foreach ($attributes as $key => $attribute) {
+                $attributeIds[] = $key;
+                $attributeValuesIds[] = $attribute;
             }
 
-            $prices = [];
-            for ($i = 0; $i < sizeof($variation['ids']); $i++) {
-                $prices[$variation['values'][$i]] = ['price' => $variation['prices'][$i]];
+            $i = 0;
+            foreach ($variations as $key => $varVal) {
+                $variationValuesIds[$i]['variation_value_id'] = $key;
+                $variationValuesIds[$i]['price'] = $varVal['price'];
+                $variationValuesIds[$i]['quantity'] = $varVal['quantity'];
+                $i++;
             }
 
-            $product->variation()->detach($product->variation->pluck('id'));
-            $product->variationValues()->detach($product->variationValues->pluck('id'));
+            $product->attributes()->attach($attributeIds);
+            $product->attributeValues()->attach($attributeValuesIds);
 
-            $product->variation()->attach($stock_qty);
-            $product->variationValues()->attach($variation['values']);
-            $product->variation()->attach($prices);
+            $product->variation()->attach($variation);
+            $product->variationValues()->attach($variationValuesIds);
 
-            return response('Product updated');
+            return response('Produkt wurde aktualisiert');
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -235,6 +230,6 @@ class ProductController extends Controller
         $product->product_images()->delete();
         $product->delete();
 
-        return response('Product deleted');
+        return response('Produkt wurde gelöscht');
     }
 }

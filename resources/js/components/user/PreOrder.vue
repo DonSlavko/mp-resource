@@ -19,7 +19,7 @@
             <template v-slot:item.actions="{ item }">
                 <v-btn small outlined
                        v-if="item.status === 'Approved'"
-                       @click="processPreorder(item)">Process to order
+                       @click="processPreorder(item)">Bestellung aufgeben
                 </v-btn>
             </template>
             <template v-slot:expanded-item="{ headers, item }">
@@ -35,7 +35,7 @@
                 </td>
             </template>
             <template v-slot:no-data>
-                You have no orders
+                Sie haben keine Vorbestellungen
             </template>
         </v-data-table>
 
@@ -139,7 +139,6 @@ export default {
                 this.$toasted.show(response.data[1]);
                 document.getElementById("cart-count").innerHTML = response.data[0];
                 this.initialize();
-                window.location.href = "/warenkorb";
             }).catch((error) => {
                 this.$toasted.show(error.message);
             });

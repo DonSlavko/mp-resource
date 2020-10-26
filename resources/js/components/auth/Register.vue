@@ -269,7 +269,7 @@
                             <v-form ref="step4">
                                 <h4>Überprüfen Sie Ihre Angaben</h4>
 
-                                <p>{{ input.title === 'Arzt/Ärztin' ? 'Praxis' : 'Apotheke' }} {{ input.pharmacy }}</p>
+                                <p>{{ input.title === 'Arzt/Ärztin' ? 'Praxis' : 'Apotheke' }}: {{ input.pharmacy }}</p>
                                 <p>{{ input.title === 'Arzt/Ärztin' ? 'Arzt' : 'Apotheker' }}: {{ getFullName }}</p>
                                 <p>Adresse: {{ getFullAddress || '' }}</p>
                                 <p>E-Mail: {{ input.email || '' }}</p>

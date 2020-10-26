@@ -22,9 +22,9 @@ class BrandController extends Controller
 
             Brand::create($data);
 
-            return response(['Brand created']);
+            return response(['Neue Marke wurde hinzugefügt']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -46,9 +46,9 @@ class BrandController extends Controller
 
             $brand->update($data);
 
-            return response(['Brands updated']);
+            return response(['Marke wurde aktualisiert']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 
@@ -57,9 +57,9 @@ class BrandController extends Controller
         try {
             $brand->delete();
 
-            return response(['Brand delete']);
+            return response(['Marke wurde gelöscht']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 }

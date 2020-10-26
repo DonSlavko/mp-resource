@@ -33,7 +33,7 @@ class CallServiceController extends Controller
 
             return response(['Message successfully sent to service']);
         } catch (\Exception $exception) {
-            return response(['message' => 'There was an error. Please try again later'], 500);
+            return response(['message' => 'Es gab einen Fehler'], 500);
         }
     }
 }
