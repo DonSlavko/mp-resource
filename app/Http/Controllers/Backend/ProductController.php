@@ -59,7 +59,7 @@ class ProductController extends Controller
 
                 $prod->variations_values = $variations_values;
 
-                $prod->variation_id = $prod->variation()->first()->id;
+                $prod->variation_id = optional($prod->variation()->first())->id ?? null;
 
                 return $prod;
             })->toArray();

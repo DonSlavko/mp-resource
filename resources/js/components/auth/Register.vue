@@ -385,7 +385,7 @@ export default {
                 password: [
                     value => !!value || 'Passwort angeben',
                     value => {
-                        const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!\$%&\*?\,\_])(?=.{8,})/;
+                        const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!\$%&\*?\,\_])(?=.{10,})/;
                         return (
                             pattern.test(value) ||
                             "Minimum 10 Zeichen\n" +

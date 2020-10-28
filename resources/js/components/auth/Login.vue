@@ -2,7 +2,7 @@
     <v-container fluid>
         <v-row>
             <v-col offset-md="5" cols="12" md="2">
-                <v-img max-width="200" src="/storage/Logo-Original.png" contain></v-img>
+                <v-img max-width="200" src="/images/Logo-Original.png" contain></v-img>
             </v-col>
             <v-col offset-md="4" cols="12" md="4">
                 <v-form method="POST" action="login" ref="form">
